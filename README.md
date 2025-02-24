@@ -1,6 +1,6 @@
 # Projeto Feito!
 
-Este trabalho será feito para a matéria de **FDS (Fundamentos de Desenvolvimento de Software)**.
+Este projeto será feito para a matéria de **FDS (Fundamentos de Desenvolvimento de Software) da turma 2A da Cesar School**.
 
 ## Equipe
 - Daniel Andrade Ferreira Silva
