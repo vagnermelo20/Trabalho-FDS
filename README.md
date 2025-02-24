@@ -2,7 +2,7 @@
 
 Este trabalho será feito para a matéria de **FDS (Fundamentos de Desenvolvimento de Software)**.
 
-## Integrantes
+## Equipe
 - Daniel Andrade Ferreira Silva
 - David Magalhães Porto Oliveira
 - Leonardo de Queiroz Chaves
