@@ -14,22 +14,22 @@ Este projeto será feito para a matéria de **FDS (Fundamentos de Desenvolviment
 Este projeto, intitulado de **Feito!**, tem como objetivo criar uma aplicação para gerenciamento de tarefas, sejam elas individuais ou em grupo, buscando aumentar a produtividade em atividades cotidianas e profissionais.
 
 
-## Entrega 01
+# Entrega 01
 
-**historias no docs**
+## historias no docs
 https://docs.google.com/document/d/1VuMGLYWZ6n-Ukg5oMf2sK77N9eiq_S7NzGKHBzIdv9g/edit?tab=t.0
 
-**screencast no youtube**
+## screencast no youtube
 https://www.youtube.com/watch?v=vz-zFIEjX3Q
 
 
-**quadro do Jira**
+## quadro do Jira
 ![image](https://github.com/user-attachments/assets/3a2e3877-c566-4f23-96b1-fba12afc3db8)
 
  
 
 
-**Sketches das historias no Figma** <br>
+## Sketches das historias no Figma <br>
 
 ![image](https://github.com/user-attachments/assets/fd5288e4-3fad-49e1-bb60-e28d83c89718)
 
