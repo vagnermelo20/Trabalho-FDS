@@ -24,7 +24,9 @@ https://www.youtube.com/watch?v=vz-zFIEjX3Q
 
 
 **quadro do Jira**
+![image](https://github.com/user-attachments/assets/3a2e3877-c566-4f23-96b1-fba12afc3db8)
 
+ 
 
 
 **Sketches das historias no Figma** <br>
