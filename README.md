@@ -39,6 +39,7 @@ https://www.youtube.com/watch?v=vz-zFIEjX3Q
 
 ![image](https://github.com/user-attachments/assets/55cc920c-a70d-45fa-adb3-a252567844c0)
 
+história 4: Como usuários membros de um grupo quero acompanhar o andamento do projeto com um histórico de entregas
 ![image](https://github.com/user-attachments/assets/8ababb7f-42aa-4d6c-82a6-05504244f9e6)
 
 
