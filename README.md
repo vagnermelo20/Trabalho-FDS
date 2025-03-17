@@ -24,7 +24,9 @@ https://www.youtube.com/watch?v=vz-zFIEjX3Q
 
 
 ## quadro do Jira
-![image](https://github.com/user-attachments/assets/3a2e3877-c566-4f23-96b1-fba12afc3db8)
+![image](https://github.com/user-attachments/assets/d00addd3-9d16-40f7-9883-8b8c227da14f)
+![image](https://github.com/user-attachments/assets/b2e7105b-4646-4e8f-b43e-1962397642f5)
+
 
  
 
