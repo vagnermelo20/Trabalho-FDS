@@ -24,8 +24,13 @@ https://www.youtube.com/watch?v=vz-zFIEjX3Q
 
 
 ## quadro do Jira
+
+### Link do jira
+https://trabalhofds.atlassian.net/
 ![image](https://github.com/user-attachments/assets/d00addd3-9d16-40f7-9883-8b8c227da14f)
 ![image](https://github.com/user-attachments/assets/b2e7105b-4646-4e8f-b43e-1962397642f5)
+
+
 
 
  
