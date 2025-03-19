@@ -34,7 +34,8 @@ https://trabalhofds.atlassian.net/
 
 
  
-
+### Link do Figma
+https://www.figma.com/design/2qqjd2by9hBYF834AlShsX/Projeto-2?t=oZ8SWjYzrl9XIubM-0
 
 ## Sketches das historias no Figma <br>
 
