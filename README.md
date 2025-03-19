@@ -24,7 +24,7 @@ https://www.youtube.com/watch?v=vz-zFIEjX3Q
 
 
 
-### Link do jira
+## Link do jira
 https://trabalhofds.atlassian.net/
 ## quadro do Jira
 ![image](https://github.com/user-attachments/assets/d00addd3-9d16-40f7-9883-8b8c227da14f)
@@ -34,7 +34,7 @@ https://trabalhofds.atlassian.net/
 
 
  
-### Link do Figma
+## Link do Figma
 https://www.figma.com/design/2qqjd2by9hBYF834AlShsX/Projeto-2?t=oZ8SWjYzrl9XIubM-0
 
 ## Sketches das historias no Figma <br>
