@@ -22,5 +22,12 @@ class Objetivo(models.Model):
     Estar_concluído = models.BooleanField(default=False)
     def __str__(self):
         return self.Nome
+    
+class Subtarefa(models.Model):
+    Nome = models.CharField(max_length=255)
+    descrição = models.TextField()
+    estar_concluído = models.BooleanField(default=False)
+    def __str__(self):
+        return self.Nome
 
 
