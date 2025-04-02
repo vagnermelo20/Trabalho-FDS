@@ -45,6 +45,7 @@ class CriarObjetivoView(View):
         objetivo = Objetivo.objects.create(
             Nome=nome_objetivo,
             Descrição=descricao_objetivo,
+            Status='pendente',  # Estado inicial é "pendente"
             usuario=usuario
         )
 
@@ -57,6 +58,7 @@ class CriarObjetivoView(View):
                 Subtarefa.objects.create(
                     Nome=nome,
                     descrição=descricao,
+                    Status='pendente',  # Estado inicial é "pendente"
                     objetivo=objetivo
                 )
                 count += 1
@@ -66,3 +68,31 @@ class CriarObjetivoView(View):
             f'Objetivo "{nome_objetivo}" foi criado com sucesso com {count} subtarefa(s).'
         )
         return redirect('criar_objetivo')
+
+class VisualizarObjetivosView(View):
+    def get(self, request):
+
+        usuario = Usuario.objects.first()
+        
+        if not usuario:
+            messages.error(request, "Nenhum usuário encontrado. Por favor, crie um usuário primeiro.")
+            return redirect('criar_usuario')
+            
+        filtro = request.GET.get('filtro', 'todos')
+        
+        if filtro == 'pendentes':
+            objetivos = Objetivo.objects.filter(usuario=usuario, Status='pendente')
+        elif filtro == 'ativas':
+            objetivos = Objetivo.objects.filter(usuario=usuario, Status='ativa')
+        elif filtro == 'completas':
+            objetivos = Objetivo.objects.filter(usuario=usuario, Status='completa')
+        else: 
+            objetivos = Objetivo.objects.filter(usuario=usuario)
+        
+        
+        context = {
+            'objetivos': objetivos,
+            'filtro_atual': filtro
+        }
+        
+        return render(request, 'visualizar_objetivos.html', context)
