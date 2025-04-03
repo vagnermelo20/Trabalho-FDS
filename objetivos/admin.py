@@ -1,3 +1,5 @@
 from django.contrib import admin
+from objetivos.models import  Objetivo, Subtarefa
 
-# Register your models here.
+admin.site.register(Objetivo)
+admin.site.register(Subtarefa)
