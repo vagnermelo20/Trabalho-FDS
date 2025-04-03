@@ -8,7 +8,7 @@ from django.http import HttpResponse
 
 class CriarUsuarioView(View):
     def get(self, request):
-        return HttpResponse('<h1>TO NA HOME<h1>')
+        return render(request,'login/criar_usuario.html')
 
     def post(self, request):
         nome = request.POST.get('nome')

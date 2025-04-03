@@ -4,12 +4,13 @@ from django.views import View
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Usuario, Objetivo, Subtarefa
-from django.http import HttpResponse
+
 
 
 class CriarObjetivoView(View):
     def get(self, request):
-        return HttpResponse('criar_objetivo.html')
+
+        return render(request,'objetivos/criar_objetivo.html')
 
     def post(self, request):
         nome_objetivo = request.POST.get('nome_objetivo')
