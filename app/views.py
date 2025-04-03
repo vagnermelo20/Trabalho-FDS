@@ -4,10 +4,11 @@ from django.views import View
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Usuario, Objetivo, Subtarefa
+from django.http import HttpResponse
 
 class CriarUsuarioView(View):
     def get(self, request):
-        return render(request, 'criar_usuario.html')
+        return HttpResponse('<h1>TO NA HOME<h1>')
 
     def post(self, request):
         nome = request.POST.get('nome')
@@ -28,7 +29,7 @@ class CriarUsuarioView(View):
     
 class CriarObjetivoView(View):
     def get(self, request):
-        return render(request, 'criar_objetivo.html')
+        return HttpResponse('criar_objetivo.html')
 
     def post(self, request):
         nome_objetivo = request.POST.get('nome_objetivo')
