@@ -157,8 +157,7 @@ class AlterarStatusObjetivoView(View):
         # Redirecionar para a página de visualização mantendo o filtro
         filtro = request.POST.get('filtro_atual', 'todos')
         return redirect(f'/objetivos/?filtro={filtro}')
-
-
+    
 class LoginView(View):
     def get(self, request):
         return render(request, 'login.html')
@@ -182,4 +181,13 @@ class LoginView(View):
         except Usuario.DoesNotExist:
             messages.error(request, 'Usuário não encontrado.')
 
+        return redirect('login')
+
+class LogoutView(View):
+    def get(self, request):
+        # Remover o ID do usuário da sessão
+        if 'usuario_id' in request.session:
+            del request.session['usuario_id']
+        
+        messages.success(request, "Você saiu do sistema com sucesso.")
         return redirect('login')
