@@ -25,6 +25,38 @@ class CriarUsuarioView(View):
 
         Usuario.objects.create(Nome=nome, E_mail=email, Senha=senha)
         messages.success(request, f'Usuário "{nome}" criado com sucesso!')
-        return redirect('criar_usuario')
-    
+        return redirect('login')  # Redirecionar para página de login após criação
 
+class LoginView(View):
+    def get(self, request):
+        return render(request, 'login.html')
+    
+    def post(self, request):
+        email = request.POST.get('email')
+        senha = request.POST.get('senha')
+
+        if not email or not senha:
+            messages.error(request, 'Todos os campos são obrigatórios.')
+            return redirect('login')
+
+        try:
+            usuario = Usuario.objects.get(E_mail=email)
+            if usuario.Senha == senha:
+                request.session['usuario_id'] = usuario.id
+                messages.success(request, f'Bem-vindo(a), {usuario.Nome}!')
+                return redirect('visualizar_objetivos')  # Redireciona para visualização após login
+            else:
+                messages.error(request, 'Senha incorreta.')
+        except Usuario.DoesNotExist:
+            messages.error(request, 'Usuário não encontrado.')
+
+        return redirect('login')
+
+class LogoutView(View):
+    def get(self, request):
+        # Remover o ID do usuário da sessão
+        if 'usuario_id' in request.session:
+            del request.session['usuario_id']
+        
+        messages.success(request, "Você saiu do sistema com sucesso.")
+        return redirect('login')
