@@ -1,14 +1,12 @@
-from django.shortcuts import render
-
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
-from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Usuario, Objetivo, Subtarefa
 from django.http import HttpResponse
 
 class CriarUsuarioView(View):
     def get(self, request):
-        return HttpResponse('<h1>TO NA HOME<h1>')
+        return render(request, 'criar_usuario.html')
 
     def post(self, request):
         nome = request.POST.get('nome')
@@ -25,17 +23,36 @@ class CriarUsuarioView(View):
 
         Usuario.objects.create(Nome=nome, E_mail=email, Senha=senha)
         messages.success(request, f'Usuário "{nome}" criado com sucesso!')
-        return redirect('criar_usuario')
+        return redirect('login')  # Redirecionar para página de login após criação
+
+class CriarObjetivoView(View):
+    def get(self, request):
+        # Verificar se o usuário está logado
+        if 'usuario_id' not in request.session:
+            messages.error(request, "Você precisa estar logado para criar objetivos.")
+            return redirect('login')
+        return render(request, 'criar_objetivo.html')
     
-
-
     def post(self, request):
+        # Verificar se o usuário está logado
+        usuario_id = request.session.get('usuario_id')
+        if not usuario_id:
+            messages.error(request, "Você precisa estar logado para criar objetivos.")
+            return redirect('login')
+            
+        # Buscar o usuário pelo ID na sessão
+        try:
+            usuario = Usuario.objects.get(id=usuario_id)
+        except Usuario.DoesNotExist:
+            messages.error(request, "Usuário não encontrado.")
+            # Limpar a sessão se o usuário não existir mais
+            del request.session['usuario_id']
+            return redirect('login')
+        
         nome_objetivo = request.POST.get('nome_objetivo')
         descricao_objetivo = request.POST.get('descricao_objetivo')
         subtarefas_nomes = request.POST.getlist('subtarefa_nome')
         subtarefas_descricoes = request.POST.getlist('subtarefa_descricao')
-
-        usuario = Usuario.objects.first()
 
         if not nome_objetivo:
             messages.error(request, 'É necessário preencher o nome do objetivo.')
@@ -66,17 +83,25 @@ class CriarUsuarioView(View):
             request,
             f'Objetivo "{nome_objetivo}" foi criado com sucesso com {count} subtarefa(s).'
         )
-        return redirect('criar_objetivo')
+        return redirect('visualizar_objetivos')  # Redirecionar para a visualização após criação
 
 
 class VisualizarObjetivosView(View):
     def get(self, request):
-
-        usuario = Usuario.objects.first()
-        
-        if not usuario:
-            messages.error(request, "Nenhum usuário encontrado. Por favor, crie um usuário primeiro.")
-            return redirect('criar_usuario')
+        # Verificar se o usuário está logado
+        usuario_id = request.session.get('usuario_id')
+        if not usuario_id:
+            messages.error(request, "Você precisa estar logado para visualizar seus objetivos.")
+            return redirect('login')
+            
+        # Buscar o usuário pelo ID na sessão
+        try:
+            usuario = Usuario.objects.get(id=usuario_id)
+        except Usuario.DoesNotExist:
+            messages.error(request, "Usuário não encontrado.")
+            # Limpar a sessão se o usuário não existir mais
+            del request.session['usuario_id']
+            return redirect('login')
             
         filtro = request.GET.get('filtro', 'todos')
         
@@ -92,32 +117,34 @@ class VisualizarObjetivosView(View):
         
         context = {
             'objetivos': objetivos,
-            'filtro_atual': filtro
+            'filtro_atual': filtro,
+            'usuario': usuario  # Passamos o usuário para o template
         }
         
         return render(request, 'visualizar_objetivos.html', context)
+
+
+class LoginView(View):
+    def get(self, request):
+        return render(request, 'login.html')
     
-    class LoginView(View):
-        def get(self, request):
-            return render(request, 'login.html')
-        
-        def post(self, request):
-            email = request.POST.get('email')
-            senha = request.POST.get('senha')
+    def post(self, request):
+        email = request.POST.get('email')
+        senha = request.POST.get('senha')
 
-            if not email or not senha:
-                messages.error(request, 'Todos os campos são obrigatórios.')
-                return redirect('login')
-
-            try:
-                usuario = Usuario.objects.get(E_mail=email)
-                if usuario.Senha == senha:
-                    request.session['usuario_id'] = usuario.id
-                    messages.success(request, f'Bem-vindo(a), {usuario.Nome}!')
-                    return redirect('criar_objetivo')
-                else:
-                    messages.error(request, 'Senha incorreta.')
-            except Usuario.DoesNotExist:
-                messages.error(request, 'Usuário não encontrado.')
-
+        if not email or not senha:
+            messages.error(request, 'Todos os campos são obrigatórios.')
             return redirect('login')
+
+        try:
+            usuario = Usuario.objects.get(E_mail=email)
+            if usuario.Senha == senha:
+                request.session['usuario_id'] = usuario.id
+                messages.success(request, f'Bem-vindo(a), {usuario.Nome}!')
+                return redirect('visualizar_objetivos')  # Redireciona para visualização após login
+            else:
+                messages.error(request, 'Senha incorreta.')
+        except Usuario.DoesNotExist:
+            messages.error(request, 'Usuário não encontrado.')
+
+        return redirect('login')
