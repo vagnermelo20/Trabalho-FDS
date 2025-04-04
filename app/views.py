@@ -123,6 +123,41 @@ class VisualizarObjetivosView(View):
         
         return render(request, 'visualizar_objetivos.html', context)
 
+# Nova view para alterar o status de um objetivo
+class AlterarStatusObjetivoView(View):
+    def post(self, request, objetivo_id):
+        # Verificar se o usuário está logado
+        usuario_id = request.session.get('usuario_id')
+        if not usuario_id:
+            messages.error(request, "Você precisa estar logado para alterar objetivos.")
+            return redirect('login')
+            
+        # Buscar o objetivo e verificar se pertence ao usuário
+        objetivo = get_object_or_404(Objetivo, id=objetivo_id)
+        
+        # Verificar se o objetivo pertence ao usuário logado
+        if objetivo.usuario.id != usuario_id:
+            messages.error(request, "Você não tem permissão para alterar este objetivo.")
+            return redirect('visualizar_objetivos')
+            
+        # Obter o novo status do formulário
+        novo_status = request.POST.get('status')
+        
+        # Validar o status
+        if novo_status not in ['pendente', 'ativa', 'completa']:
+            messages.error(request, "Status inválido.")
+            return redirect('visualizar_objetivos')
+            
+        # Atualizar o status
+        objetivo.Status = novo_status
+        objetivo.save()
+        
+        messages.success(request, f'Status do objetivo "{objetivo.Nome}" alterado para "{objetivo.get_Status_display()}".')
+        
+        # Redirecionar para a página de visualização mantendo o filtro
+        filtro = request.POST.get('filtro_atual', 'todos')
+        return redirect(f'/objetivos/?filtro={filtro}')
+
 
 class LoginView(View):
     def get(self, request):
