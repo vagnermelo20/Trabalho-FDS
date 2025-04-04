@@ -4,10 +4,11 @@ from django.views import View
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Usuario, Objetivo, Subtarefa
+from django.http import HttpResponse
 
 class CriarUsuarioView(View):
     def get(self, request):
-        return render(request, 'criar_usuario.html')
+        return HttpResponse('<h1>TO NA HOME<h1>')
 
     def post(self, request):
         nome = request.POST.get('nome')
@@ -26,9 +27,7 @@ class CriarUsuarioView(View):
         messages.success(request, f'Usuário "{nome}" criado com sucesso!')
         return redirect('criar_usuario')
     
-class CriarObjetivoView(View):
-    def get(self, request):
-        return render(request, 'criar_objetivo.html')
+
 
     def post(self, request):
         nome_objetivo = request.POST.get('nome_objetivo')
@@ -69,6 +68,7 @@ class CriarObjetivoView(View):
         )
         return redirect('criar_objetivo')
 
+
 class VisualizarObjetivosView(View):
     def get(self, request):
 
@@ -96,3 +96,28 @@ class VisualizarObjetivosView(View):
         }
         
         return render(request, 'visualizar_objetivos.html', context)
+    
+    class LoginView(View):
+        def get(self, request):
+            return render(request, 'login.html')
+        
+        def post(self, request):
+            email = request.POST.get('email')
+            senha = request.POST.get('senha')
+
+            if not email or not senha:
+                messages.error(request, 'Todos os campos são obrigatórios.')
+                return redirect('login')
+
+            try:
+                usuario = Usuario.objects.get(E_mail=email)
+                if usuario.Senha == senha:
+                    request.session['usuario_id'] = usuario.id
+                    messages.success(request, f'Bem-vindo(a), {usuario.Nome}!')
+                    return redirect('criar_objetivo')
+                else:
+                    messages.error(request, 'Senha incorreta.')
+            except Usuario.DoesNotExist:
+                messages.error(request, 'Usuário não encontrado.')
+
+            return redirect('login')

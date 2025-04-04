@@ -1,6 +1,5 @@
 from django.contrib import admin
-from app.models import Usuario, Objetivo, Subtarefa
+from objetivos.models import  Objetivo, Subtarefa
 
-admin.site.register(Usuario)
 admin.site.register(Objetivo)
 admin.site.register(Subtarefa)
