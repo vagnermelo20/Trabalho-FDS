@@ -17,19 +17,20 @@ class CriarUsuarioView(View):
 
         if not nome or not email or not senha:
             messages.error(request, 'Todos os campos são obrigatórios.')
-            return redirect('criar_usuario')
+            return redirect('login/criar_usuario.html')
 
-        if Usuario.objects.filter(E_mail=email).exists():
+        elif Usuario.objects.filter(E_mail=email).exists():
             messages.error(request, 'Este e-mail já está cadastrado.')
-            return redirect('criar_usuario')
+            return redirect('login/criar_usuario,html')
 
-        Usuario.objects.create(Nome=nome, E_mail=email, Senha=senha)
-        messages.success(request, f'Usuário "{nome}" criado com sucesso!')
-        return redirect('login')  # Redirecionar para página de login após criação
+        else:
+            Usuario.objects.create(Nome=nome, E_mail=email, Senha=senha)
+            messages.success(request, f'Usuário "{nome}" criado com sucesso!')
+            return redirect('login/logar.html')  # Redirecionar para página de login após criação
 
 class LoginView(View):
     def get(self, request):
-        return render(request, 'login.html')
+        return render(request, 'login/logar.html')
     
     def post(self, request):
         email = request.POST.get('email')
@@ -37,14 +38,14 @@ class LoginView(View):
 
         if not email or not senha:
             messages.error(request, 'Todos os campos são obrigatórios.')
-            return redirect('login')
+            return redirect('login/logar.html')
 
         try:
             usuario = Usuario.objects.get(E_mail=email)
             if usuario.Senha == senha:
                 request.session['usuario_id'] = usuario.id
                 messages.success(request, f'Bem-vindo(a), {usuario.Nome}!')
-                return redirect('visualizar_objetivos')  # Redireciona para visualização após login
+                return redirect('objetivos/objetivos/visualizar_objetivos.html')  # Redireciona para visualização após login
             else:
                 messages.error(request, 'Senha incorreta.')
         except Usuario.DoesNotExist:
@@ -59,4 +60,4 @@ class LogoutView(View):
             del request.session['usuario_id']
         
         messages.success(request, "Você saiu do sistema com sucesso.")
-        return redirect('login')
+        return redirect('login/logar.html')
