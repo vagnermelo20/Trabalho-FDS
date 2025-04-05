@@ -1,14 +1,13 @@
-from django.shortcuts import render
-
-from django.views import View
 from django.shortcuts import render, redirect
+from django.views import View
 from django.contrib import messages
 from .models import Usuario
 from django.http import HttpResponse
+from django.contrib.auth.hashers import make_password, check_password
 
 class CriarUsuarioView(View):
     def get(self, request):
-        return render(request,'login/criar_usuario.html')
+        return render(request, 'login/criar_usuario.html')
 
     def post(self, request):
         nome = request.POST.get('nome')
@@ -21,10 +20,12 @@ class CriarUsuarioView(View):
 
         elif Usuario.objects.filter(E_mail=email).exists():
             messages.error(request, 'Este e-mail já está cadastrado.')
-            return redirect('login/criar_usuario,html')
+            return redirect('login/criar_usuario.html')
 
         else:
-            Usuario.objects.create(Nome=nome, E_mail=email, Senha=senha)
+# Usar make_password para criar senha hasheada
+            senha_hasheada = make_password(senha)
+            Usuario.objects.create(Nome=nome, E_mail=email, Senha=senha_hasheada)
             messages.success(request, f'Usuário "{nome}" criado com sucesso!')
             return redirect('login/logar.html')  # Redirecionar para página de login após criação
 
@@ -42,16 +43,17 @@ class LoginView(View):
 
         try:
             usuario = Usuario.objects.get(E_mail=email)
-            if usuario.Senha == senha:
+            # Usar check_password para verificar a senha hasheada
+            if check_password(senha, usuario.Senha):
                 request.session['usuario_id'] = usuario.id
                 messages.success(request, f'Bem-vindo(a), {usuario.Nome}!')
-                return redirect('objetivos/objetivos/visualizar_objetivos.html')  # Redireciona para visualização após login
+                return redirect('visualizar_objetivos')  # Redireciona para visualização após login
             else:
                 messages.error(request, 'Senha incorreta.')
         except Usuario.DoesNotExist:
             messages.error(request, 'Usuário não encontrado.')
 
-        return redirect('login')
+        return redirect('login/logar.html')
 
 class LogoutView(View):
     def get(self, request):
