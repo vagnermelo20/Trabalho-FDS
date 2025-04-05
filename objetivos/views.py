@@ -14,7 +14,9 @@ class CriarObjetivoView(View):
             messages.error(request, "Você precisa estar logado para criar objetivos.")
             return redirect('logar')
         
-        return render(request, 'objetivos/criar_objetivo.html')
+        lista_objetivos=Usuario.objects.all() 
+        contexto={'objetivo': lista_objetivos}  
+        return render(request,'objetivos/visualizar_objetivos.html',contexto)
         
     
     def post(self, request):
@@ -22,7 +24,7 @@ class CriarObjetivoView(View):
         usuario_id = request.session.get('usuario_id')
         if not usuario_id:
             messages.error(request, "Você precisa estar logado para criar objetivos.")
-            return redirect('logar')
+            return render(request,'login/logar.html')
             
         # Buscar o usuário pelo ID na sessão
         try:
@@ -31,14 +33,14 @@ class CriarObjetivoView(View):
             messages.error(request, "Usuário não encontrado.")
             # Limpar a sessão se o usuário não existir mais
             del request.session['usuario_id']
-            return redirect('logar')
+            return render(request,'login/logar.html')
         
         nome_objetivo = request.POST.get('nome_objetivo')
         descricao_objetivo = request.POST.get('descricao_objetivo')
 
         if not nome_objetivo:
             messages.error(request, 'É necessário preencher o nome do objetivo.')
-            return redirect('criar_objetivo')
+            return render(request, 'objetivos/criar_objetivo.html')
 
         objetivo = Objetivo.objects.create(
             Nome=nome_objetivo,
@@ -51,8 +53,7 @@ class CriarObjetivoView(View):
             request,
             f'Objetivo "{nome_objetivo}" foi criado com sucesso!'
         )
-            
-        return redirect('visualizar_objetivos')  # Redirecionar para a visualização após criação
+        # Redirecionar para a visualização após criação
 
 
 class VisualizarObjetivosView(View):
@@ -107,7 +108,7 @@ class DeletarObjetivoView(View):
         # Verificar se o objetivo pertence ao usuário logado
         if objetivo.usuario.id != usuario_id:
             messages.error(request, "Você não tem permissão para excluir este objetivo.")
-            return redirect('visualizar_objetivos')
+            return render(request,'objetivos/visualizar_objetivos.html')
         
         # Guardar o nome para mensagem de confirmação
         nome_objetivo = objetivo.Nome
@@ -117,9 +118,8 @@ class DeletarObjetivoView(View):
         
         messages.success(request, f'Objetivo "{nome_objetivo}" foi excluído com sucesso.')
         
-        # Redirecionar para a página de visualização mantendo o filtro de pendentes, ativas, completas ou todas
-        filtro = request.POST.get('filtro_atual', 'todos')
-        return redirect(f'/objetivos/?filtro={filtro}')
+       
+        
  
 
 
@@ -137,7 +137,7 @@ class EditarObjetivoView(View):
         # Verificar se o objetivo pertence ao usuário logado
         if objetivo.usuario.id != usuario_id:
             messages.error(request, "Você não tem permissão para editar este objetivo.")
-            return redirect('visualizar_objetivos')
+            return render(request,'objetivos/visualizar_objetivos.html')
             
         context = {
             'objetivo': objetivo,
@@ -158,7 +158,7 @@ class EditarObjetivoView(View):
         # Verificar se o objetivo pertence ao usuário logado
         if objetivo.usuario.id != usuario_id:
             messages.error(request, "Você não tem permissão para editar este objetivo.")
-            return redirect('visualizar_objetivos')
+            return render(request,'objetivos/visualizar_objetivos.html')
             
         # Obter os dados do formulário
         nome_objetivo = request.POST.get('nome_objetivo')
