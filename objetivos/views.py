@@ -110,13 +110,13 @@ class VisualizarObjetivosView(View):
         
         return render(request, 'visualizar_objetivos.html', context)
 
-# Nova view para alterar o status de um objetivo
-class AlterarStatusObjetivoView(View):
+
+class DeletarObjetivoView(View):
     def post(self, request, objetivo_id):
         # Verificar se o usuário está logado
         usuario_id = request.session.get('usuario_id')
         if not usuario_id:
-            messages.error(request, "Você precisa estar logado para alterar objetivos.")
+            messages.error(request, "Você precisa estar logado para excluir objetivos.")
             return redirect('login')
             
         # Buscar o objetivo e verificar se pertence ao usuário
@@ -124,22 +124,16 @@ class AlterarStatusObjetivoView(View):
         
         # Verificar se o objetivo pertence ao usuário logado
         if objetivo.usuario.id != usuario_id:
-            messages.error(request, "Você não tem permissão para alterar este objetivo.")
+            messages.error(request, "Você não tem permissão para excluir este objetivo.")
             return redirect('visualizar_objetivos')
-            
-        # Obter o novo status do formulário
-        novo_status = request.POST.get('status')
         
-        # Validar o status
-        if novo_status not in ['pendente', 'ativa', 'completa']:
-            messages.error(request, "Status inválido.")
-            return redirect('visualizar_objetivos')
-            
-        # Atualizar o status
-        objetivo.Status = novo_status
-        objetivo.save()
+        # Guardar o nome para mensagem de confirmação
+        nome_objetivo = objetivo.Nome
         
-        messages.success(request, f'Status do objetivo "{objetivo.Nome}" alterado para "{objetivo.get_Status_display()}".')
+        # Excluir o objetivo (isso também excluirá as subtarefas devido à relação CASCADE)
+        objetivo.delete()
+        
+        messages.success(request, f'Objetivo "{nome_objetivo}" foi excluído com sucesso.')
         
         # Redirecionar para a página de visualização mantendo o filtro
         filtro = request.POST.get('filtro_atual', 'todos')
