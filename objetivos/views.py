@@ -1,4 +1,3 @@
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.contrib import messages
@@ -13,11 +12,9 @@ class CriarObjetivoView(View):
         # Verificar se o usuário está logado
         if 'usuario_id' not in request.session:
             messages.error(request, "Você precisa estar logado para criar objetivos.")
-            return redirect('login')
+            return redirect('logar')
         
-        lista_objetivos=Objetivo.objects.all()
-        contexto={'objetivos':lista_objetivos}
-        return render(request,'objetivos/criar_objetivo.html',contexto)
+        return render(request, 'objetivos/criar_objetivo.html')
         
     
     def post(self, request):
@@ -25,7 +22,7 @@ class CriarObjetivoView(View):
         usuario_id = request.session.get('usuario_id')
         if not usuario_id:
             messages.error(request, "Você precisa estar logado para criar objetivos.")
-            return redirect('login')
+            return redirect('logar')
             
         # Buscar o usuário pelo ID na sessão
         try:
@@ -34,12 +31,10 @@ class CriarObjetivoView(View):
             messages.error(request, "Usuário não encontrado.")
             # Limpar a sessão se o usuário não existir mais
             del request.session['usuario_id']
-            return redirect('login')
+            return redirect('logar')
         
         nome_objetivo = request.POST.get('nome_objetivo')
         descricao_objetivo = request.POST.get('descricao_objetivo')
-        subtarefas_nomes = request.POST.getlist('subtarefa_nome')
-        subtarefas_descricoes = request.POST.getlist('subtarefa_descricao')
 
         if not nome_objetivo:
             messages.error(request, 'É necessário preencher o nome do objetivo.')
@@ -52,24 +47,11 @@ class CriarObjetivoView(View):
             usuario=usuario
         )
 
-        count = 0
-        for i in range(len(subtarefas_nomes)):
-            nome = subtarefas_nomes[i]
-            descricao = subtarefas_descricoes[i]
-
-            if nome.strip():
-                Subtarefa.objects.create(
-                    Nome=nome,
-                    descrição=descricao,
-                    Status='pendente',  # Estado inicial é "pendente"
-                    objetivo=objetivo
-                )
-                count += 1
-
         messages.success(
             request,
-            f'Objetivo "{nome_objetivo}" foi criado com sucesso com {count} subtarefa(s).'
+            f'Objetivo "{nome_objetivo}" foi criado com sucesso!'
         )
+            
         return redirect('visualizar_objetivos')  # Redirecionar para a visualização após criação
 
 
