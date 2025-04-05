@@ -138,3 +138,68 @@ class DeletarObjetivoView(View):
         # Redirecionar para a página de visualização mantendo o filtro
         filtro = request.POST.get('filtro_atual', 'todos')
         return redirect(f'/objetivos/?filtro={filtro}')
+ 
+
+
+class EditarObjetivoView(View):
+    def get(self, request, objetivo_id):
+        # Verificar se o usuário está logado
+        usuario_id = request.session.get('usuario_id')
+        if not usuario_id:
+            messages.error(request, "Você precisa estar logado para editar objetivos.")
+            return redirect('login')
+            
+        # Buscar o objetivo e verificar se pertence ao usuário
+        objetivo = get_object_or_404(Objetivo, id=objetivo_id)
+        
+        # Verificar se o objetivo pertence ao usuário logado
+        if objetivo.usuario.id != usuario_id:
+            messages.error(request, "Você não tem permissão para editar este objetivo.")
+            return redirect('visualizar_objetivos')
+            
+        context = {
+            'objetivo': objetivo,
+        }
+        
+        return render(request, 'objetivos/editar_objetivo.html', context)
+    
+    def post(self, request, objetivo_id):
+        # Verificar se o usuário está logado
+        usuario_id = request.session.get('usuario_id')
+        if not usuario_id:
+            messages.error(request, "Você precisa estar logado para editar objetivos.")
+            return redirect('login')
+            
+        # Buscar o objetivo e verificar se pertence ao usuário
+        objetivo = get_object_or_404(Objetivo, id=objetivo_id)
+        
+        # Verificar se o objetivo pertence ao usuário logado
+        if objetivo.usuario.id != usuario_id:
+            messages.error(request, "Você não tem permissão para editar este objetivo.")
+            return redirect('visualizar_objetivos')
+            
+        # Obter os dados do formulário
+        nome_objetivo = request.POST.get('nome_objetivo')
+        descricao_objetivo = request.POST.get('descricao_objetivo')
+        novo_status = request.POST.get('status')
+        
+        # Validar os dados
+        if not nome_objetivo:
+            messages.error(request, 'É necessário preencher o nome do objetivo.')
+            return redirect('editar_objetivo', objetivo_id=objetivo_id)
+            
+        if novo_status not in ['pendente', 'ativa', 'completa']:
+            messages.error(request, "Status inválido.")
+            return redirect('editar_objetivo', objetivo_id=objetivo_id)
+            
+        # Atualizar os dados do objetivo
+        objetivo.Nome = nome_objetivo
+        objetivo.Descrição = descricao_objetivo
+        objetivo.Status = novo_status
+        objetivo.save()
+        
+        messages.success(request, f'Objetivo "{nome_objetivo}" atualizado com sucesso.')
+        
+        # Redirecionar para a página de visualização mantendo o filtro
+        filtro = request.POST.get('filtro_atual', 'todos')
+        return redirect(f'/objetivos/?filtro={filtro}')
