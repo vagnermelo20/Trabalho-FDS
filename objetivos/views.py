@@ -135,7 +135,7 @@ class DeletarObjetivoView(View):
         
         messages.success(request, f'Objetivo "{nome_objetivo}" foi excluído com sucesso.')
         
-        # Redirecionar para a página de visualização mantendo o filtro
+        # Redirecionar para a página de visualização mantendo o filtro de pendentes, ativas, completas ou todas
         filtro = request.POST.get('filtro_atual', 'todos')
         return redirect(f'/objetivos/?filtro={filtro}')
  
@@ -200,7 +200,7 @@ class EditarObjetivoView(View):
         
         messages.success(request, f'Objetivo "{nome_objetivo}" atualizado com sucesso.')
         
-        # Redirecionar para a página de visualização mantendo o filtro
+        # Redirecionar para a página de visualização mantendo o filtro de pendentes, ativas, completas ou todas
         filtro = request.POST.get('filtro_atual', 'todos')
         return redirect(f'/objetivos/?filtro={filtro}')
 
