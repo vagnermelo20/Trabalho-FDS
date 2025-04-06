@@ -14,7 +14,8 @@ Este projeto será feito para a matéria de **FDS (Fundamentos de Desenvolviment
 Este projeto, intitulado de **Feito!**, tem como objetivo criar uma aplicação para gerenciamento de tarefas, sejam elas individuais ou em grupo, buscando aumentar a produtividade em atividades cotidianas e profissionais.
 
 
-# Entrega 01
+
+<details><summary><h1><b>Entrega 01</b></h1></summary>
 
 ## historias no docs
 https://docs.google.com/document/d/1VuMGLYWZ6n-Ukg5oMf2sK77N9eiq_S7NzGKHBzIdv9g/edit?tab=t.0
@@ -49,8 +50,10 @@ https://www.figma.com/design/2qqjd2by9hBYF834AlShsX/Projeto-2?t=oZ8SWjYzrl9XIubM
 
 história 4: Como usuários membros de um grupo quero acompanhar o andamento do projeto com um histórico de entregas
 ![image](https://github.com/user-attachments/assets/8ababb7f-42aa-4d6c-82a6-05504244f9e6)
+</details>
 
+<details><summary><h1><b>Entrega 02</b></h1></summary>
 
+##Sprint no jira
 
-
-
+</details>
