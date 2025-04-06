@@ -1,11 +1,11 @@
 {% extends "objetivos/base1.html" %}
 {% block content %}
     <header>
-        <h1>OBJETIVOS</h1>
+        <h1>TAREFAS</h1>
     </header>
     <br>
     <main>
-        <a href="{% url 'criar_objetivo' %}" style="text-decoration: none; border: 1px solid black; padding: 5px; background-color: lightgray;">+ Criar Objetivo</a>
+        <a href="{% url 'criar_objetivo' %}" style="text-decoration: none; border: 1px solid black; padding: 5px; background-color: lightgray;">+ Criar tarefas</a>
         {% for objetivo in objetivos %}
         <div style="border: 1px solid black; padding: 10px; margin-bottom: 10px;">
             <p><strong>Tarefa:</strong> {{ objetivo.Nome }}</p>
