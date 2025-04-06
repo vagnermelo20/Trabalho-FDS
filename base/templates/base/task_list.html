@@ -1,0 +1,20 @@
+<h1>Tarefas</h1>
+<a href="{% url 'task-create' %}">Add tasks</a>
+
+<table>
+    <tr>
+        <th>
+            Tarefas
+        </th>
+    </tr>
+    {% for task in tasks|dictsort:"number" %}
+    <tr>
+        <td>{{task.title}} 
+            || Urgency = {{task.number}}</td>
+        <td><a href="{% url 'task' task.id %}">View</a></td>
+        <td><a href="{% url 'task-update' task.id %}">Edit urgency</a></td>
+    </tr>
+    {% empty %}
+        <h3>no items in list</h3>
+    {% endfor %}
+</table>
