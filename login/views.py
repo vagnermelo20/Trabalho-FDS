@@ -36,7 +36,7 @@ class CriarUsuarioView(View):
 class LoginView(View):
     def get(self, request):
         return render(request, 'login/logar.html')
-    
+
     def post(self, request):
         email = request.POST.get('email')
         senha = request.POST.get('senha')
@@ -51,14 +51,14 @@ class LoginView(View):
             if check_password(senha, usuario.Senha):
                 request.session['usuario_id'] = usuario.id
                 messages.success(request, f'Bem-vindo(a), {usuario.Username}!')
-                return render(request,'objetivos/visualizar_objetivos.html')  # Redireciona para visualização após login
+                # Redirecionar para a view de visualização de objetivos
+                return redirect('visualizar_objetivos')
             else:
                 messages.error(request, 'Senha incorreta.')
         except Usuario.DoesNotExist:
             messages.error(request, 'Usuário não encontrado.')
 
         return render(request, 'login/logar.html')
-
 
 class LogoutView(View):
     def get(self, request):
