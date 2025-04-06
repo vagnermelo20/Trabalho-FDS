@@ -30,8 +30,7 @@ class CriarUsuarioView(View):
             # Usar make_password para criar senha hasheada
             senha_hasheada = make_password(senha)
             Usuario.objects.create(Username=username, E_mail=email, Senha=senha_hasheada)
-            messages.success(request, f'Usuário "{username}" criado com sucesso!')
-            return render(request,'login/logar.html')  # Redirecionar para página de login após criação
+            return redirect('logar')  # MUDANÇA AQUI: usar redirect em vez de render
 
 class LoginView(View):
     def get(self, request):
@@ -50,7 +49,7 @@ class LoginView(View):
             # Usar check_password para verificar a senha hasheada
             if check_password(senha, usuario.Senha):
                 request.session['usuario_id'] = usuario.id
-                messages.success(request, f'Bem-vindo(a), {usuario.Username}!')
+                request.session.save()  # Forçar a gravação da sessão
                 # Redirecionar para a view de visualização de objetivos
                 return redirect('visualizar_objetivos')
             else:
@@ -66,5 +65,4 @@ class LogoutView(View):
         if 'usuario_id' in request.session:
             del request.session['usuario_id']
         
-        messages.success(request, "Você saiu do sistema com sucesso.")
-        return render(request,'login/logar.html')
+        return redirect('logar')  # Redireciona para a URL de login
