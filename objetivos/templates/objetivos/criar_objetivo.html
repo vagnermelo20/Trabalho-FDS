@@ -3,6 +3,16 @@
 {% block content %}
 <header><h1>Adicionar tarefas</h1></header>
 <main>
+
+    <!-- Exibe mensagens de erro, se houver -->
+    {% if messages %}
+        <ul style="color: red;">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
     <form method="POST">
         {% csrf_token %}
         <br>
