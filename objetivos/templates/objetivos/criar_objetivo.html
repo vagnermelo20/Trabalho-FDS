@@ -1,6 +1,5 @@
 {% extends "objetivos/base1.html" %}
 
-
 {% block content %}
 <header><h1>Adicionar objetivo</h1></header>
 <main>
@@ -8,15 +7,18 @@
         {% csrf_token %}
         <br>
         <label for="campo_nome">Nome:</label>
-        <input type="text"  name="nome_objetivo" id="campo_nome" placeholder="Digite seu nome do objetivo">
+        <input type="text" name="nome_objetivo" id="campo_nome" placeholder="Digite o nome do objetivo">
         <br>
         <label for="campo_descricao">Descrição:</label>
         <br>
         <br>
         <textarea name="descricao_objetivo" rows="10" cols="40" maxlength="500"></textarea>
         <br>
-        <br>    
+        <br>
         <button type="submit">Enviar</button>
     </form>
+    <br>
+    <!-- Botão para voltar à página de visualização de objetivos -->
+    <a href="{% url 'visualizar_objetivos' %}" style="text-decoration: none; border: 1px solid black; padding: 5px; background-color: lightgray;">Voltar</a>
 </main>
 {% endblock content %}
