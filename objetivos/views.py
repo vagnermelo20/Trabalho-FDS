@@ -30,6 +30,14 @@ class CriarObjetivoView(View):
             messages.error(request, 'É necessário preencher o nome do objetivo.')
             return render(request, 'objetivos/criar_objetivo.html')
 
+        # Verificar se já existe um objetivo com o mesmo nome para este usuário
+        if Objetivo.objects.filter(Nome=nome_objetivo, usuario_id=usuario_id).exists():
+            messages.error(request, 'Você já tem uma tarefa com este nome. Por favor, escolha um nome diferente.')
+            return render(request, 'objetivos/criar_objetivo.html', {
+                'nome_objetivo': nome_objetivo,
+                'descricao_objetivo': descricao_objetivo
+            })
+
         # Criar o objetivo associado ao usuário logado
         Objetivo.objects.create(
             Nome=nome_objetivo,
@@ -38,7 +46,6 @@ class CriarObjetivoView(View):
             usuario_id=usuario_id  # Associar ao usuário logado
         )
 
-        messages.success(request, f'Objetivo "{nome_objetivo}" foi criado com sucesso!')
         return redirect('visualizar_objetivos')
 
 
@@ -74,7 +81,6 @@ class DeletarObjetivoView(View):
         nome_objetivo = objetivo.Nome
         objetivo.delete()
 
-        messages.success(request, f'Objetivo "{nome_objetivo}" foi excluído com sucesso.')
         return redirect('visualizar_objetivos')
 
 
@@ -107,14 +113,24 @@ class EditarObjetivoView(View):
         descricao_objetivo = request.POST.get('descricao_objetivo')
         novo_status = request.POST.get('status')
 
+        # Validar o nome do objetivo
         if not nome_objetivo:
             messages.error(request, 'É necessário preencher o nome do objetivo.')
-            return redirect('editar_objetivo', objetivo_id=objetivo_id)
+            return render(request, 'objetivos/editar_objetivo.html', {'objetivo': objetivo})
+
+        # Verificar se já existe OUTRO objetivo com o mesmo nome para este usuário
+        # Usamos exclude(id=objetivo_id) para não considerar o próprio objetivo na verificação
+        if Objetivo.objects.filter(Nome=nome_objetivo, usuario_id=usuario_id).exclude(id=objetivo_id).exists():
+            messages.error(request, 'Você já tem uma tarefa com este nome. Por favor, escolha um nome diferente.')
+            return render(request, 'objetivos/editar_objetivo.html', {
+                'objetivo': objetivo,
+                'nome_objetivo': nome_objetivo,
+                'descricao_objetivo': descricao_objetivo
+            })
 
         objetivo.Nome = nome_objetivo
         objetivo.Descrição = descricao_objetivo
         objetivo.Status = novo_status
         objetivo.save()
 
-        messages.success(request, f'Objetivo "{nome_objetivo}" atualizado com sucesso.')
         return redirect('visualizar_objetivos')
