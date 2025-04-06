@@ -8,7 +8,7 @@
         <a href="{% url 'criar_objetivo' %}" style="text-decoration: none; border: 1px solid black; padding: 5px; background-color: lightgray;">+ Criar Objetivo</a>
         {% for objetivo in objetivos %}
         <div style="border: 1px solid black; padding: 10px; margin-bottom: 10px;">
-            <p><strong>Objetivo:</strong> {{ objetivo.Nome }}</p>
+            <p><strong>Tarefa:</strong> {{ objetivo.Nome }}</p>
             <p><strong>Descrição:</strong> {{ objetivo.Descrição }}</p>
             <p><strong>Status:</strong> {{ objetivo.Status }}</p>
             <a href="{% url 'editar_objetivo' objetivo.id %}">Editar</a> | 
