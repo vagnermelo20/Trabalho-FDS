@@ -37,9 +37,9 @@ jobs:
 
       - name: Zip artifact for deployment
         run: |
-          cd TRABALHO_FDS/
+          
           zip release.zip ./* -r
-          cd ..
+          
           mv TRABALHO-FDS/release.zip .
           
 
