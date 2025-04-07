@@ -36,6 +36,7 @@ jobs:
 
       - name: Zip artifact for deployment
         run: |
+          cd SEUPROJETODJANGO/
           zip release.zip ./* -r
           cd ..
           mv TRABALHO-FDS/release.zip .
