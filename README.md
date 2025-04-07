@@ -54,6 +54,24 @@ história 4: Como usuários membros de um grupo quero acompanhar o andamento do 
 
 <details><summary><h1><b>Entrega 02</b></h1></summary>
 
-##Sprint no jira
+## Sprint no jira
+
+## Issue/bug tracker
+
+![image](https://github.com/user-attachments/assets/357f8318-482e-46f6-8fe0-1967838f991b)
+![image](https://github.com/user-attachments/assets/c746decc-3c5f-4f62-b334-91a022fd6b73)
+![image](https://github.com/user-attachments/assets/1a3ceb79-f536-4adb-9674-abf717b4651f)
+![image](https://github.com/user-attachments/assets/72a84966-4415-44ca-8e7f-521b2455fc3f)
+![image](https://github.com/user-attachments/assets/a7111b90-c9f5-493b-915f-85a325f4e32b)
+![image](https://github.com/user-attachments/assets/5f21bff2-f278-4067-97b2-beaca8640b49)
+![image](https://github.com/user-attachments/assets/0f7f9197-a894-4693-afc4-a9d6d858339d)
+![image](https://github.com/user-attachments/assets/15a2a132-ed4c-410d-9c6b-673a3c1ad814)
+![image](https://github.com/user-attachments/assets/be956d60-432a-4a3d-ae11-5249ea120852)
+![image](https://github.com/user-attachments/assets/8f5ec332-cf24-4357-95f7-77203a18d409)
+![image](https://github.com/user-attachments/assets/2a421810-76b8-4e4f-a053-26e9c86ba03d)
+
+
+
+
 
 </details>
