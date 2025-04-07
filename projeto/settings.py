@@ -60,6 +60,9 @@ else:
         }
     }
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://feito1-hze3ef6bxagcehp.brazilsouth-01.azurewebsites.net'
+]
 
 # Application definition
 
