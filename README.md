@@ -57,7 +57,7 @@ história 4: Como usuários membros de um grupo quero acompanhar o andamento do 
 ## Acesso ao site
 
 entre no site, faca o cadastro com um email que ainda não foi utilizado, faça o login e utilize o site.
-
+https://feito1-hze3efe6bxagcehp.brazilsouth-01.azurewebsites.net
 ## Link do Jira
 https://trabalhofds.atlassian.net/ 
 
