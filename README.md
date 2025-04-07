@@ -54,7 +54,11 @@ história 4: Como usuários membros de um grupo quero acompanhar o andamento do 
 
 <details><summary><h1><b>Entrega 02</b></h1></summary>
 
-## Link do Jira[
+## Acesso ao site
+
+entre no site, faca o cadastro com um email que ainda não foi utilizado, faça o login e utilize o site.
+
+## Link do Jira
 https://trabalhofds.atlassian.net/ 
 
 ## Sprint no jira
