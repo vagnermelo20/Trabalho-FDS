@@ -75,7 +75,12 @@ jobs:
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
-        with:
+      - name: 'Cleaning testing files'
+        run: |
+          cd SEUPROJETODJANGO/
+          rm db.sqlite3
+          rm .env
+          cd ..
           app-name: 'Feito1'
           slot-name: 'Production'
           
