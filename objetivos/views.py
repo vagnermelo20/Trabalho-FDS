@@ -24,6 +24,7 @@ class CriarObjetivoView(View):
         # Obter os dados do formulário
         nome_objetivo = request.POST.get('nome_objetivo')
         descricao_objetivo = request.POST.get('descricao_objetivo')
+        urgencia = request.POST.get('urgencia')  # Obter o valor de urgência
 
         # Validar o nome do objetivo
         if not nome_objetivo:
@@ -35,15 +36,28 @@ class CriarObjetivoView(View):
             messages.error(request, 'Você já tem uma tarefa com este nome. Por favor, escolha um nome diferente.')
             return render(request, 'objetivos/criar_objetivo.html', {
                 'nome_objetivo': nome_objetivo,
-                'descricao_objetivo': descricao_objetivo
+                'descricao_objetivo': descricao_objetivo,
+                'urgencia': urgencia
             })
+
+        # Converter urgência para inteiro ou usar valor padrão
+        try:
+            urgencia_int = int(urgencia) if urgencia else 1
+            # Garantir que está dentro dos limites (1-5)
+            if urgencia_int < 1:
+                urgencia_int = 1
+            elif urgencia_int > 3:
+                urgencia_int = 3
+        except ValueError:
+            urgencia_int = 1
 
         # Criar o objetivo associado ao usuário logado
         Objetivo.objects.create(
             Nome=nome_objetivo,
             Descrição=descricao_objetivo,
             Status='pendente',
-            usuario_id=usuario_id  # Associar ao usuário logado
+            usuario_id=usuario_id,
+            urgencia=urgencia_int  # Adicionar o campo de urgência
         )
 
         return redirect('visualizar_objetivos')
@@ -57,11 +71,27 @@ class VisualizarObjetivosView(View):
             messages.error(request, "Você precisa estar logado para visualizar seus objetivos.")
             return redirect('logar')
 
-        # Buscar todos os objetivos do usuário logado
-        objetivos = Objetivo.objects.filter(usuario_id=usuario_id)
+        # Obter parâmetro de filtro da URL, se existir
+        filtro_urgencia = request.GET.get('urgencia')
+        
+        # Iniciar com todos os objetivos do usuário
+        objetivos_query = Objetivo.objects.filter(usuario_id=usuario_id)
+        
+        # Aplicar filtro de urgência, se especificado
+        if filtro_urgencia:
+            try:
+                urgencia_valor = int(filtro_urgencia)
+                objetivos_query = objetivos_query.filter(urgencia=urgencia_valor)
+            except ValueError:
+                # Se o valor não for um número válido, ignorar o filtro
+                pass
+        
+        # Ordenar por urgência (decrescente)
+        objetivos = objetivos_query.order_by('-urgencia')
 
         context = {
             'objetivos': objetivos,
+            'filtro_atual': filtro_urgencia,  # Passar o filtro atual para o template
         }
 
         return render(request, 'objetivos/visualizar_objetivos.html', context)
@@ -112,6 +142,7 @@ class EditarObjetivoView(View):
         nome_objetivo = request.POST.get('nome_objetivo')
         descricao_objetivo = request.POST.get('descricao_objetivo')
         novo_status = request.POST.get('status')
+        urgencia = request.POST.get('urgencia')  # Obter o valor de urgência
 
         # Validar o nome do objetivo
         if not nome_objetivo:
@@ -125,12 +156,25 @@ class EditarObjetivoView(View):
             return render(request, 'objetivos/editar_objetivo.html', {
                 'objetivo': objetivo,
                 'nome_objetivo': nome_objetivo,
-                'descricao_objetivo': descricao_objetivo
+                'descricao_objetivo': descricao_objetivo,
+                'urgencia': urgencia
             })
+
+        # Converter urgência para inteiro ou manter o valor atual
+        try:
+            urgencia_int = int(urgencia) if urgencia else objetivo.urgencia
+            # Garantir que está dentro dos limites (1-5)
+            if urgencia_int < 1:
+                urgencia_int = 1
+            elif urgencia_int > 3:
+                urgencia_int = 3
+        except ValueError:
+            urgencia_int = objetivo.urgencia
 
         objetivo.Nome = nome_objetivo
         objetivo.Descrição = descricao_objetivo
         objetivo.Status = novo_status
+        objetivo.urgencia = urgencia_int  # Atualizar o campo de urgência
         objetivo.save()
 
         return redirect('visualizar_objetivos')
