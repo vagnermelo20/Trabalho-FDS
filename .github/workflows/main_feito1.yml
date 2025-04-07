@@ -81,7 +81,6 @@ jobs:
         id: deploy-to-webapp
       - name: 'Cleaning testing files'
         run: |
-          cd SEUPROJETODJANGO/
           rm db.sqlite3
           rm .env
           cd ..
