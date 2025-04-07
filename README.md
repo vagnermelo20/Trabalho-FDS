@@ -58,6 +58,10 @@ história 4: Como usuários membros de um grupo quero acompanhar o andamento do 
 
 entre no site, faca o cadastro com um email que ainda não foi utilizado, faça o login e utilize o site.
 https://feito1-hze3efe6bxagcehp.brazilsouth-01.azurewebsites.net
+
+
+## Screencast do uso do site
+https://youtu.be/eUo7GgNKgSQ
 ## Link do Jira
 https://trabalhofds.atlassian.net/ 
 
@@ -67,6 +71,7 @@ https://trabalhofds.atlassian.net/
 
 ## backlog do Jira 
 ![image](https://github.com/user-attachments/assets/e2bf5dc0-c13c-4b43-ae55-594b14c9829f)
+
 
 
 ## Issue/bug tracker
