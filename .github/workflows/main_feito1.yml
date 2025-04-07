@@ -47,7 +47,7 @@ jobs:
           zip release.zip ./* -r
           cd ..
           mv TRABALHO-FDS/release.zip .
-          .
+          
 
 
   deploy:
