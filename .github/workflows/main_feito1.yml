@@ -33,13 +33,15 @@ jobs:
         run: pip install -r requirements.txt
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
+      
 
       - name: Zip artifact for deployment
         run: |
+          cd TRABALHO_FDS/
           zip release.zip ./* -r
           cd ..
           mv TRABALHO-FDS/release.zip .
-          .
+          
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
