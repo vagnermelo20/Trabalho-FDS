@@ -5,19 +5,44 @@
     </header>
     <br>
     <main>
-        <a href="{% url 'criar_objetivo' %}" style="text-decoration: none; border: 1px solid black; padding: 5px; background-color: lightgray;">+ Criar tarefas</a>
-        {% for objetivo in objetivos %}
-        <div style="border: 1px solid black; padding: 10px; margin-bottom: 10px;">
-            <p><strong>Tarefa:</strong> {{ objetivo.Nome }}</p>
-            <p><strong>Descrição:</strong> {{ objetivo.Descrição }}</p>
-            <p><strong>Status:</strong> {{ objetivo.Status }}</p>
-            <a href="{% url 'editar_objetivo' objetivo.id %}">Editar</a> | 
-            <form method="POST" action="{% url 'deletar_objetivo' objetivo.id %}" style="display:inline;" onsubmit="return confirm('Você tem certeza que deseja deletar este objetivo?');">
-                {% csrf_token %}
-                <button type="submit">Deletar</button>
-            </form>
+        <div style="margin-bottom: 20px;">
+            <a href="{% url 'criar_objetivo' %}" style="text-decoration: none; border: 1px solid black; padding: 5px; background-color: lightgray;">+ Criar tarefas</a>
+            
+            <!-- Botões de filtro por urgência -->
+            <div style="margin-top: 15px;">
+                <strong>Filtrar por urgência:</strong>
+                <a href="{% url 'visualizar_objetivos' %}" style="margin-left: 10px; text-decoration: none; border: 1px solid black; padding: 5px; {% if not filtro_atual %}background-color: #c0e0c0;{% else %}background-color: lightgray;{% endif %}">Todas</a>
+                <a href="{% url 'visualizar_objetivos' %}?urgencia=3" style="margin-left: 5px; text-decoration: none; border: 1px solid black; padding: 5px; {% if filtro_atual == '3' %}background-color: #ffb0b0;{% else %}background-color: lightgray;{% endif %}">Alta (3)</a>
+                <a href="{% url 'visualizar_objetivos' %}?urgencia=2" style="margin-left: 5px; text-decoration: none; border: 1px solid black; padding: 5px; {% if filtro_atual == '2' %}background-color: #ffffb0;{% else %}background-color: lightgray;{% endif %}">Média (2)</a>
+                <a href="{% url 'visualizar_objetivos' %}?urgencia=1" style="margin-left: 5px; text-decoration: none; border: 1px solid black; padding: 5px; {% if filtro_atual == '1' %}background-color: #b0e0ff;{% else %}background-color: lightgray;{% endif %}">Baixa (1)</a>
+            </div>
         </div>
-        {% endfor %}
+        
+        {% if objetivos %}
+            {% for objetivo in objetivos %}
+            <div style="border: 1px solid black; padding: 10px; margin-bottom: 10px;
+                {% if objetivo.urgencia == 3 %}background-color: rgba(255, 200, 200, 0.3);{% endif %}
+                {% if objetivo.urgencia == 2 %}background-color: rgba(255, 255, 200, 0.3);{% endif %}
+                {% if objetivo.urgencia == 1 %}background-color: rgba(200, 230, 255, 0.3);{% endif %}">
+                <p><strong>Tarefa:</strong> {{ objetivo.Nome }}</p>
+                <p><strong>Descrição:</strong> {{ objetivo.Descrição }}</p>
+                <p><strong>Status:</strong> {{ objetivo.Status }}</p>
+                <p><strong>Urgência:</strong> 
+                    {% if objetivo.urgencia == 1 %}<span style="color: blue;">1 - Baixa</span>
+                    {% elif objetivo.urgencia == 2 %}<span style="color: orange;">2 - Média</span>
+                    {% elif objetivo.urgencia == 3 %}<span style="color: red;">3 - Alta</span>
+                    {% else %}Não definida{% endif %}
+                </p>
+                <a href="{% url 'editar_objetivo' objetivo.id %}">Editar</a> | 
+                <form method="POST" action="{% url 'deletar_objetivo' objetivo.id %}" style="display:inline;" onsubmit="return confirm('Você tem certeza que deseja deletar este objetivo?');">
+                    {% csrf_token %}
+                    <button type="submit">Deletar</button>
+                </form>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>Não há tarefas com este nível de urgência.</p>
+        {% endif %}
     </main>
     <br>
 {% endblock content %}
