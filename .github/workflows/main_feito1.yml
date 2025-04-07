@@ -33,6 +33,14 @@ jobs:
         run: pip install -r requirements.txt
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
+      
+      - name: Upload artifact for deployment jobs
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-app
+          path: |
+            release.zip
+            !venv/
 
       - name: Zip artifact for deployment
         run: |
@@ -41,13 +49,6 @@ jobs:
           mv TRABALHO-FDS/release.zip .
           .
 
-      - name: Upload artifact for deployment jobs
-        uses: actions/upload-artifact@v4
-        with:
-          name: python-app
-          path: |
-            release.zip
-            !venv/
 
   deploy:
     runs-on: ubuntu-latest
