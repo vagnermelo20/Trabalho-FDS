@@ -30,7 +30,11 @@ if NOT_PROD:
     DEBUG = True
     # SECURITY WARNING: keep the secret key used in production secret!
     SECRET_KEY = '<6v!j72!kb1&^vd)9^0ppn7!hh(-t2#6r3@77&4%7l!2xsne4-m>'
-    ALLOWED_HOSTS = ['*']
+    ALLOWED_HOSTS = [
+        'feito1-hze3ef6bxagcehp.brazilsouth-01.azurewebsites.net',
+        'localhost',
+        '127.0.0.1',
+    ]
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
