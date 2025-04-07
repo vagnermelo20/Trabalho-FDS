@@ -67,10 +67,12 @@ https://trabalhofds.atlassian.net/
 
 ## Sprint no jira
 
-![image](https://github.com/user-attachments/assets/9a2e4f2c-bbdb-43c8-b230-4634b05de22a)
+![image](https://github.com/user-attachments/assets/c68cc56f-e903-423c-9629-8a2045030fed)
+
 
 ## backlog do Jira 
-![image](https://github.com/user-attachments/assets/e2bf5dc0-c13c-4b43-ae55-594b14c9829f)
+![image](https://github.com/user-attachments/assets/130f866a-aa92-42c2-8ac0-4dd58c32e0f1)
+
 
 
 
