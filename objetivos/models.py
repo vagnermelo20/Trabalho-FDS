@@ -1,6 +1,6 @@
 from django.db import models
 from login.models import Usuario
-
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 class Objetivo(models.Model):
     STATUS_CHOICES = (
@@ -12,6 +12,12 @@ class Objetivo(models.Model):
     Descrição = models.TextField()
     Status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pendente')
     usuario = models.ForeignKey('login.Usuario', on_delete=models.CASCADE,related_name= 'Objetivos')
+    urgencia = models.IntegerField(null=True, blank=True, default=0, help_text="Enter a number between 1 and 10",
+        validators=[
+            MaxValueValidator(3),  
+            MinValueValidator(1),     
+        ]
+    )
 
     def __str__(self):
         return self.Nome
