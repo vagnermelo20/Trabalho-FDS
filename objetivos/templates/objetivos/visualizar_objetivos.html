@@ -35,11 +35,11 @@
                 <a href="{% url 'visualizar_objetivos' %}" 
                    class="link {% if not filtro_atual %}ativo-todas{% endif %}">Todas</a>
                 <a href="{% url 'visualizar_objetivos' %}?urgencia=3" 
-                   class="link {% if filtro_atual == '3' %}ativo-alta{% endif %}">Alta (3)</a>
+                   class="link {% if filtro_atual == '3' %}ativo-alta{% endif %}">Alta/Nível 3</a>
                 <a href="{% url 'visualizar_objetivos' %}?urgencia=2" 
-                   class="link {% if filtro_atual == '2' %}ativo-media{% endif %}">Média (2)</a>
+                   class="link {% if filtro_atual == '2' %}ativo-media{% endif %}">Média/Nível 2</a>
                 <a href="{% url 'visualizar_objetivos' %}?urgencia=1" 
-                   class="link {% if filtro_atual == '1' %}ativo-baixa{% endif %}">Baixa (1)</a>
+                   class="link {% if filtro_atual == '1' %}ativo-baixa{% endif %}">Baixa/Nível 1</a>
             </div>
         </div>
         
