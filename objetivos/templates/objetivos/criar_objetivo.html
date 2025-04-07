@@ -22,7 +22,16 @@
         <label for="campo_descricao">Descrição:</label>
         <br>
         <br>
-        <textarea name="descricao_objetivo" rows="10" cols="40" maxlength="500"></textarea>
+        <textarea name="descricao_objetivo" rows="10" cols="40" maxlength="500">{{ descricao_objetivo }}</textarea>
+        <br>
+        <br>
+        <!-- Adicionar o campo de urgência -->
+        <label for="campo_urgencia">Urgência (1-3):</label>
+        <select name="urgencia" id="campo_urgencia">
+            <option value="1" {% if urgencia == '1' %}selected{% endif %}>1 - Baixa</option>
+            <option value="2" {% if urgencia == '2' %}selected{% endif %}>2 - Média</option>
+            <option value="3" {% if urgencia == '3' %}selected{% endif %}>3 - Alta</option>
+        </select>
         <br>
         <br>
         <button type="submit">Enviar</button>
