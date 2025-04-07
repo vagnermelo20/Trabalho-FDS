@@ -20,10 +20,10 @@
         
         {% if objetivos %}
             {% for objetivo in objetivos %}
-            <div style="border: 1px solid black; padding: 10px; margin-bottom: 10px;
-                {% if objetivo.urgencia == 3 %}background-color: rgba(255, 200, 200, 0.3);{% endif %}
-                {% if objetivo.urgencia == 2 %}background-color: rgba(255, 255, 200, 0.3);{% endif %}
-                {% if objetivo.urgencia == 1 %}background-color: rgba(200, 230, 255, 0.3);{% endif %}">
+            <div class="tarefa 
+                {% if objetivo.urgencia == 3 %}urgencia-alta{% endif %}
+                {% if objetivo.urgencia == 2 %}urgencia-media{% endif %}
+                {% if objetivo.urgencia == 1 %}urgencia-baixa{% endif %}">
                 <p><strong>Tarefa:</strong> {{ objetivo.Nome }}</p>
                 <p><strong>Descrição:</strong> {{ objetivo.Descrição }}</p>
                 <p><strong>Status:</strong> {{ objetivo.Status }}</p>
@@ -45,4 +45,15 @@
         {% endif %}
     </main>
     <br>
+    <style>
+        .urgencia-alta {
+            background-color: rgba(255, 200, 200, 0.3);
+        }
+        .urgencia-media {
+            background-color: rgba(255, 255, 200, 0.3);
+        }
+        .urgencia-baixa {
+            background-color: rgba(200, 230, 255, 0.3);
+        }
+    </style>
 {% endblock content %}
