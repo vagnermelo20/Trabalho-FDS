@@ -54,7 +54,16 @@ história 4: Como usuários membros de um grupo quero acompanhar o andamento do 
 
 <details><summary><h1><b>Entrega 02</b></h1></summary>
 
+## Link do Jira[
+https://trabalhofds.atlassian.net/ 
+
 ## Sprint no jira
+
+![image](https://github.com/user-attachments/assets/9a2e4f2c-bbdb-43c8-b230-4634b05de22a)
+
+## backlog do Jira 
+![image](https://github.com/user-attachments/assets/e2bf5dc0-c13c-4b43-ae55-594b14c9829f)
+
 
 ## Issue/bug tracker
 
