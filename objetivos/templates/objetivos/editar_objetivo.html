@@ -32,6 +32,15 @@
         </select>
         <br>
         <br>
+        <!-- Adicionar o campo de urgência -->
+        <label for="campo_urgencia">Urgência (1-3):</label>
+        <select name="urgencia" id="campo_urgencia">
+            <option value="1" {% if objetivo.urgencia == 1 %}selected{% endif %}>1 - Baixa</option>
+            <option value="2" {% if objetivo.urgencia == 2 %}selected{% endif %}>2 - Média</option>
+            <option value="3" {% if objetivo.urgencia == 3 %}selected{% endif %}>3 - Alta</option>
+        </select>
+        <br>
+        <br>
         <button type="submit">Salvar</button>
     </form>
     <br>
