@@ -4,6 +4,7 @@ from django.contrib import messages
 from .models import Usuario
 from django.http import HttpResponse
 from django.contrib.auth.hashers import make_password, check_password
+from django.template import RequestContext
 
 class CriarUsuarioView(View):
     def get(self, request):
