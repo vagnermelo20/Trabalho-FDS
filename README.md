@@ -82,7 +82,10 @@ https://trabalhofds.atlassian.net/
 
 Progamação em par foi usado em praticamente todo o projeto. Estabelecemos inicialmente 3 duplas, cada dulpa iria implementar uma historia. Definimos depois que seria melhor deixar 2 duplas na criação das views e dos módulos enquanto outra ficaria responsável na criação dos templates. O processo foi muito enriquecedor para todos os envolvidos, as divisão dos grupos entre os que fariam views e models e outro que faria os templates fez com que a troca de conhecimento entre os participantes tivesse de ser mais frequente, tornando o processo mais colaborativo e eficente. A programação em par ocorreu tanto presencialmente, em alguns momento, como também de forma online, com a utlização do discord e do whattsapp. Por mais que tivesse essas delimitações entre grupos de trabalho, houve também a mescla dos integrantes em determinados momentos do projeto.
 O motivo da programação em par não ser utilizada em 100% do projeto foi devido a principalmente conflito de horários entre os membros junto com uma nescessidade de maior agilidade na realização do projeto.
-</details>
 
 #Link do screencast
-[Screencast](https://youtu.be/xBdM84UWv6I?si=fG1iTN-NJXAVg2o_)
+
+[Screencast Entrega 2](https://youtu.be/xBdM84UWv6I?si=fG1iTN-NJXAVg2o_)
+</details>
+
+
