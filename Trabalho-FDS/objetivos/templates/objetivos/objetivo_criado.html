@@ -1,0 +1,27 @@
+{% extends "objetivos/base1.html" %}
+
+{% block content %}
+<header><h1>Objetivo Criado com Sucesso!</h1></header>
+<main>
+    {% if messages %}
+        <ul class="mensagens">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <section>
+        <p>O objetivo <strong>{{ objetivo.Nome }}</strong> foi criado com sucesso.</p>
+        <p>O que deseja fazer agora?</p>
+
+        <ul>
+            <!-- Link para adicionar subtarefa, opcional -->
+            <li><a href="{% url 'adicionar_subtarefa' objetivo.id %}">➕ Adicionar Subtarefa</a></li>
+
+            <!-- Link para voltar para os objetivos -->
+            <li><a href="{% url 'visualizar_objetivos' %}">📋 Ver todos os meus objetivos</a></li>
+        </ul>
+    </section>
+</main>
+{% endblock content %}
