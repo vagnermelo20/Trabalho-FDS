@@ -1,0 +1,29 @@
+{% extends "login/base.html" %}
+
+{% block titulo  %} <title>Cadastro</title> {% endblock titulo %}
+
+{% block content %}
+<header><h1>Cadastro</h1></header>
+<main>
+    <form method="POST">
+        {% csrf_token %}
+        <br>
+        <label for="campo_username">Nome:</label>
+        <input type="text"  name="username" id="campo_username" placeholder="Digite seu nome de usuário">
+        <br>
+        <label for="campo_email">E-mail:</label>
+        <input type="email"  name="email" id="campo_email" placeholder="Digite seu E-mail">
+        <br>
+        <label for="campo_senha">Senha:</label>
+        <input type="password"  name="senha" id="campo_senha" placeholder="Digite sua senha">
+        <br>
+        <br>    
+        <button type="submit">Enviar</button>
+    </form>
+</main>
+
+{% endblock content %}
+
+
+
+
