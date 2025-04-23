@@ -1,0 +1,22 @@
+{% extends "objetivos/base1.html" %}
+
+
+{% block content %}
+<header><h1>Adicionar objetivo</h1></header>
+<main>
+    <form method="POST">
+        {% csrf_token %}
+        <br>
+        <label for="campo_nome">Nome:</label>
+        <input type="text"  name="nome_objetivo" id="campo_nome" placeholder="Digite seu nome do objetivo">
+        <br>
+        <label for="campo_descricao">Descrição:</label>
+        <br>
+        <br>
+        <textarea name="descricao_objetivo" rows="10" cols="40" maxlength="500"></textarea>
+        <br>
+        <br>    
+        <button type="submit">Enviar</button>
+    </form>
+</main>
+{% endblock content %}

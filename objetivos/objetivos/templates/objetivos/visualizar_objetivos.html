@@ -1,0 +1,47 @@
+{% extends "objetivos/base1.html" %}
+
+{% block content %}
+    <header>
+        <h1>OBJETIVOS</h1>
+        <a href="{% url 'criar_objetivo' %}" style="text-decoration: none; border: 1px solid black; padding: 5px; background-color: lightgray;">+ Criar Objetivo</a>
+    </header>
+    <br>
+    <main>
+        {% for objetivo in objetivos %}
+        <div style="border: 1px solid black; padding: 10px; margin-bottom: 10px;">
+            <p><strong>Objetivo:</strong> {{ objetivo.Nome }}</p>
+            <p><strong>Descrição:</strong> {{ objetivo.Descrição }}</p>
+            <p><strong>Status:</strong> {{ objetivo.Status }}</p>
+            <p><strong>Usuário:</strong> {{ objetivo.usuario }}</p>
+            <a href="{% url 'editar_objetivo' objetivo.id %}">Editar</a> | 
+            <form method="POST" action="{% url 'deletar_objetivo' objetivo.id %}" style="display:inline;" onsubmit="return confirm('Você tem certeza que deseja deletar este objetivo?');">
+                {% csrf_token %}
+                <button type="submit">Deletar</button>
+            </form>
+
+            <h4>Subtarefas</h4>
+            {% if objetivo.subtarefas.all %}
+                <ul>
+                    {% for subtarefa in objetivo.subtarefas.all %}
+                        <li>
+                            <strong>{{ subtarefa.Nome }}</strong><br>
+                            Descrição: {{ subtarefa.descrição }}<br>
+                            Status: {{ subtarefa.Status }}<br>
+                            <a href="{% url 'editar_subtarefa' objetivo.id subtarefa.id %}">Editar</a> |
+                            <form method="POST" action="{% url 'deletar_subtarefa' objetivo.id subtarefa.id %}" style="display:inline;" onsubmit="return confirm('Você tem certeza que deseja deletar esta subtarefa?');">
+                                {% csrf_token %}
+                                <button type="submit">Deletar</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Não há subtarefas para este objetivo.</p>
+            {% endif %}
+
+            <a href="{% url 'adicionar_subtarefas' objetivo.id %}" style="text-decoration: none; border: 1px solid black; padding: 5px; background-color: lightgray;">+ Adicionar Subtarefa</a>
+        </div>
+        {% endfor %}
+    </main>
+    <br>
+{% endblock content %}
