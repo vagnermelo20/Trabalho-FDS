@@ -331,29 +331,7 @@ class VisualizarSubtarefasView(View):
         
         return render(request, 'objetivos/visualizar_subtarefas.html', context)
     
-class Grupo(View):
-    def get(self,request):
-        usuario_id = request.session.get('usuario_id')
-        if not usuario_id:
-            messages.error(request, "Você precisa estar logado para acessar grupos.")
-            return redirect('logar')
-        grupos=Grupos.objects.all()
-        contexto={'grupos':grupos}
-        return render(request,"objetivos/grupos.html",contexto)
-    
-    def post(self,request):
-        nome_grupo_pesquisa=request.POST.get('nome_grupo_pesquisa')
 
-        grupos_pesquisa=Grupos.objects.filter(Nome_grupo=nome_grupo_pesquisa)
-        if not grupos_pesquisa:
-            messages.error(request,"Esse grupo não existe")
-            return render(request,"objetivos/grupos.html")
-        contexto={'grupos':grupos_pesquisa}
-        return render(request,'objetivos/grupos.html',contexto)
-        #Terminar essa view. Ainda falta adicionar, quando a senha for correta em participantes/ botao_clicado=request.POST('botao_clicado')
-
-
-    
 class Meus_Grupos(View):
     def get(self,request):
         usuario_id = request.session.get('usuario_id')
@@ -399,6 +377,30 @@ class Criar_Grupo(View):
 
         messages.success(request,"Grupo criado com sucesso")
         
-        return redirect('grupo')
+        return redirect('visualizar_objetivos')
+    
+class Senha(View):
+    def get(self,request):
+        
+        return render(request,"objetivos/senha.html")
+    
+    def post(self,request):
+        nome_do_grupo=request.POST.get('nome_do_grupo')
+        senha=request.POST.get('senha')
+        
+        try:
+            grupo=Grupos.objects.get(Nome_grupo=nome_do_grupo,Senha_grupo=senha)
+        
+        except:
+            messages.error(request,"Erro na inserção da senha")
+            return render(request,"objetivos/senha.html")
+        
+        
+        usuario_id=request.session.get('usuario_id')
+        nome_participante_obj= get_object_or_404(Usuario,id=usuario_id)
+        nome_participante=nome_participante_obj.username
+        Participantes_grupos.objects.create(Grupos=grupo.Nome_grupo,nome_participantes=nome_participante)
+        messages.success(request,f"Você agora faz parte do grupo {nome_do_grupo}")
+        return redirect('meus_grupos')
         
         
