@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.contrib import messages
-from .models import Objetivo, Subtarefa
+from .models import Objetivo, Subtarefa,Grupos
 from login.models import Usuario
+
 
 class CriarObjetivoView(View):
     def get(self, request):
@@ -329,3 +330,63 @@ class VisualizarSubtarefasView(View):
         }
         
         return render(request, 'objetivos/visualizar_subtarefas.html', context)
+    
+class Grupo(View):
+    def get(self,request):
+        usuario_id = request.session.get('usuario_id')
+        if not usuario_id:
+            messages.error(request, "Você precisa estar logado para acessar grupos.")
+            return redirect('logar')
+        grupos=Grupos.objects.all()
+        contexto={'grupos',grupos}
+        return render(request,"objetivos/grupos.html",contexto)
+    
+    def post(self,request):
+        nome_grupo_pesquisa=request.POST.get('nome_grupo_pesquisa')
+
+        grupos_pesquisa=Grupos.objects.filter(Nome_grupo=nome_grupo_pesquisa)
+        if not grupos_pesquisa:
+            messages.error(request,"Esse grupo não existe")
+            return render(request,"objetivos/grupos.html")
+        contexto={'grupos_pesquisa',grupos_pesquisa}
+        return render(request,'objetivos/grupos.html',contexto)
+        #Terminar essa view. Ainda falta adicionar, quando a senha for correta em participantes/ botao_clicado=request.POST('botao_clicado')
+
+
+    
+class Meus_Grupos(View):
+    def get(self,request):
+        usuario_id = request.session.get('usuario_id')
+        if not usuario_id:
+            messages.error(request, "Você precisa estar logado para os seus grupos.")
+            return redirect('logar')
+        meus_grupos=Grupos.objects.filter(Participantes=Usuario.username)
+        contexto={'grupos_pesquisa',meus_grupos}
+        return render(request,"objetivos/grupos.html",contexto)
+
+    
+class Criar_Grupo(View):
+    def get(self,request):
+        usuario_id = request.session.get('usuario_id')
+        if not usuario_id:
+            messages.error(request, "Você precisa estar logado para criar grupos.")
+            return redirect('logar')
+        return render(request,"objetivos/criar_grupo.html")
+    
+    def post(self,request):
+
+        usuario_id = request.session.get('usuario_id')
+        if not usuario_id:
+            messages.error(request, "Você precisa estar logado para criar grupos.")
+            return redirect('logar')
+
+        nome_grupo=request.POST.get('nome_grupo')
+        qtd_membros_grupo=request.POST.get('qtd_membros_grupo')
+        senha=request.POST.get('senha')
+        
+        if Objetivo.objects.filter(Nome_grupo=nome_grupo).exists():
+            messages.error(request,'Esse grupo já existe')
+            return render(request,"objetivos/criar_grupo.html")
+        
+        messages.success(request,"Grupo criado com sucesso")
+        return('criar_grupo')
