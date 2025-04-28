@@ -1,0 +1,16 @@
+{% extends "objetivos/base1.html" %}
+
+{% block titulo %}<title>Criar Grupo</title>{% endblock titulo %}
+{% block content %}
+    {% if messages %}
+        <ul style="color: red; padding-left: 20px; margin-bottom: 20px;">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% for grupo in meu_grupo %}
+        <p><strong>Nome do grupo:</strong> {{ grupo.Grupos }}</p>
+        <a href="">Visualizar</a>
+    {% endfor %}
+{% endblock content %}
