@@ -5,6 +5,16 @@
 {% block content %}
 <header><h1>Cadastro</h1></header>
 <main>
+
+    {% if messages %}
+        <ul style="color: red;">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+
     <form method="POST">
         {% csrf_token %}
         <br>
@@ -19,11 +29,13 @@
         <br>
         <br>    
         <button type="submit">Enviar</button>
+        <br>
+        <br>
+        <a href="{% url 'logar' %}" style="text-decoration: none; border: 1px solid black; padding: 5px; background-color: lightgray;">Já possui conta? Faça login</a>
     </form>
 </main>
 
 {% endblock content %}
-
 
 
 

@@ -1,47 +1,80 @@
 {% extends "objetivos/base1.html" %}
 
+{% block titulo  %}<title>Visualizar Objetivos</title>{% endblock titulo %}
+
 {% block content %}
+    <style>
+        .container { margin-bottom: 20px; }
+        .link { text-decoration: none; border: 1px solid black; padding: 5px; background-color: lightgray; margin-left: 5px; }
+        .filtros { margin-top: 15px; }
+        
+        .ativo-todas { background-color: #c0e0c0; }
+        .ativo-alta { background-color: #ffb0b0; }
+        .ativo-media { background-color: #ffffb0; }
+        .ativo-baixa { background-color: #b0e0ff; }
+        
+        .tarefa { padding: 10px; margin-bottom: 10px; border: 1px solid black; }
+        .tarefa-alta { background-color: rgba(255, 200, 200, 0.3); }
+        .tarefa-media { background-color: rgba(255, 255, 200, 0.3); }
+        .tarefa-baixa { background-color: rgba(200, 230, 255, 0.3); }
+        
+        .texto-baixa { color: blue; }
+        .texto-media { color: orange; }
+        .texto-alta { color: red; }
+        
+        form { display: inline; }
+    </style>
+
     <header>
-        <h1>OBJETIVOS</h1>
-        <a href="{% url 'criar_objetivo' %}" style="text-decoration: none; border: 1px solid black; padding: 5px; background-color: lightgray;">+ Criar Objetivo</a>
+        <h1>TAREFAS</h1>
     </header>
     <br>
     <main>
-        {% for objetivo in objetivos %}
-        <div style="border: 1px solid black; padding: 10px; margin-bottom: 10px;">
-            <p><strong>Objetivo:</strong> {{ objetivo.Nome }}</p>
-            <p><strong>Descrição:</strong> {{ objetivo.Descrição }}</p>
-            <p><strong>Status:</strong> {{ objetivo.Status }}</p>
-            <p><strong>Usuário:</strong> {{ objetivo.usuario }}</p>
-            <a href="{% url 'editar_objetivo' objetivo.id %}">Editar</a> | 
-            <form method="POST" action="{% url 'deletar_objetivo' objetivo.id %}" style="display:inline;" onsubmit="return confirm('Você tem certeza que deseja deletar este objetivo?');">
-                {% csrf_token %}
-                <button type="submit">Deletar</button>
-            </form>
-
-            <h4>Subtarefas</h4>
-            {% if objetivo.subtarefas.all %}
-                <ul>
-                    {% for subtarefa in objetivo.subtarefas.all %}
-                        <li>
-                            <strong>{{ subtarefa.Nome }}</strong><br>
-                            Descrição: {{ subtarefa.descrição }}<br>
-                            Status: {{ subtarefa.Status }}<br>
-                            <a href="{% url 'editar_subtarefa' objetivo.id subtarefa.id %}">Editar</a> |
-                            <form method="POST" action="{% url 'deletar_subtarefa' objetivo.id subtarefa.id %}" style="display:inline;" onsubmit="return confirm('Você tem certeza que deseja deletar esta subtarefa?');">
-                                {% csrf_token %}
-                                <button type="submit">Deletar</button>
-                            </form>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p>Não há subtarefas para este objetivo.</p>
-            {% endif %}
-
-            <a href="{% url 'adicionar_subtarefas' objetivo.id %}" style="text-decoration: none; border: 1px solid black; padding: 5px; background-color: lightgray;">+ Adicionar Subtarefa</a>
+        <div class="container">
+            <a href="{% url 'criar_objetivo' %}" class="link">+ Criar tarefas</a>
+            
+            <div class="filtros">
+                <strong>Filtrar por urgência:</strong>
+                <a href="{% url 'visualizar_objetivos' %}" 
+                   class="link {% if not filtro_atual %}ativo-todas{% endif %}">Todas</a>
+                <a href="{% url 'visualizar_objetivos' %}?urgencia=3" 
+                   class="link {% if filtro_atual == '3' %}ativo-alta{% endif %}">Alta/Nível 3</a>
+                <a href="{% url 'visualizar_objetivos' %}?urgencia=2" 
+                   class="link {% if filtro_atual == '2' %}ativo-media{% endif %}">Média/Nível 2</a>
+                <a href="{% url 'visualizar_objetivos' %}?urgencia=1" 
+                   class="link {% if filtro_atual == '1' %}ativo-baixa{% endif %}">Baixa/Nível 1</a>
+            </div>
         </div>
-        {% endfor %}
+        
+        {% if objetivos %}
+            {% for objetivo in objetivos %}
+            <div class="tarefa {% if objetivo.urgencia == 3 %}tarefa-alta{% elif objetivo.urgencia == 2 %}tarefa-media{% elif objetivo.urgencia == 1 %}tarefa-baixa{% endif %}">
+                <p><strong>Tarefa:</strong> {{ objetivo.Nome }}</p>
+                <p><strong>Descrição:</strong> {{ objetivo.Descrição }}</p>
+                <p><strong>Status:</strong> {{ objetivo.Status }}</p>
+                <p>
+                    <strong>Urgência:</strong> 
+                    {% if objetivo.urgencia == 1 %}
+                        <span class="texto-baixa">1 - Baixa</span>
+                    {% elif objetivo.urgencia == 2 %}
+                        <span class="texto-media">2 - Média</span>
+                    {% elif objetivo.urgencia == 3 %}
+                        <span class="texto-alta">3 - Alta</span>
+                    {% else %}
+                        Não definida
+                    {% endif %}
+                </p>
+                <a href="{% url 'editar_objetivo' objetivo.id %}">Editar</a> | 
+                <form method="POST" action="{% url 'deletar_objetivo' objetivo.id %}" 
+                      onsubmit="return confirm('Você tem certeza que deseja deletar este objetivo?');">
+                    {% csrf_token %}
+                    <button type="submit">Deletar</button>
+                </form>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>Não há tarefas com este nível de urgência.</p>
+        {% endif %}
     </main>
     <br>
 {% endblock content %}

@@ -3,7 +3,6 @@ from django.views import View
 from django.contrib import messages
 from .models import Objetivo, Subtarefa
 from login.models import Usuario
-from django.db.models import Q
 
 class CriarObjetivoView(View):
     def get(self, request):
@@ -11,63 +10,92 @@ class CriarObjetivoView(View):
         if 'usuario_id' not in request.session:
             messages.error(request, "Você precisa estar logado para criar objetivos.")
             return redirect('logar')
-        
+
+        # Renderiza o formulário de criação de objetivo
         return render(request, 'objetivos/criar_objetivo.html')
-    
+
     def post(self, request):
+        # Verificar se o usuário está logado
         usuario_id = request.session.get('usuario_id')
         if not usuario_id:
             messages.error(request, "Você precisa estar logado para criar objetivos.")
             return redirect('logar')
-        
-        # Buscar o usuário pelo ID na sessão
-        try:
-            usuario = Usuario.objects.get(id=usuario_id)
-        except Usuario.DoesNotExist:
-            messages.error(request, "Usuário não encontrado.")
-            del request.session['usuario_id']
-            return redirect('logar')
-        
+
+        # Obter os dados do formulário
         nome_objetivo = request.POST.get('nome_objetivo')
         descricao_objetivo = request.POST.get('descricao_objetivo')
+        urgencia = request.POST.get('urgencia')  # Obter o valor de urgência
 
+        # Validar o nome do objetivo
         if not nome_objetivo:
             messages.error(request, 'É necessário preencher o nome do objetivo.')
             return render(request, 'objetivos/criar_objetivo.html')
 
-        # Criar o objetivo
-        objetivo = Objetivo.objects.create(
+        # Verificar se já existe um objetivo com o mesmo nome para este usuário
+        if Objetivo.objects.filter(Nome=nome_objetivo, usuario_id=usuario_id).exists():
+            messages.error(request, 'Você já tem uma tarefa com este nome. Por favor, escolha um nome diferente.')
+            return render(request, 'objetivos/criar_objetivo.html', {
+                'nome_objetivo': nome_objetivo,
+                'descricao_objetivo': descricao_objetivo,
+                'urgencia': urgencia
+            })
+
+        # Converter urgência para inteiro ou usar valor padrão
+        try:
+            urgencia_int = int(urgencia) if urgencia else 1
+            # Garantir que está dentro dos limites (1-5)
+            if urgencia_int < 1:
+                urgencia_int = 1
+            elif urgencia_int > 3:
+                urgencia_int = 3
+        except ValueError:
+            urgencia_int = 1
+
+        # Criar o objetivo associado ao usuário logado
+        Objetivo.objects.create(
             Nome=nome_objetivo,
             Descrição=descricao_objetivo,
             Status='pendente',
-            usuario=usuario
+            usuario_id=usuario_id,
+            urgencia=urgencia_int  # Adicionar o campo de urgência
         )
 
-        messages.success(request, f'Objetivo "{nome_objetivo}" foi criado com sucesso!')
-        
-        # Redireciona para a página de visualização de objetivos com a opção de adicionar subtarefa
-        return render(request, 'objetivos/objetivo_criado.html', {'objetivo': objetivo})
-
+        return redirect('visualizar_objetivos')
 
 
 class VisualizarObjetivosView(View):
     def get(self, request):
+        # Verificar se o usuário está logado
         usuario_id = request.session.get('usuario_id')
         if not usuario_id:
             messages.error(request, "Você precisa estar logado para visualizar seus objetivos.")
             return redirect('logar')
 
-        usuario = get_object_or_404(Usuario, id=usuario_id)
+        # Obter parâmetro de filtro da URL, se existir
+        filtro_urgencia = request.GET.get('urgencia')
         
-        # Usando 'subtarefas' como related_name
-        objetivos = Objetivo.objects.filter(usuario=usuario).prefetch_related('subtarefas')
+        # Iniciar com todos os objetivos do usuário
+        objetivos_query = Objetivo.objects.filter(usuario_id=usuario_id)
+        
+        # Aplicar filtro de urgência, se especificado
+        if filtro_urgencia:
+            try:
+                urgencia_valor = int(filtro_urgencia)
+                objetivos_query = objetivos_query.filter(urgencia=urgencia_valor)
+            except ValueError:
+                # Se o valor não for um número válido, ignorar o filtro
+                pass
+        
+        # Ordenar por urgência (decrescente)
+        objetivos = objetivos_query.order_by('-urgencia')
 
         context = {
             'objetivos': objetivos,
-            'usuario': usuario
+            'filtro_atual': filtro_urgencia,  # Passar o filtro atual para o template
         }
 
         return render(request, 'objetivos/visualizar_objetivos.html', context)
+
 
 class DeletarObjetivoView(View):
     def post(self, request, objetivo_id):
@@ -76,18 +104,13 @@ class DeletarObjetivoView(View):
         if not usuario_id:
             messages.error(request, "Você precisa estar logado para excluir objetivos.")
             return redirect('logar')
-            
-        # Buscar o objetivo e verificar se pertence ao usuário
-        objetivo = get_object_or_404(Objetivo, id=objetivo_id)
-        
-        if objetivo.usuario.id != usuario_id:
-            messages.error(request, "Você não tem permissão para excluir este objetivo.")
-            return redirect('visualizar_objetivos')
-        
+
+        # Buscar o objetivo e verificar se pertence ao usuário logado
+        objetivo = get_object_or_404(Objetivo, id=objetivo_id, usuario_id=usuario_id)
+
         nome_objetivo = objetivo.Nome
         objetivo.delete()
-        
-        messages.success(request, f'Objetivo "{nome_objetivo}" foi excluído com sucesso.')
+
         return redirect('visualizar_objetivos')
 
 
@@ -98,48 +121,63 @@ class EditarObjetivoView(View):
         if not usuario_id:
             messages.error(request, "Você precisa estar logado para editar objetivos.")
             return redirect('logar')
-            
-        objetivo = get_object_or_404(Objetivo, id=objetivo_id)
-        
-        if objetivo.usuario.id != usuario_id:
-            messages.error(request, "Você não tem permissão para editar este objetivo.")
-            return redirect('visualizar_objetivos')
-            
+
+        objetivo = get_object_or_404(Objetivo, id=objetivo_id, usuario_id=usuario_id)
+
         context = {
             'objetivo': objetivo,
         }
-        
+
         return render(request, 'objetivos/editar_objetivo.html', context)
-    
+
     def post(self, request, objetivo_id):
         # Verificar se o usuário está logado
         usuario_id = request.session.get('usuario_id')
         if not usuario_id:
             messages.error(request, "Você precisa estar logado para editar objetivos.")
             return redirect('logar')
-            
-        objetivo = get_object_or_404(Objetivo, id=objetivo_id)
-        
-        if objetivo.usuario.id != usuario_id:
-            messages.error(request, "Você não tem permissão para editar este objetivo.")
-            return redirect('visualizar_objetivos')
-            
+
+        objetivo = get_object_or_404(Objetivo, id=objetivo_id, usuario_id=usuario_id)
+
         nome_objetivo = request.POST.get('nome_objetivo')
         descricao_objetivo = request.POST.get('descricao_objetivo')
         novo_status = request.POST.get('status')
-        
+        urgencia = request.POST.get('urgencia')  # Obter o valor de urgência
+
+        # Validar o nome do objetivo
         if not nome_objetivo:
             messages.error(request, 'É necessário preencher o nome do objetivo.')
-            return redirect('editar_objetivo', objetivo_id=objetivo_id)
-            
+            return render(request, 'objetivos/editar_objetivo.html', {'objetivo': objetivo})
+
+        # Verificar se já existe OUTRO objetivo com o mesmo nome para este usuário
+        # Usamos exclude(id=objetivo_id) para não considerar o próprio objetivo na verificação
+        if Objetivo.objects.filter(Nome=nome_objetivo, usuario_id=usuario_id).exclude(id=objetivo_id).exists():
+            messages.error(request, 'Você já tem uma tarefa com este nome. Por favor, escolha um nome diferente.')
+            return render(request, 'objetivos/editar_objetivo.html', {
+                'objetivo': objetivo,
+                'nome_objetivo': nome_objetivo,
+                'descricao_objetivo': descricao_objetivo,
+                'urgencia': urgencia
+            })
+
+        # Converter urgência para inteiro ou manter o valor atual
+        try:
+            urgencia_int = int(urgencia) if urgencia else objetivo.urgencia
+            # Garantir que está dentro dos limites (1-5)
+            if urgencia_int < 1:
+                urgencia_int = 1
+            elif urgencia_int > 3:
+                urgencia_int = 3
+        except ValueError:
+            urgencia_int = objetivo.urgencia
+
         objetivo.Nome = nome_objetivo
         objetivo.Descrição = descricao_objetivo
         objetivo.Status = novo_status
+        objetivo.urgencia = urgencia_int  # Atualizar o campo de urgência
         objetivo.save()
-        
-        messages.success(request, f'Objetivo "{nome_objetivo}" atualizado com sucesso.')
-        return redirect('visualizar_objetivos')
 
+#antes da tranquilo
 
 class EditarSubtarefaView(View):
     def get(self, request, objetivo_id, subtarefa_id):

@@ -4,6 +4,7 @@ from django.contrib import messages
 from .models import Usuario
 from django.http import HttpResponse
 from django.contrib.auth.hashers import make_password, check_password
+from django.template import RequestContext
 
 class CriarUsuarioView(View):
     def get(self, request):
@@ -30,13 +31,12 @@ class CriarUsuarioView(View):
             # Usar make_password para criar senha hasheada
             senha_hasheada = make_password(senha)
             Usuario.objects.create(Username=username, E_mail=email, Senha=senha_hasheada)
-            messages.success(request, f'Usuário "{username}" criado com sucesso!')
-            return render(request,'login/logar.html')  # Redirecionar para página de login após criação
+            return redirect('logar')  # MUDANÇA AQUI: usar redirect em vez de render
 
 class LoginView(View):
     def get(self, request):
         return render(request, 'login/logar.html')
-    
+
     def post(self, request):
         email = request.POST.get('email')
         senha = request.POST.get('senha')
@@ -50,8 +50,9 @@ class LoginView(View):
             # Usar check_password para verificar a senha hasheada
             if check_password(senha, usuario.Senha):
                 request.session['usuario_id'] = usuario.id
-                messages.success(request, f'Bem-vindo(a), {usuario.Username}!')
-                return render(request,'objetivos/visualizar_objetivos.html')  # Redireciona para visualização após login
+                request.session.save()  # Forçar a gravação da sessão
+                # Redirecionar para a view de visualização de objetivos
+                return redirect('visualizar_objetivos')
             else:
                 messages.error(request, 'Senha incorreta.')
         except Usuario.DoesNotExist:
@@ -59,12 +60,10 @@ class LoginView(View):
 
         return render(request, 'login/logar.html')
 
-
 class LogoutView(View):
     def get(self, request):
         # Remover o ID do usuário da sessão
         if 'usuario_id' in request.session:
             del request.session['usuario_id']
         
-        messages.success(request, "Você saiu do sistema com sucesso.")
-        return render(request,'login/logar.html')
+        return redirect('logar')  # Redireciona para a URL de login
