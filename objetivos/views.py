@@ -52,15 +52,19 @@ class CriarObjetivoView(View):
             urgencia_int = 1
 
         # Criar o objetivo associado ao usuário logado
-        Objetivo.objects.create(
+        objetivo = Objetivo.objects.create(
             Nome=nome_objetivo,
             Descrição=descricao_objetivo,
             Status='pendente',
             usuario_id=usuario_id,
-            urgencia=urgencia_int  # Adicionar o campo de urgência
+            urgencia=urgencia_int
         )
 
-        return redirect('visualizar_objetivos')
+        # Adicionando uma mensagem sobre a possibilidade de adicionar subtarefas
+        messages.success(request, f'Objetivo "{nome_objetivo}" criado com sucesso! Deseja adicionar subtarefas?')
+        
+        # Redirecionar para visualização, mas incluir o ID do objetivo recém-criado
+        return render(request, 'objetivos/objetivo_criado.html', {'objetivo': objetivo})
 
 
 class VisualizarObjetivosView(View):
@@ -296,3 +300,29 @@ class DeletarSubtarefaView(View):
 
         messages.success(request, f'Subtarefa "{subtarefa.Nome}" excluída com sucesso.')
         return redirect('visualizar_objetivos')
+
+class VisualizarSubtarefasView(View):
+    def get(self, request, objetivo_id):
+        # Verificar se o usuário está logado
+        usuario_id = request.session.get('usuario_id')
+        if not usuario_id:
+            messages.error(request, "Você precisa estar logado para visualizar subtarefas.")
+            return redirect('logar')
+
+        # Buscar o objetivo pelo ID e verificar se pertence ao usuário logado
+        objetivo = get_object_or_404(Objetivo, id=objetivo_id)
+        
+        # Verificar se o objetivo pertence ao usuário logado
+        if objetivo.usuario.id != usuario_id:
+            messages.error(request, "Você não tem permissão para visualizar subtarefas deste objetivo.")
+            return redirect('visualizar_objetivos')
+        
+        # Buscar todas as subtarefas do objetivo
+        subtarefas = Subtarefa.objects.filter(objetivo=objetivo)
+        
+        context = {
+            'objetivo_principal': objetivo,
+            'subtarefas': subtarefas,
+        }
+        
+        return render(request, 'objetivos/visualizar_subtarefas.html', context)

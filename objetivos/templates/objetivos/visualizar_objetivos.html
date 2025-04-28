@@ -49,16 +49,16 @@
         {% if objetivos %}
             {% for objetivo in objetivos %}
             <div class="tarefa {% if objetivo.urgencia == 3 %}tarefa-alta{% elif objetivo.urgencia == 2 %}tarefa-media{% elif objetivo.urgencia == 1 %}tarefa-baixa{% endif %}">
-                <p><strong>Tarefa:</strong> {{ objetivo.Nome }}</p>
-                <p><strong>Descrição:</strong> {{ objetivo.Descrição }}</p>
-                <p><strong>Status:</strong> {{ objetivo.Status }}</p>
+                <p><strong>Tarefa:</strong> {{ Objetivo.nome }}</p>
+                <p><strong>Descrição:</strong> {{ Objetivo.descrição }}</p>
+                <p><strong>Status:</strong> {{ Objetivo.status }}</p>
                 <p>
                     <strong>Urgência:</strong> 
-                    {% if objetivo.urgencia == 1 %}
+                    {% if Objetivo.urgencia == 1 %}
                         <span class="texto-baixa">1 - Baixa</span>
-                    {% elif objetivo.urgencia == 2 %}
+                    {% elif Objetivo.urgencia == 2 %}
                         <span class="texto-media">2 - Média</span>
-                    {% elif objetivo.urgencia == 3 %}
+                    {% elif Objetivo.urgencia == 3 %}
                         <span class="texto-alta">3 - Alta</span>
                     {% else %}
                         Não definida
@@ -69,7 +69,8 @@
                       onsubmit="return confirm('Você tem certeza que deseja deletar este objetivo?');">
                     {% csrf_token %}
                     <button type="submit">Deletar</button>
-                </form>
+                </form> | 
+                <a href="{% url 'visualizar_subtarefas' objetivo.id %}">Visualizar subtarefas</a>
             </div>
             {% endfor %}
         {% else %}

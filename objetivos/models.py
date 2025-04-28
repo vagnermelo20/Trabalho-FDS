@@ -8,9 +8,9 @@ class Objetivo(models.Model):
         ('ativa', 'Ativa'),
         ('completa', 'Completa'),
     )     
-    Nome = models.CharField(max_length=1000)
-    Descrição = models.TextField()
-    Status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pendente')
+    nome = models.CharField(max_length=1000)
+    descrição = models.TextField()
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pendente')
     usuario = models.ForeignKey('login.Usuario', on_delete=models.CASCADE,related_name= 'Objetivos')
     urgencia = models.IntegerField(null=True, blank=True, default=0,
         validators=[
@@ -29,9 +29,9 @@ class Subtarefa(models.Model):
         ('concluída', 'Concluída'),
     ]
     
-    Nome = models.CharField(max_length=200)
+    nome = models.CharField(max_length=200)
     descrição = models.TextField()
-    Status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pendente')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pendente')
     objetivo = models.ForeignKey(Objetivo, on_delete=models.CASCADE, related_name='subtarefas')  # AQUI
 
     def __str__(self):
