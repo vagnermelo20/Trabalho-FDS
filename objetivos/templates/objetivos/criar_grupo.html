@@ -1,7 +1,7 @@
 {% extends "objetivos/base1.html" %}
 
 {% block titulo %}<title>Criar Grupo</title>{% endblock titulo %}
-
+{% block content %}
 <main>
     
     {% if messages %}
@@ -17,9 +17,6 @@
         <label for="campo_nome_grupo">Nome do grupo:</label>
         <input type="text" name="nome_grupo" id="campo_nome_grupo" placeholder="Digite o nome do seu grupo">
         
-        <label for="campo_qtd_membros_grupo">Quantidade máxima de membros:</label>
-        <input type="number" name="Qtd_membros_grupo" placeholder="Digite a quantidade de membros do seu grupo">
-
         <label for="campo_senha">Senha do grupo:</label>
         <input type="text" name="senha" placeholder="Digite a senha do grupo">
                 
