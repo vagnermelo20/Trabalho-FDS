@@ -5,8 +5,8 @@
 {% block content %}
     <header>
         <h1>TAREFAS</h1>
-        <a href="{% url 'visualizar_objetivos' %}" class="link">TAREFAS</a> 
-        <a href="{% url 'grupo' %}" class="link">GRUPO</a>
+        <a href="{% url 'meus_grupos' %}" class="link">Meus grupos</a>
+        <a href="{% url 'grupo' %}" class="link">Grupos</a>
     </header>
     
     <main>
@@ -29,7 +29,7 @@
         {% if objetivos %}
             {% for objetivo in objetivos %}
             <div class="tarefa {% if objetivo.urgencia == 3 %}tarefa-alta{% elif objetivo.urgencia == 2 %}tarefa-media{% elif objetivo.urgencia == 1 %}tarefa-baixa{% endif %}">
-                <p><strong>Tarefa:</strong> {{ objetivo.nome }}</p>
+                <p><strong>Tarefa:</strong> {{ objetivo.nome }}</p> 
                 <p><strong>Descrição:</strong> {{ objetivo.descrição }}</p>
                 <p><strong>Status:</strong> {{ objetivo.status }}</p>
                 <p>

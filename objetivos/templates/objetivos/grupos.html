@@ -14,11 +14,12 @@
     <form method="POST">
         {% csrf_token %}
         <a href="{% url 'criar_grupo' %}" class="link">Criar grupo</a>
+        <a href="{% url 'meus_grupos' %}" class="link">Meus grupos</a>
         <input type="text" name="nome_grupo_pesquisa" id="campo_nome_grupo_pesquisar" placeholder="Procure um grupo"><button type="submit">Enviar</button>
     </form>
-    {% for grupo_pesquisa in grupos_pesquisa %}
-        <p><strong>Nome do grupo:</strong> {{ grupo_pesquisa.Nome_grupo }}</p>
-        <a href="{% url 'senha' grupo_pesquisa.id %}" class="link">Entrar</a>
+    {% for grupo in grupos %}
+        <p><strong>Nome do grupo:</strong> {{ grupo.Nome_grupo }}</p>
+        
     {% endfor %}
 
 {% endblock content %}
