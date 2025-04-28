@@ -1,0 +1,25 @@
+{% extends "objetivos/base1.html" %}
+
+{% block titulo %}<title>Grupos</title>{% endblock titulo %}
+
+{% if messages %}
+        <ul style="color: red; padding-left: 20px; margin-bottom: 20px;">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+{% endif %}
+
+{% block content %}
+    <form method="POST">
+        {% csrf_token %}
+        <label for="campo_nome_grupo_pesquisa">Nome do grupo:</label>
+        <input type="text" name="nome_grupo_pesquisa" id="campo_nome_grupo_pesquisar" placeholder="Procure um grupo"><button type="submit">Enviar</button>
+    </form>
+    {% for grupo_pesquisa in grupo_pesquisa %}
+        <p><strong>Nome do grupo:</strong> {{ grupo_pesquisa.Nome_grupo }}</p>
+        <p><strong>Quantidade de membros do grupo:</strong> {{ grupo_pesquisa.Qtd_membros_grupo }}</p>
+        <a href="{% url 'senha' grupo_pesquisa.id %}" class="link">Entrar</a>
+    {% endfor %}
+
+{% endblock content %}
