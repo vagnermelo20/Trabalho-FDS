@@ -30,7 +30,9 @@ class TesteFluxoCompletoObjetivos(LiveServerTestCase):
         driver.find_element(By.ID, "campo_username").send_keys("UsuarioNovoTeste")
         time.sleep(1)
         driver.find_element(By.ID, "campo_email").send_keys("novousuario@teste.com")
+        time.sleep(1)
         driver.find_element(By.ID, "campo_senha").send_keys("senha321")
+        time.sleep(1)
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
 
@@ -39,8 +41,11 @@ class TesteFluxoCompletoObjetivos(LiveServerTestCase):
 
         # ---------- 2. Login com o novo usuário ----------
         campo_email = driver.find_element(By.ID, "campo_email")
+        time.sleep(1)
         campo_senha = driver.find_element(By.ID, "campo_senha")
+        time.sleep(1)
         botao_entrar = driver.find_element(By.TAG_NAME, "button")
+        time.sleep(1)
 
         campo_email.send_keys("novousuario@teste.com")
         time.sleep(1)
@@ -60,8 +65,11 @@ class TesteFluxoCompletoObjetivos(LiveServerTestCase):
         time.sleep(1)
 
         driver.find_element(By.ID, "campo_nome").send_keys("Objetivo Teste 1")
+        time.sleep(1)
         driver.find_element(By.ID, "campo_descricao").send_keys("Descrição do objetivo 1.")
+        time.sleep(1)
         driver.find_element(By.ID, "campo_urgencia").send_keys("2")
+        time.sleep(1)
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
 
@@ -76,6 +84,7 @@ class TesteFluxoCompletoObjetivos(LiveServerTestCase):
         time.sleep(1)
 
         driver.find_element(By.ID, "campo_descricao").send_keys("Descrição sem título.")
+        time.sleep(1)
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
 
@@ -85,6 +94,7 @@ class TesteFluxoCompletoObjetivos(LiveServerTestCase):
 
         # ---------- 5. Tentativa de criar objetivo duplicado ----------
         driver.find_element(By.ID, "campo_nome").send_keys("Objetivo Teste 1")
+        time.sleep(1)
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
 
@@ -101,8 +111,10 @@ class TesteFluxoCompletoObjetivos(LiveServerTestCase):
         time.sleep(1)
 
         campo_nome = driver.find_element(By.ID, "campo_nome")
+        time.sleep(1)
         campo_nome.clear()
         campo_nome.send_keys("Objetivo Teste Editado")
+        time.sleep(1)
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
 
