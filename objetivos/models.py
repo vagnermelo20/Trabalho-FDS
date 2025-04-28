@@ -37,4 +37,12 @@ class Subtarefa(models.Model):
     def __str__(self):
         return self.nome
 
+class Grupos(models.Model):
+    Nome_grupo=models.CharField(max_length=1000,unique=True)
+    Qtd_membros_grupo=models.PositiveIntegerField()
+    Senha_grupo=models.CharField(max_length=100)
+    Participantes=models.CharField(max_length=100,unique=True)
+
+    def __str__(self):
+        return self.Nome_grupo
 
