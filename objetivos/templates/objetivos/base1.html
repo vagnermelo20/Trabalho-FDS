@@ -3,33 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% block titulo  %}{% endblock titulo %}
-    <style>
-        header {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px;
-            background-color: #f0f0f0;
-            border-bottom: 1px solid #ccc;
-        }
-
-    </style>
+    <title>Document</title>
 </head>
 <body>
-    <header>
-        <div>
-            {% if usuario %}
-                <span><strong>Usuário:</strong> {{ usuario.Username }}</span>
-            {% endif %}
-        </div>
-        <div>
-            {% if usuario %}
-
-                <a href="{% url 'logout' %}" style="text-decoration: none; border: 1px solid black; padding: 5px; background-color: lightgray;">Logout</a>            {% else %}
-                <a href="{% url 'logar' %}">Login</a>
-            {% endif %}
-        </div>
-    </header>
     {% block content %}{% endblock content %}
 </body>
 </html>

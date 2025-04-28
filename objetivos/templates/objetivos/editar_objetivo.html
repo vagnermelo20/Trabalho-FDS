@@ -1,24 +1,13 @@
 {% extends "objetivos/base1.html" %}
 
-{% block titulo  %}<title>Editar objetivos</title>{% endblock titulo %}
-
 {% block content %}
-<header><h1>Editar tarefas</h1></header>
+<header><h1>Editar Objetivo</h1></header>
 <main>
-    <!-- Adicionar bloco de mensagens para exibir erros -->
-    {% if messages %}
-        <ul style="color: red;">
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-
     <form method="POST">
         {% csrf_token %}
         <br>
         <label for="campo_nome">Nome:</label>
-        <input type="text" name="nome_objetivo" id="campo_nome" value="{{ objetivo.Nome }}" placeholder="Digite o nome da tarefa">
+        <input type="text" name="nome_objetivo" id="campo_nome" value="{{ objetivo.Nome }}" placeholder="Digite o nome do objetivo">
         <br>
         <label for="campo_descricao">Descrição:</label>
         <br>
@@ -34,19 +23,7 @@
         </select>
         <br>
         <br>
-        <!-- Adicionar o campo de urgência -->
-        <label for="campo_urgencia">Urgência (1-3):</label>
-        <select name="urgencia" id="campo_urgencia">
-            <option value="1" {% if objetivo.urgencia == 1 %}selected{% endif %}>1 - Baixa</option>
-            <option value="2" {% if objetivo.urgencia == 2 %}selected{% endif %}>2 - Média</option>
-            <option value="3" {% if objetivo.urgencia == 3 %}selected{% endif %}>3 - Alta</option>
-        </select>
-        <br>
-        <br>
         <button type="submit">Salvar</button>
     </form>
-    <br>
-    <!-- Botão para voltar à página de visualização de objetivos -->
-    <a href="{% url 'visualizar_objetivos' %}" style="text-decoration: none; border: 1px solid black; padding: 5px; background-color: lightgray;">Voltar</a>
 </main>
 {% endblock content %}

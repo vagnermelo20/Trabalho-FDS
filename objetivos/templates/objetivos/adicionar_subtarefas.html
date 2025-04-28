@@ -1,0 +1,24 @@
+{% extends "objetivos/base1.html" %}
+
+{% block content %}
+    <header>
+        <h1>Adicionar Subtarefas para: {{ objetivo.Nome }}</h1>
+        <a href="{% url 'visualizar_objetivos' %}" style="text-decoration: none; border: 1px solid black; padding: 5px; background-color: lightgray;">Voltar para Objetivos</a>
+    </header>
+
+    <main>
+        <form method="POST">
+            {% csrf_token %}
+            
+            <label for="campo_nome">Nome da Subtarefa:</label>
+            <input type="text" name="nome_subtarefa" id="campo_nome" placeholder="Digite o nome da subtarefa" required>
+            <br>
+
+            <label for="campo_descricao">Descrição:</label>
+            <textarea name="descricao_subtarefa" id="campo_descricao" rows="4" cols="50" placeholder="Descrição da subtarefa"></textarea>
+            <br>
+
+            <button type="submit">Adicionar Subtarefa</button>
+        </form>
+    </main>
+{% endblock content %}
