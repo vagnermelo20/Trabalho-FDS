@@ -1,0 +1,33 @@
+{% extends "objetivos/base1.html" %}
+
+{% block content %}
+    <header>
+        <h1>Editar Subtarefa</h1>
+        <a href="{% url 'visualizar_objetivos' %}" style="text-decoration: none; border: 1px solid black; padding: 5px; background-color: lightgray;">Voltar para Objetivos</a>
+    </header>
+
+    <main>
+        <h3>Objetivo: {{ objetivo.Nome }}</h3>
+        <form method="POST">
+            {% csrf_token %}
+            
+            <label for="campo_nome">Nome:</label>
+            <input type="text" name="nome_subtarefa" id="campo_nome" value="{{ subtarefa.Nome }}" required>
+            <br>
+
+            <label for="campo_descricao">Descrição:</label>
+            <textarea name="descricao_subtarefa" id="campo_descricao" rows="4" cols="50">{{ subtarefa.descrição }}</textarea>
+            <br>
+
+            <label for="campo_status">Status:</label>
+            <select name="status_subtarefa" id="campo_status">
+                <option value="pendente" {% if subtarefa.Status == 'pendente' %}selected{% endif %}>Pendente</option>
+                <option value="em andamento" {% if subtarefa.Status == 'em andamento' %}selected{% endif %}>Em andamento</option>
+                <option value="concluída" {% if subtarefa.Status == 'concluída' %}selected{% endif %}>Concluída</option>
+            </select>
+            <br>
+
+            <button type="submit">Salvar alterações</button>
+        </form>
+    </main>
+{% endblock content %}
