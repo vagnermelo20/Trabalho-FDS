@@ -1,0 +1,25 @@
+{% extends "objetivos/base1.html" %}
+
+
+
+{% block content %}
+<header><h1>Entrar em um grupo</h1></header>
+<main>
+    {% if messages %}
+    {% for message in messages %}
+        <ul style="color: red; padding-left: 20px; margin-bottom: 20px;">
+                <li>{{ message }}</li>
+            </ul>
+    {% endfor %}
+    {% endif %}
+    <form method="POST">
+        {% csrf_token %}
+        <label for="campo_nome_grupo">Nome do grupo:</label>
+        <input type="text" id="campo_nome_grupo" name="nome_do_grupo" placeholder="Digite o nome do grupo">
+        <label for="campo_senha">Senha:</label>
+        <input type="text" id="campo_senha" name="senha" placeholder="Digite a senha do grupo">
+        <button type="submit">Enviar</button>
+    </form>
+    <a href="{% url 'visualizar_objetivos' %}" class="link">Voltar</a>
+</main>
+{% endblock content %}
