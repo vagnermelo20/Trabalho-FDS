@@ -348,7 +348,7 @@ class Grupo(View):
         if not grupos_pesquisa:
             messages.error(request,"Esse grupo não existe")
             return render(request,"objetivos/grupos.html")
-        contexto={'grupos_pesquisa':grupos_pesquisa}
+        contexto={'grupos':grupos_pesquisa}
         return render(request,'objetivos/grupos.html',contexto)
         #Terminar essa view. Ainda falta adicionar, quando a senha for correta em participantes/ botao_clicado=request.POST('botao_clicado')
 
@@ -360,9 +360,11 @@ class Meus_Grupos(View):
         if not usuario_id:
             messages.error(request, "Você precisa estar logado para os seus grupos.")
             return redirect('logar')
-        meus_grupos=Grupos.objects.filter(Participantes=Usuario.username)
-        contexto={'grupos_pesquisa':meus_grupos}
-        return render(request,"objetivos/grupos.html",contexto)
+        
+        nome_participante = get_object_or_404(Usuario,id=usuario_id)
+        meus_grupos=Participantes_grupos.objects.filter(nome_participantes=nome_participante.username,)
+        contexto={'meu_grupo':meus_grupos}
+        return render(request,"objetivos/meus_grupos.html",contexto)
 
     
 class Criar_Grupo(View):
@@ -391,13 +393,12 @@ class Criar_Grupo(View):
             Nome_grupo=nome_grupo,
             Senha_grupo=senha,
         )
-        # tem que colocar isso na parte de senha
-        # nome_participante = get_object_or_404(Usuario,id=usuario_id)
-        # Participantes_grupos.objects.create(Grupos=nome_grupo,nome_participantes=nome_participante.username)
-
+        
+        nome_participante = get_object_or_404(Usuario,id=usuario_id)
+        Participantes_grupos.objects.create(Grupos=nome_grupo,nome_participantes=nome_participante.username)
 
         messages.success(request,"Grupo criado com sucesso")
         
-        return render(request,'objetivos/grupos.html')
+        return redirect('grupo')
         
         
