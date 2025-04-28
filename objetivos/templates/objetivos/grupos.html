@@ -19,6 +19,7 @@
     </form>
     {% for grupo in grupos %}
         <p><strong>Nome do grupo:</strong> {{ grupo.Nome_grupo }}</p>
+        <a href="{% url 'senha' %}">Entrar</a>
         
     {% endfor %}
 
