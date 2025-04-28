@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.contrib import messages
-from .models import Objetivo, Subtarefa,Grupos
+from .models import Objetivo, Subtarefa,Grupos,Participantes_grupos
 from login.models import Usuario
 
 
@@ -338,7 +338,7 @@ class Grupo(View):
             messages.error(request, "Você precisa estar logado para acessar grupos.")
             return redirect('logar')
         grupos=Grupos.objects.all()
-        contexto={'grupos',grupos}
+        contexto={'grupos':grupos}
         return render(request,"objetivos/grupos.html",contexto)
     
     def post(self,request):
@@ -348,7 +348,7 @@ class Grupo(View):
         if not grupos_pesquisa:
             messages.error(request,"Esse grupo não existe")
             return render(request,"objetivos/grupos.html")
-        contexto={'grupos_pesquisa',grupos_pesquisa}
+        contexto={'grupos_pesquisa':grupos_pesquisa}
         return render(request,'objetivos/grupos.html',contexto)
         #Terminar essa view. Ainda falta adicionar, quando a senha for correta em participantes/ botao_clicado=request.POST('botao_clicado')
 
@@ -361,7 +361,7 @@ class Meus_Grupos(View):
             messages.error(request, "Você precisa estar logado para os seus grupos.")
             return redirect('logar')
         meus_grupos=Grupos.objects.filter(Participantes=Usuario.username)
-        contexto={'grupos_pesquisa',meus_grupos}
+        contexto={'grupos_pesquisa':meus_grupos}
         return render(request,"objetivos/grupos.html",contexto)
 
     
@@ -381,12 +381,23 @@ class Criar_Grupo(View):
             return redirect('logar')
 
         nome_grupo=request.POST.get('nome_grupo')
-        qtd_membros_grupo=request.POST.get('qtd_membros_grupo')
         senha=request.POST.get('senha')
         
-        if Objetivo.objects.filter(Nome_grupo=nome_grupo).exists():
+        if Grupos.objects.filter(Nome_grupo=nome_grupo).exists():
             messages.error(request,'Esse grupo já existe')
             return render(request,"objetivos/criar_grupo.html")
         
+        Grupos.objects.create(
+            Nome_grupo=nome_grupo,
+            Senha_grupo=senha,
+        )
+        # tem que colocar isso na parte de senha
+        # nome_participante = get_object_or_404(Usuario,id=usuario_id)
+        # Participantes_grupos.objects.create(Grupos=nome_grupo,nome_participantes=nome_participante.username)
+
+
         messages.success(request,"Grupo criado com sucesso")
-        return('criar_grupo')
+        
+        return render(request,'objetivos/grupos.html')
+        
+        
