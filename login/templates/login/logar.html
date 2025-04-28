@@ -1,31 +1,27 @@
 {% extends "login/base.html" %}
-{% block titulo  %} <title>Login</title> {% endblock titulo %}
+{% block titulo %}<title>Login</title>{% endblock titulo %}
+
 {% block content %}
 <header><h1>Login</h1></header>
 <main>
-
     {% if messages %}
-        <ul style="color: red;">
+        <ul style="color: red; padding-left: 20px;">
             {% for message in messages %}
                 <li>{{ message }}</li>
             {% endfor %}
         </ul>
     {% endif %}
 
-
     <form method="POST">
         {% csrf_token %}
-        <br>
         <label for="campo_email">E-mail:</label>
-        <input type="email"  name="email" id="campo_email" placeholder="Digite seu E-mail">
-        <br>
+        <input type="email" name="email" id="campo_email" placeholder="Digite seu E-mail">
+        
         <label for="campo_senha">Senha:</label>
-        <input type="password"  name="senha" id="campo_senha" placeholder="Digite sua senha">
-        <br>
-        <br>    
-        <button type="submit">Enviar</button>
-        <br>
-        <br>
+        <input type="password" name="senha" id="campo_senha" placeholder="Digite sua senha">
+        
+        <button type="submit">Entrar</button>
+        
         <a href="{% url 'criar_usuario' %}">Cadastrar-se</a>
     </form>
 </main>

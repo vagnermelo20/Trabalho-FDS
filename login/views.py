@@ -19,18 +19,18 @@ class CriarUsuarioView(View):
             messages.error(request, 'Todos os campos são obrigatórios.')
             return render(request,'login/criar_usuario.html')
 
-        elif Usuario.objects.filter(E_mail=email).exists():
+        elif Usuario.objects.filter(email=email).exists():
             messages.error(request, 'Este e-mail já está cadastrado.')
             return render(request,'login/criar_usuario.html')
         
-        elif Usuario.objects.filter(Username=username).exists():
+        elif Usuario.objects.filter(username=username).exists():
             messages.error(request, 'Este usuário já está cadastrado.')
             return render(request,'login/criar_usuario.html')
 
         else:
             # Usar make_password para criar senha hasheada
             senha_hasheada = make_password(senha)
-            Usuario.objects.create(Username=username, E_mail=email, Senha=senha_hasheada)
+            Usuario.objects.create(username=username, email=email, senha=senha_hasheada)
             return redirect('logar')  # MUDANÇA AQUI: usar redirect em vez de render
 
 class LoginView(View):
@@ -46,9 +46,9 @@ class LoginView(View):
             return render(request, 'login/logar.html')
 
         try:
-            usuario = Usuario.objects.get(E_mail=email)
+            usuario = Usuario.objects.get(email=email)
             # Usar check_password para verificar a senha hasheada
-            if check_password(senha, usuario.Senha):
+            if check_password(senha, usuario.senha):  # Correção: usar usuario.senha, não Usuario.senha
                 request.session['usuario_id'] = usuario.id
                 request.session.save()  # Forçar a gravação da sessão
                 # Redirecionar para a view de visualização de objetivos

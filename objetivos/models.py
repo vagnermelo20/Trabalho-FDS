@@ -20,7 +20,7 @@ class Objetivo(models.Model):
     )
 
     def __str__(self):
-        return self.Nome
+        return self.nome
     
 class Subtarefa(models.Model):
     STATUS_CHOICES = [
@@ -35,6 +35,6 @@ class Subtarefa(models.Model):
     objetivo = models.ForeignKey(Objetivo, on_delete=models.CASCADE, related_name='subtarefas')  # AQUI
 
     def __str__(self):
-        return self.Nome
+        return self.nome
 
 

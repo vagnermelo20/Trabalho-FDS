@@ -1,20 +1,22 @@
 {% extends "objetivos/base1.html" %}
 
+{% block titulo %}<title>Objetivo Criado</title>{% endblock titulo %}
+
 {% block content %}
 <header><h1>Objetivo Criado com Sucesso!</h1></header>
 <main>
-
+        
     <section>
-        <p>O objetivo <strong>{{ Objetivo.nome }}</strong> foi criado com sucesso.</p>
+        <p>O objetivo <strong>{{ objetivo.nome }}</strong> foi criado com sucesso.</p>
         <p>O que deseja fazer agora?</p>
 
-        <ul>
-            <!-- Link para adicionar subtarefa, opcional -->
-            <li><a href="{% url 'adicionar_subtarefas' objetivo.id %}">➕ Adicionar Subtarefa</a></li>
-
+        <div class="container">
+            <!-- Link para adicionar subtarefa usando a classe link do base1.html -->
+            <a href="{% url 'adicionar_subtarefas' objetivo.id %}" class="link">➕ Adicionar Subtarefa</a>
+            
             <!-- Link para voltar para os objetivos -->
-            <li><a href="{% url 'visualizar_objetivos' %}">📋 Ver todos os meus objetivos</a></li>
-        </ul>
+            <a href="{% url 'visualizar_objetivos' %}" class="link">📋 Ver todos os objetivos</a>
+        </div>
     </section>
 </main>
 {% endblock content %}

@@ -32,7 +32,7 @@ class CriarObjetivoView(View):
             return render(request, 'objetivos/criar_objetivo.html')
 
         # Verificar se já existe um objetivo com o mesmo nome para este usuário
-        if Objetivo.objects.filter(Nome=nome_objetivo, usuario_id=usuario_id).exists():
+        if Objetivo.objects.filter(nome=nome_objetivo, usuario_id=usuario_id).exists():
             messages.error(request, 'Você já tem uma tarefa com este nome. Por favor, escolha um nome diferente.')
             return render(request, 'objetivos/criar_objetivo.html', {
                 'nome_objetivo': nome_objetivo,
@@ -43,7 +43,7 @@ class CriarObjetivoView(View):
         # Converter urgência para inteiro ou usar valor padrão
         try:
             urgencia_int = int(urgencia) if urgencia else 1
-            # Garantir que está dentro dos limites (1-5)
+            # Garantir que está dentro dos limites (1-3)
             if urgencia_int < 1:
                 urgencia_int = 1
             elif urgencia_int > 3:
@@ -53,9 +53,9 @@ class CriarObjetivoView(View):
 
         # Criar o objetivo associado ao usuário logado
         objetivo = Objetivo.objects.create(
-            Nome=nome_objetivo,
-            Descrição=descricao_objetivo,
-            Status='pendente',
+            nome=nome_objetivo,
+            descrição=descricao_objetivo,
+            status='pendente',
             usuario_id=usuario_id,
             urgencia=urgencia_int
         )
@@ -112,7 +112,7 @@ class DeletarObjetivoView(View):
         # Buscar o objetivo e verificar se pertence ao usuário logado
         objetivo = get_object_or_404(Objetivo, id=objetivo_id, usuario_id=usuario_id)
 
-        nome_objetivo = objetivo.Nome
+        nome_objetivo = objetivo.nome
         objetivo.delete()
 
         return redirect('visualizar_objetivos')
@@ -155,7 +155,7 @@ class EditarObjetivoView(View):
 
         # Verificar se já existe OUTRO objetivo com o mesmo nome para este usuário
         # Usamos exclude(id=objetivo_id) para não considerar o próprio objetivo na verificação
-        if Objetivo.objects.filter(Nome=nome_objetivo, usuario_id=usuario_id).exclude(id=objetivo_id).exists():
+        if Objetivo.objects.filter(nome=nome_objetivo, usuario_id=usuario_id).exclude(id=objetivo_id).exists():
             messages.error(request, 'Você já tem uma tarefa com este nome. Por favor, escolha um nome diferente.')
             return render(request, 'objetivos/editar_objetivo.html', {
                 'objetivo': objetivo,
@@ -167,7 +167,7 @@ class EditarObjetivoView(View):
         # Converter urgência para inteiro ou manter o valor atual
         try:
             urgencia_int = int(urgencia) if urgencia else objetivo.urgencia
-            # Garantir que está dentro dos limites (1-5)
+            # Garantir que está dentro dos limites (1-3)
             if urgencia_int < 1:
                 urgencia_int = 1
             elif urgencia_int > 3:
@@ -175,13 +175,15 @@ class EditarObjetivoView(View):
         except ValueError:
             urgencia_int = objetivo.urgencia
 
-        objetivo.Nome = nome_objetivo
-        objetivo.Descrição = descricao_objetivo
-        objetivo.Status = novo_status
+        objetivo.nome = nome_objetivo
+        objetivo.descrição = descricao_objetivo
+        objetivo.status = novo_status
         objetivo.urgencia = urgencia_int  # Atualizar o campo de urgência
         objetivo.save()
 
-#antes da tranquilo
+        messages.success(request, f'Objetivo "{nome_objetivo}" atualizado com sucesso!')
+        return redirect('visualizar_objetivos')
+
 
 class EditarSubtarefaView(View):
     def get(self, request, objetivo_id, subtarefa_id):
@@ -219,7 +221,7 @@ class EditarSubtarefaView(View):
         # Verificar duplicidade de nome (excluindo a própria subtarefa)
         if Subtarefa.objects.filter(
             objetivo=objetivo,
-            Nome__iexact=nome_subtarefa  # case-insensitive
+            nome__iexact=nome_subtarefa  # case-insensitive
         ).exclude(id=subtarefa.id).exists():
             messages.error(request, f'Já existe outra subtarefa com o nome "{nome_subtarefa}" para este objetivo.')
             return render(request, 'objetivos/editar_subtarefa.html', {
@@ -227,9 +229,9 @@ class EditarSubtarefaView(View):
                 'subtarefa': subtarefa
             })
 
-        subtarefa.Nome = nome_subtarefa
+        subtarefa.nome = nome_subtarefa
         subtarefa.descrição = descricao_subtarefa
-        subtarefa.Status = status_subtarefa
+        subtarefa.status = status_subtarefa
         subtarefa.save()
 
         messages.success(request, f'Subtarefa "{nome_subtarefa}" atualizada com sucesso.')
@@ -270,18 +272,18 @@ class AdicionarSubtarefasView(View):
             return redirect('adicionar_subtarefas', objetivo_id=objetivo.id)
 
         # Verificar se já existe uma subtarefa com o mesmo nome
-        if Subtarefa.objects.filter(objetivo=objetivo, Nome__iexact=nome_subtarefa).exists():
+        if Subtarefa.objects.filter(objetivo=objetivo, nome__iexact=nome_subtarefa).exists():
             messages.error(request, f'Já existe uma subtarefa com o nome "{nome_subtarefa}" para este objetivo.')
             return redirect('adicionar_subtarefas', objetivo_id=objetivo.id)
 
         Subtarefa.objects.create(
-            Nome=nome_subtarefa,
+            nome=nome_subtarefa,
             descrição=descricao_subtarefa,
-            Status='pendente',
+            status='pendente',
             objetivo=objetivo
         )
 
-        messages.success(request, f'Subtarefa "{nome_subtarefa}" adicionada com sucesso ao objetivo "{objetivo.Nome}".')
+        messages.success(request, f'Subtarefa "{nome_subtarefa}" adicionada com sucesso ao objetivo "{objetivo.nome}".')
         return redirect('visualizar_objetivos')
 
 class DeletarSubtarefaView(View):
@@ -296,9 +298,10 @@ class DeletarSubtarefaView(View):
             return redirect('visualizar_objetivos')
 
         # Deletar a subtarefa
+        nome_subtarefa = subtarefa.nome
         subtarefa.delete()
 
-        messages.success(request, f'Subtarefa "{subtarefa.Nome}" excluída com sucesso.')
+        messages.success(request, f'Subtarefa "{nome_subtarefa}" excluída com sucesso.')
         return redirect('visualizar_objetivos')
 
 class VisualizarSubtarefasView(View):

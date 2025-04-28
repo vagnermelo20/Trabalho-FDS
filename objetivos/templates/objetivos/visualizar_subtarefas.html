@@ -1,21 +1,21 @@
 {% extends "objetivos/base1.html" %}
 
-{% block titulo  %}<title>Visualizar Subtarefas</title>{% endblock titulo %}
+{% block titulo %}<title>Visualizar Subtarefas</title>{% endblock titulo %}
 
 {% block content %}
-    <style>
-        .container { margin-bottom: 20px; }
-        .link { text-decoration: none; border: 1px solid black; padding: 5px; background-color: lightgray; margin-left: 5px; }
-        .tarefa { padding: 10px; margin-bottom: 10px; border: 1px solid black; }
-        
-        form { display: inline; }
-    </style>
-
     <header>
-        <h1>SUBTAREFAS DE: {{ Objetivo.nome }}</h1>
+        <h1>SUBTAREFAS DE: {{ objetivo_principal.nome }}</h1>
     </header>
-    <br>
+    
     <main>
+        {% if messages %}
+            <ul style="color: red; padding-left: 20px; margin-bottom: 20px;">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        
         <div class="container">
             <a href="{% url 'adicionar_subtarefas' objetivo_principal.id %}" class="link">+ Criar subtarefa</a>
             <a href="{% url 'visualizar_objetivos' %}" class="link">Voltar para tarefas</a>
@@ -24,20 +24,21 @@
         {% if subtarefas %}
             {% for subtarefa in subtarefas %}
             <div class="tarefa">
-                <p><strong>Subtarefa:</strong> {{ Subtarefa.nome }}</p>
+                <p><strong>Subtarefa:</strong> {{ subtarefa.nome }}</p>
                 <p><strong>Descrição:</strong> {{ subtarefa.descrição }}</p>
-                <p><strong>Status:</strong> {{ Subtarefa.status }}</p>
-                <a href="{% url 'editar_subtarefa' objetivo_principal.id subtarefa.id %}">Editar</a> | 
-                <form method="POST" action="{% url 'deletar_subtarefa' objetivo_principal.id subtarefa.id %}" 
-                      onsubmit="return confirm('Você tem certeza que deseja deletar esta subtarefa?');">
-                    {% csrf_token %}
-                    <button type="submit">Deletar</button>
-                </form>
+                <p><strong>Status:</strong> {{ subtarefa.status }}</p>
+                <div class="container">
+                    <a href="{% url 'editar_subtarefa' objetivo_principal.id subtarefa.id %}" class="link">Editar</a>
+                    <form method="POST" action="{% url 'deletar_subtarefa' objetivo_principal.id subtarefa.id %}" 
+                          onsubmit="return confirm('Você tem certeza que deseja deletar esta subtarefa?');" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit">Deletar</button>
+                    </form>
+                </div>
             </div>
             {% endfor %}
         {% else %}
             <p>Não há subtarefas cadastradas para este objetivo.</p>
         {% endif %}
     </main>
-    <br>
 {% endblock content %}
