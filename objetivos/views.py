@@ -397,8 +397,13 @@ class Senha(View):
         
         
         usuario_id=request.session.get('usuario_id')
-        nome_participante_obj= get_object_or_404(Usuario,id=usuario_id)
-        nome_participante=nome_participante_obj.username
+        nome_participante= get_object_or_404(Usuario,id=usuario_id)
+        
+      
+        if Participantes_grupos.objects.filter(Grupos=grupo.Nome_grupo,nome_participantes=nome_participante.username).exists():
+            messages.error(request,"Você já faz parte desse grupo")
+            return render(request,"objetivos/senha.html")
+
         Participantes_grupos.objects.create(Grupos=grupo.Nome_grupo,nome_participantes=nome_participante)
         messages.success(request,f"Você agora faz parte do grupo {nome_do_grupo}")
         return redirect('meus_grupos')
