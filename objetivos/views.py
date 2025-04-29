@@ -414,7 +414,7 @@ class Senha(View):
             messages.error(request,"Você já faz parte desse grupo")
             return render(request,"objetivos/senha.html")
 
-        Participantes_grupos.objects.create(Grupos=grupo.Nome_grupo,nome_participantes=nome_participante)
+        Participantes_grupos.objects.create(Grupos=grupo.Nome_grupo,nome_participantes=nome_participante.username)
         messages.success(request,f"Você agora faz parte do grupo {nome_do_grupo}")
         return redirect('meus_grupos')
         
