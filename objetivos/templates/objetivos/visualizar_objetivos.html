@@ -11,6 +11,15 @@
     </header>
     
     <main>
+
+        {% if messages %}
+            <ul style="color: red; padding-left: 20px; margin-bottom: 20px;">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        
         <div class="container">
             <a href="{% url 'criar_objetivo' %}" class="link">+ Criar tarefas</a>
             
