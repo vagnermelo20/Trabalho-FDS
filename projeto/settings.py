@@ -31,11 +31,22 @@ DEBUG = os.getenv('DEBUG', 'False').lower() in ['true', '1', 't']
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(' ')
 #CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', '').split(' ')
 
-# Banco de Dados
-DATABASES = {
+# Banco de Dados tradicional para mexer no codigo
+'''DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}'''
+
+
+# Banco de Dados pra deixar quando estiver em produção. 
+#LEMBRAR DE NÃO SUBIR O DB.SQLITE3 DO PROJETO NO GITHUB
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': '/home/database/db.sqlite3',
     }
 }
 

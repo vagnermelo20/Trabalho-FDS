@@ -1,6 +1,10 @@
 # Projeto Feito!
 
-Este projeto será feito para a matéria de **FDS (Fundamentos de Desenvolvimento de Software) da turma 2A da Cesar School do curso de Ciência da Computação**.
+Este projeto será feito para a matéria de **FDS (Fundamentos de Desenvolvimento de Software) da turma 2A da Cesar School do curso de Ciência da Computação**.5
+
+## Link do site: 
+![Link do site:]https://feito1-hze3efe6bxagcehp.brazilsouth-01.azurewebsites.net/
+
 
 ## Equipe
 - Daniel Andrade Ferreira Silva
@@ -49,6 +53,7 @@ https://www.figma.com/design/2qqjd2by9hBYF834AlShsX/Projeto-2?t=oZ8SWjYzrl9XIubM
 
 história 4: Como usuários membros de um grupo quero acompanhar o andamento do projeto com um histórico de entregas
 ![image](https://github.com/user-attachments/assets/8ababb7f-42aa-4d6c-82a6-05504244f9e6)
+
 
 
 

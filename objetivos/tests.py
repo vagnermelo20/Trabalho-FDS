@@ -1,7 +1,6 @@
 from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
@@ -15,14 +14,12 @@ class TesteFluxoCompletoObjetivos(LiveServerTestCase):
     def setUpClass(cls):
         super().setUpClass()
         options = Options()
-        # Se estiver no GitHub Actions, usa headless
         if os.environ.get('GITHUB_ACTIONS') == 'true':
             options.add_argument('--headless')
             options.add_argument('--no-sandbox')
             options.add_argument('--disable-dev-shm-usage')
         cls.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
         cls.driver.implicitly_wait(10)
-
 
     @classmethod
     def tearDownClass(cls):
@@ -32,10 +29,9 @@ class TesteFluxoCompletoObjetivos(LiveServerTestCase):
     def test_fluxo_completo_usuario_objetivos(self):
         driver = self.driver
 
-        # ---------- 1. Cadastro de novo usuário ----------
+        # 1. Cadastro de novo usuário
         driver.get(f'{self.live_server_url}/criar_usuario/')
         time.sleep(1)
-
         driver.find_element(By.ID, "campo_username").send_keys("UsuarioNovoTeste")
         time.sleep(1)
         driver.find_element(By.ID, "campo_email").send_keys("novousuario@teste.com")
@@ -45,34 +41,22 @@ class TesteFluxoCompletoObjetivos(LiveServerTestCase):
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
 
-        # Após cadastro, volta para página de login
         self.assertEqual(driver.current_url, f'{self.live_server_url}/')
 
-        # ---------- 2. Login com o novo usuário ----------
-        campo_email = driver.find_element(By.ID, "campo_email")
+        # 2. Login
+        driver.find_element(By.ID, "campo_email").send_keys("novousuario@teste.com")
         time.sleep(1)
-        campo_senha = driver.find_element(By.ID, "campo_senha")
+        driver.find_element(By.ID, "campo_senha").send_keys("senha321")
         time.sleep(1)
-        botao_entrar = driver.find_element(By.TAG_NAME, "button")
+        driver.find_element(By.TAG_NAME, "button").click()
+        time.sleep(2)
+
+        WebDriverWait(driver, 10).until(EC.url_contains('/objetivos/'))
         time.sleep(1)
 
-        campo_email.send_keys("novousuario@teste.com")
-        time.sleep(1)
-        campo_senha.send_keys("senha321")
-        time.sleep(1)
-        botao_entrar.click()
-
-        WebDriverWait(driver, 10).until(
-            EC.url_contains('/objetivos/')
-        )
-        time.sleep(1)
-
-        self.assertIn('/objetivos/', driver.current_url)
-
-        # ---------- 3. Criação de objetivo com sucesso ----------
+        # 3. Criar objetivo
         driver.find_element(By.LINK_TEXT, "+ Criar tarefas").click()
         time.sleep(1)
-
         driver.find_element(By.ID, "campo_nome").send_keys("Objetivo Teste 1")
         time.sleep(1)
         driver.find_element(By.ID, "campo_descricao").send_keys("Descrição do objetivo 1.")
@@ -85,57 +69,120 @@ class TesteFluxoCompletoObjetivos(LiveServerTestCase):
         driver.find_element(By.LINK_TEXT, "📋 Ver todos os objetivos").click()
         time.sleep(1)
 
-        body_text = driver.find_element(By.TAG_NAME, "body").text
-        self.assertIn("Objetivo Teste 1", body_text)
-
-        # ---------- 4. Tentativa de criar objetivo sem nome ----------
+        # 4. Criar objetivo sem nome
         driver.find_element(By.LINK_TEXT, "+ Criar tarefas").click()
         time.sleep(1)
-
         driver.find_element(By.ID, "campo_descricao").send_keys("Descrição sem título.")
         time.sleep(1)
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
 
-        # Valida que deu erro
-        body_text = driver.find_element(By.TAG_NAME, "body").text
-        self.assertIn("É necessário preencher o nome do objetivo.", body_text)
+        self.assertIn("É necessário preencher o nome do objetivo.", driver.find_element(By.TAG_NAME, "body").text)
+        time.sleep(1)
 
-        # ---------- 5. Tentativa de criar objetivo duplicado ----------
+        # 5. Criar objetivo duplicado
         driver.find_element(By.ID, "campo_nome").send_keys("Objetivo Teste 1")
         time.sleep(1)
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
 
-        # Valida que deu erro de duplicidade
-        body_text = driver.find_element(By.TAG_NAME, "body").text
-        self.assertIn("Você já tem uma tarefa com este nome. Por favor, escolha um nome diferente.", body_text)
-
-        # Clicar em Voltar para voltar para objetivos
+        self.assertIn("Você já tem uma tarefa com este nome.", driver.find_element(By.TAG_NAME, "body").text)
+        time.sleep(1)
 
         driver.find_element(By.LINK_TEXT, "Voltar").click()
         time.sleep(1)
 
+        # 6. Editar objetivo
         driver.find_element(By.LINK_TEXT, "Editar").click()
         time.sleep(1)
-
         campo_nome = driver.find_element(By.ID, "campo_nome")
-        time.sleep(1)
         campo_nome.clear()
         campo_nome.send_keys("Objetivo Teste Editado")
         time.sleep(1)
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
 
-        self.assertIn('/objetivos/', driver.current_url)
+        driver.find_element(By.LINK_TEXT, "Visualizar subtarefas").click()
+        time.sleep(1)
 
-        # ---------- 7. Deletar o objetivo criado ----------
-        botao_deletar = driver.find_element(By.XPATH, "//form/button[contains(text(), 'Deletar')]")
-        botao_deletar.click()
+        self.assertIn("Não há subtarefas cadastradas para este objetivo", driver.find_element(By.TAG_NAME, "body").text)
+        time.sleep(1)
+
+        # 7. Criar subtarefa
+        driver.find_element(By.LINK_TEXT, "+ Criar subtarefa").click()
+        time.sleep(1)
+        driver.find_element(By.ID, "campo_nome").send_keys("Subtarefa Teste 1")
+        time.sleep(1)
+        driver.find_element(By.ID, "campo_descricao").send_keys("Descrição da subtarefa 1.")
+        time.sleep(1)
+        driver.find_element(By.TAG_NAME, "button").click()
+        time.sleep(2)
+
+        driver.find_element(By.LINK_TEXT, "Visualizar subtarefas").click()
+        time.sleep(1)
+
+        self.assertIn("Subtarefa Teste 1", driver.find_element(By.TAG_NAME, "body").text)
+        time.sleep(1)
+
+        # 8. Criar subtarefa sem nome
+        driver.find_element(By.LINK_TEXT, "+ Criar subtarefa").click()
+        time.sleep(1)
+        driver.find_element(By.ID, "campo_descricao").send_keys("Subtarefa sem nome")
+        time.sleep(1)
+        driver.find_element(By.TAG_NAME, "button").click()
+        time.sleep(2)
+        
+        self.assertIn("O nome da subtarefa é obrigatório.", driver.find_element(By.TAG_NAME, "body").text)
+
+        # 9. Criar subtarefa duplicada
+        time.sleep(1)
+        driver.find_element(By.ID, "campo_nome").send_keys("Subtarefa Teste 1")
+        time.sleep(1)
+        driver.find_element(By.ID, "campo_descricao").send_keys("Outra descrição.")
+        time.sleep(1)
+        driver.find_element(By.TAG_NAME, "button").click()
+        time.sleep(2)
+
+        driver.find_element(By.LINK_TEXT, "Voltar para Subtarefas").click()
+        
+    
+
+        # 10. Editar subtarefa
+        driver.find_element(By.LINK_TEXT, "Editar").click()
+        time.sleep(1)
+        campo_nome = driver.find_element(By.ID, "campo_nome")
+        campo_nome.clear()
+        campo_nome.send_keys("Subtarefa Editada")
+        time.sleep(1)
+        campo_descricao = driver.find_element(By.ID, "campo_descricao")
+        campo_descricao.clear()
+        campo_descricao.send_keys("Subtarefa editada descrição.")
+        time.sleep(1)
+        driver.find_element(By.CSS_SELECTOR, "select#campo_status option[value='em andamento']").click()
+        time.sleep(1)
+        driver.find_element(By.TAG_NAME, "button").click()
+        time.sleep(2)
+
+        driver.find_element(By.LINK_TEXT, "Visualizar subtarefas").click()
+        time.sleep(1)
+
+        self.assertIn("Subtarefa Editada", driver.find_element(By.TAG_NAME, "body").text)
+        time.sleep(1)
+
+        # 11. Deletar subtarefa
+        botao_deletar_sub = driver.find_element(By.XPATH, "//form/button[contains(text(), 'Deletar')]")
+        botao_deletar_sub.click()
         time.sleep(1)
         alerta = driver.switch_to.alert
         alerta.accept()
         time.sleep(2)
 
-        body_text = driver.find_element(By.TAG_NAME, "body").text
-        self.assertNotIn("Objetivo Teste Editado", body_text)
+        # 12. Deletar objetivo
+        botao_deletar_obj = driver.find_element(By.XPATH, "//form/button[contains(text(), 'Deletar')]")
+        botao_deletar_obj.click()
+        time.sleep(1)
+        alerta = driver.switch_to.alert
+        alerta.accept()
+        time.sleep(2)
+
+        self.assertNotIn("Objetivo Teste Editado", driver.find_element(By.TAG_NAME, "body").text)

@@ -362,6 +362,16 @@ class Criar_Grupo(View):
 
         nome_grupo=request.POST.get('nome_grupo')
         senha=request.POST.get('senha')
+
+        if not nome_grupo:
+            messages.error(request, 'O nome do grupo é obrigatório.')
+            return render(request, "objetivos/criar_grupo.html")
+            
+        # Validar senha do grupo
+        if not senha:
+            messages.error(request, 'A senha do grupo é obrigatória.')
+            return render(request, "objetivos/criar_grupo.html")
+
         
         if Grupos.objects.filter(Nome_grupo=nome_grupo).exists():
             messages.error(request,'Esse grupo já existe')
