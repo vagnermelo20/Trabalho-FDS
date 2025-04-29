@@ -8,11 +8,20 @@
     </header>
 
     <main>
+
+        {% if messages %}
+        <ul style="color: red; padding-left: 20px; margin-bottom: 20px;">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
                 <form method="POST">
             {% csrf_token %}
             
             <label for="campo_nome">Nome da Subtarefa:</label>
-            <input type="text" name="nome_subtarefa" id="campo_nome" placeholder="Digite o nome da subtarefa" required>
+            <input type="text" name="nome_subtarefa" id="campo_nome" placeholder="Digite o nome da subtarefa" >
 
             <label for="campo_descricao">Descrição:</label>
             <textarea name="descricao_subtarefa" id="campo_descricao" rows="4" placeholder="Descrição da subtarefa"></textarea>
