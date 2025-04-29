@@ -387,7 +387,7 @@ class Criar_Grupo(View):
 
         messages.success(request,"Grupo criado com sucesso")
         
-        return redirect('visualizar_objetivos')
+        return redirect('meus_grupos')
     
 class Senha(View):
     def get(self,request):
