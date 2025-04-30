@@ -142,5 +142,10 @@ Cenário 03: Criar um grupo que já existe:
 Cenário 04: Criar grupo sem senha:
 
 ![image](https://github.com/user-attachments/assets/e78868b9-5c12-4215-8c13-666ea621fcf4)
+
+## Bug tracker:
+
+![image](https://github.com/user-attachments/assets/c451af3d-6f5c-4577-8bad-fad0849c06fa)
+
 <br>
 </details>
