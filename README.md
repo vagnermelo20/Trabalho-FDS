@@ -90,14 +90,12 @@ O motivo da programação em par não ser utilizada em 100% do projeto foi devid
 <details><summary><h1><b>Entrega 03</b></h1></summary>
 Hitória de Criar subtarefas como um usuário
  <br>
- Cenário 1: Subtarefa criada com sucesso
-![image](https://github.com/user-attachments/assets/051792f4-40cf-41e9-beda-96c0167c85b5) 
+Cenário 1: Subtarefa criada com sucesso
+ ![image](https://github.com/user-attachments/assets/8ffab4e2-2cc8-49a8-abf0-dfee9e692877) 
 Cenário 2: 
 Subtarefa criada sem nome
-![image](https://github.com/user-attachments/assets/5117fb5a-e9ea-4814-8e29-354f922cdb31) 
 Cenário 3:
 Subtarefa Criada com nome duplicado
-![image](https://github.com/user-attachments/assets/32243aeb-d50a-4489-9847-e467043a0608) 
 
 
 
