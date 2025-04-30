@@ -38,19 +38,29 @@ class Test1_GerenciarObjetivo(LiveServerTestCase):
         driver.find_element(By.ID, "campo_senha").send_keys("senha321")
         driver.find_element(By.TAG_NAME, "button").click()
 
-        # 2. Login - Aguardando elementos após redirecionamento
-        campo_email = WebDriverWait(driver, 10).until(
+        # 2. Login - Usando WebDriverWait com retries para garantir estabilidade
+        # Aguardar até que o redirecionamento para a página de login esteja completo
+        WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "campo_email"))
         )
+        
+        # Uma pausa breve para garantir a estabilidade da página
+        time.sleep(1)
+        
+        # Localizar o campo email novamente (para evitar StaleElementReferenceException)
+        campo_email = driver.find_element(By.ID, "campo_email")
+        campo_email.clear()  # Limpar o campo antes de digitar
         campo_email.send_keys("novousuario@teste.com")
         
-        campo_senha = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.ID, "campo_senha"))
-        )
+        # Localizar o campo senha
+        campo_senha = driver.find_element(By.ID, "campo_senha") 
+        campo_senha.clear()  # Limpar o campo antes de digitar
         campo_senha.send_keys("senha321")
         
+        # Clicar no botão de login
         driver.find_element(By.TAG_NAME, "button").click()
 
+        # Aguardar o redirecionamento para a página de objetivos
         WebDriverWait(driver, 10).until(EC.url_contains('/objetivos/'))
         time.sleep(1)
 
@@ -153,20 +163,29 @@ class Test2_GerenciarObjetivo(LiveServerTestCase):
         driver.find_element(By.ID, "campo_senha").send_keys("senha321")
         driver.find_element(By.TAG_NAME, "button").click()
 
-
-        # 2. Login - Aguardando elementos após redirecionamento
-        campo_email = WebDriverWait(driver, 10).until(
+        # 2. Login - Usando WebDriverWait com retries para garantir estabilidade
+        # Aguardar até que o redirecionamento para a página de login esteja completo
+        WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "campo_email"))
         )
+        
+        # Uma pausa breve para garantir a estabilidade da página
+        time.sleep(1)
+        
+        # Localizar o campo email novamente (para evitar StaleElementReferenceException)
+        campo_email = driver.find_element(By.ID, "campo_email")
+        campo_email.clear()  # Limpar o campo antes de digitar
         campo_email.send_keys("novousuario@teste.com")
         
-        campo_senha = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.ID, "campo_senha"))
-        )
+        # Localizar o campo senha
+        campo_senha = driver.find_element(By.ID, "campo_senha") 
+        campo_senha.clear()  # Limpar o campo antes de digitar
         campo_senha.send_keys("senha321")
         
+        # Clicar no botão de login
         driver.find_element(By.TAG_NAME, "button").click()
 
+        # Aguardar o redirecionamento para a página de objetivos
         WebDriverWait(driver, 10).until(EC.url_contains('/objetivos/'))
         time.sleep(1)
 
@@ -339,20 +358,29 @@ class Test3_VerPrioridade(LiveServerTestCase):
         driver.find_element(By.ID, "campo_senha").send_keys("senha321")
         driver.find_element(By.TAG_NAME, "button").click()
 
-
-        # 2. Login - Aguardando elementos após redirecionamento
-        campo_email = WebDriverWait(driver, 10).until(
+        # 2. Login - Usando WebDriverWait com retries para garantir estabilidade
+        # Aguardar até que o redirecionamento para a página de login esteja completo
+        WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "campo_email"))
         )
+        
+        # Uma pausa breve para garantir a estabilidade da página
+        time.sleep(1)
+        
+        # Localizar o campo email novamente (para evitar StaleElementReferenceException)
+        campo_email = driver.find_element(By.ID, "campo_email")
+        campo_email.clear()  # Limpar o campo antes de digitar
         campo_email.send_keys("novousuario@teste.com")
         
-        campo_senha = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.ID, "campo_senha"))
-        )
+        # Localizar o campo senha
+        campo_senha = driver.find_element(By.ID, "campo_senha") 
+        campo_senha.clear()  # Limpar o campo antes de digitar
         campo_senha.send_keys("senha321")
         
+        # Clicar no botão de login
         driver.find_element(By.TAG_NAME, "button").click()
 
+        # Aguardar o redirecionamento para a página de objetivos
         WebDriverWait(driver, 10).until(EC.url_contains('/objetivos/'))
         time.sleep(1)
 
@@ -461,19 +489,29 @@ class Test4_CriarSubtarefa(LiveServerTestCase):
         driver.find_element(By.ID, "campo_senha").send_keys("senha321")
         driver.find_element(By.TAG_NAME, "button").click()
 
-        # 2. Login - Aguardando elementos após redirecionamento
-        campo_email = WebDriverWait(driver, 10).until(
+        # 2. Login - Usando WebDriverWait com retries para garantir estabilidade
+        # Aguardar até que o redirecionamento para a página de login esteja completo
+        WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "campo_email"))
         )
+        
+        # Uma pausa breve para garantir a estabilidade da página
+        time.sleep(1)
+        
+        # Localizar o campo email novamente (para evitar StaleElementReferenceException)
+        campo_email = driver.find_element(By.ID, "campo_email")
+        campo_email.clear()  # Limpar o campo antes de digitar
         campo_email.send_keys("novousuario@teste.com")
         
-        campo_senha = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.ID, "campo_senha"))
-        )
+        # Localizar o campo senha
+        campo_senha = driver.find_element(By.ID, "campo_senha") 
+        campo_senha.clear()  # Limpar o campo antes de digitar
         campo_senha.send_keys("senha321")
         
+        # Clicar no botão de login
         driver.find_element(By.TAG_NAME, "button").click()
 
+        # Aguardar o redirecionamento para a página de objetivos
         WebDriverWait(driver, 10).until(EC.url_contains('/objetivos/'))
         time.sleep(1)
 
@@ -610,19 +648,29 @@ class Test5_GerenciarSubtarefa(LiveServerTestCase):
         driver.find_element(By.ID, "campo_senha").send_keys("senha321")
         driver.find_element(By.TAG_NAME, "button").click()
 
-        # 2. Login - Aguardando elementos após redirecionamento
-        campo_email = WebDriverWait(driver, 10).until(
+        # 2. Login - Usando WebDriverWait com retries para garantir estabilidade
+        # Aguardar até que o redirecionamento para a página de login esteja completo
+        WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "campo_email"))
         )
+        
+        # Uma pausa breve para garantir a estabilidade da página
+        time.sleep(1)
+        
+        # Localizar o campo email novamente (para evitar StaleElementReferenceException)
+        campo_email = driver.find_element(By.ID, "campo_email")
+        campo_email.clear()  # Limpar o campo antes de digitar
         campo_email.send_keys("novousuario@teste.com")
         
-        campo_senha = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.ID, "campo_senha"))
-        )
+        # Localizar o campo senha
+        campo_senha = driver.find_element(By.ID, "campo_senha") 
+        campo_senha.clear()  # Limpar o campo antes de digitar
         campo_senha.send_keys("senha321")
         
+        # Clicar no botão de login
         driver.find_element(By.TAG_NAME, "button").click()
 
+        # Aguardar o redirecionamento para a página de objetivos
         WebDriverWait(driver, 10).until(EC.url_contains('/objetivos/'))
         time.sleep(1)
 
@@ -823,19 +871,29 @@ class Test6_CriarGrupo(LiveServerTestCase):
         driver.find_element(By.TAG_NAME, "button").click()
 
 
-        # 2. Login - Aguardando elementos após redirecionamento
-        campo_email = WebDriverWait(driver, 10).until(
+        # 2. Login - Usando WebDriverWait com retries para garantir estabilidade
+        # Aguardar até que o redirecionamento para a página de login esteja completo
+        WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "campo_email"))
         )
+        
+        # Uma pausa breve para garantir a estabilidade da página
+        time.sleep(1)
+        
+        # Localizar o campo email novamente (para evitar StaleElementReferenceException)
+        campo_email = driver.find_element(By.ID, "campo_email")
+        campo_email.clear()  # Limpar o campo antes de digitar
         campo_email.send_keys("novousuario@teste.com")
         
-        campo_senha = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.ID, "campo_senha"))
-        )
+        # Localizar o campo senha
+        campo_senha = driver.find_element(By.ID, "campo_senha") 
+        campo_senha.clear()  # Limpar o campo antes de digitar
         campo_senha.send_keys("senha321")
         
+        # Clicar no botão de login
         driver.find_element(By.TAG_NAME, "button").click()
 
+        # Aguardar o redirecionamento para a página de objetivos
         WebDriverWait(driver, 10).until(EC.url_contains('/objetivos/'))
         time.sleep(1)
 
