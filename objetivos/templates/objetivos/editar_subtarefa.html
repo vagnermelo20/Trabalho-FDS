@@ -22,7 +22,7 @@
         {% csrf_token %}
         
         <label for="campo_nome">Nome:</label>
-        <input type="text" name="nome_subtarefa" id="campo_nome" value="{{ subtarefa.nome }}" placeholder="Nome da subtarefa" required>
+        <input type="text" name="nome_subtarefa" id="campo_nome" value="{{ subtarefa.nome }}" placeholder="Nome da subtarefa">
         
         <label for="campo_descricao">Descrição:</label>
         <textarea name="descricao_subtarefa" id="campo_descricao" rows="4" placeholder="Descreva a subtarefa aqui">{{ subtarefa.descrição }}</textarea>
