@@ -84,26 +84,19 @@ Progamação em par foi usado em praticamente todo o projeto. Estabelecemos inic
 O motivo da programação em par não ser utilizada em 100% do projeto foi devido a principalmente conflito de horários entre os membros junto com uma nescessidade de maior agilidade na realização do projeto.
 
 
-</details>
+<details><summary><h1><b>Entrega 02</b></h1></summary>
+## História 01: Como usuário, eu quero poder criar subtarefas para uma tarefa:
 
+ Cenário 01: Criar subtarefa com sucesso:
+ ![image](https://github.com/user-attachments/assets/5a573f8b-a300-45c9-9bec-1e5660a3c841)
 
-<details><summary><h1><b>Entrega 03</b></h1></summary>
-Hitória de Criar subtarefas como um usuário
- <br>
-Cenário 1: Subtarefa criada com sucesso
- ![image](https://github.com/user-attachments/assets/8ffab4e2-2cc8-49a8-abf0-dfee9e692877) 
-Cenário 2: 
-Subtarefa criada sem nome
-Cenário 3:
-Subtarefa Criada com nome duplicado
+ Cenário 02: Criar subtarefa sem nome:
+ ![image](https://github.com/user-attachments/assets/3b5fe05d-f9cd-4f31-b847-76fae067c1b5)
 
+ Cenário 03: Criar subtarefa com nome igual:
+ ![image](https://github.com/user-attachments/assets/f10e9525-3d93-43ce-9f1c-a07eed0ba33e)
 
-
-
-
-
-
-
+## História 02: Como usuário eu quero poder gerenciar subtarefas
 
 
 </details>
