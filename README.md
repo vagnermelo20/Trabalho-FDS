@@ -151,5 +151,15 @@ Screencast do funcionamento do site com a adição das novas histórias:
 
 ![image](https://github.com/user-attachments/assets/c451af3d-6f5c-4577-8bad-fad0849c06fa)
 
+## Prints do Jira:
+
+Imagem 1:
+![image](https://github.com/user-attachments/assets/ec155f5c-a261-4e42-b88e-e0f88b554515)
+
+Imagem 2:
+![image](https://github.com/user-attachments/assets/e8df2fd1-0615-4c18-a825-58e2e96e94bd)
+
 <br>
 </details>
+
+
