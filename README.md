@@ -13,6 +13,10 @@ Este projeto será feito para a matéria de **FDS (Fundamentos de Desenvolviment
 ## Sobre o Projeto
 Este projeto, intitulado de **Feito!**, tem como objetivo criar uma aplicação para gerenciamento de tarefas, sejam elas individuais ou em grupo, buscando aumentar a produtividade em atividades cotidianas e profissionais.
 
+## Relato da programação em par
+
+Progamação em par foi usado em praticamente todo o projeto. Estabelecemos inicialmente 3 duplas, cada dulpa iria implementar uma historia. Definimos depois que seria melhor deixar 2 duplas na criação das views e dos módulos enquanto outra ficaria responsável na criação dos templates. O processo foi muito enriquecedor para todos os envolvidos, a divisão dos grupos entre os que fariam views e models e outro que faria os templates fez com que a troca de conhecimento entre os participantes tivesse de ser mais frequente, tornando o processo mais colaborativo e eficente. A programação em par ocorreu tanto presencialmente, em alguns momentos, como também de forma online, com a utlização do discord e do whattsapp. Por mais que tivesse essas delimitações entre grupos de trabalho, houve também a mescla dos integrantes entre grupos em determinados momentos do projeto.
+O motivo da programação em par não ser utilizada em 100% do projeto foi devido a principalmente conflito de horários entre os membros junto com uma nescessidade de maior agilidade na realização do projeto.
 
 
 <details><summary><h1><b>Entrega 01</b></h1></summary>
@@ -77,26 +81,60 @@ https://trabalhofds.atlassian.net/
 
 ![image](https://github.com/user-attachments/assets/b9121921-9645-4002-9240-7480f68b2102)
 
-
-## Relato da programação em par
-
-Progamação em par foi usado em praticamente todo o projeto. Estabelecemos inicialmente 3 duplas, cada dulpa iria implementar uma historia. Definimos depois que seria melhor deixar 2 duplas na criação das views e dos módulos enquanto outra ficaria responsável na criação dos templates. O processo foi muito enriquecedor para todos os envolvidos, a divisão dos grupos entre os que fariam views e models e outro que faria os templates fez com que a troca de conhecimento entre os participantes tivesse de ser mais frequente, tornando o processo mais colaborativo e eficente. A programação em par ocorreu tanto presencialmente, em alguns momentos, como também de forma online, com a utlização do discord e do whattsapp. Por mais que tivesse essas delimitações entre grupos de trabalho, houve também a mescla dos integrantes entre grupos em determinados momentos do projeto.
-O motivo da programação em par não ser utilizada em 100% do projeto foi devido a principalmente conflito de horários entre os membros junto com uma nescessidade de maior agilidade na realização do projeto.
+</details>
 
 
-<details><summary><h1><b>Entrega 02</b></h1></summary>
+
+<details><summary><h1><b>Entrega 03</b></h1></summary>
+ 
 ## História 01: Como usuário, eu quero poder criar subtarefas para uma tarefa:
 
  Cenário 01: Criar subtarefa com sucesso:
- ![image](https://github.com/user-attachments/assets/5a573f8b-a300-45c9-9bec-1e5660a3c841)
-
+ <br>
+ <br>
+ ![image](https://github.com/user-attachments/assets/fbb0c201-1cc0-43c9-a36d-3b346d25424a)
+ <br>
  Cenário 02: Criar subtarefa sem nome:
  ![image](https://github.com/user-attachments/assets/3b5fe05d-f9cd-4f31-b847-76fae067c1b5)
-
+ <br>
  Cenário 03: Criar subtarefa com nome igual:
  ![image](https://github.com/user-attachments/assets/f10e9525-3d93-43ce-9f1c-a07eed0ba33e)
+ <br>
+ <br>
+## História 02: Como usuário eu quero poder gerenciar subtarefas:
+<br>
+<br>
+Cenário 01: Visualização de subtarefas com sucesso:
+![image](https://github.com/user-attachments/assets/d8343575-257f-4639-9700-cb9075b7ef82)
+<br>
+Cenário 02: Editar subtarefas com sucesso:
+![image](https://github.com/user-attachments/assets/c722934e-2170-45bf-9ce0-fc0c0b3a38be)
+<br>
+Cenário 03: Editar subtarefas inserindo nome repetido:
+![image](https://github.com/user-attachments/assets/5af6acde-321f-4704-90f5-3c7a7a0e0904)
+<br>
+Cenário 04: Editar subtarefas sem inserir o nome:
+![image](https://github.com/user-attachments/assets/1df4abe1-e8d9-4104-a865-e001d78c8fb1)
+<br>
+Cenário 05: Deletar subtarefas com sucesso:
+![image](https://github.com/user-attachments/assets/43462f76-749f-4584-b213-85bd48b0a56a)
+<br>
+<br>
 
-## História 02: Como usuário eu quero poder gerenciar subtarefas
+## História 03: Como usuário, eu quero poder criar grupos:
 
-
+<br>
+<br>
+Cenário 01: Criação de grupos com sucesso:
+![image](https://github.com/user-attachments/assets/6107b30c-750f-4ea7-b2c2-6a8ef1bce3e3)
+<br>
+Cenário 02: Criar grupo sem nome:
+![image](https://github.com/user-attachments/assets/7dc32ffd-2a21-41aa-989b-ed766a5288b0)
+<br>
+Cenário 03: Criar um grupo que já existe:
+![image](https://github.com/user-attachments/assets/71cad202-442f-4694-9d0b-7416ae759a60)
+<br>
+Cenário 04: Criar grupo sem senha:
+![image](https://github.com/user-attachments/assets/e78868b9-5c12-4215-8c13-666ea621fcf4)
+<br>
 </details>
