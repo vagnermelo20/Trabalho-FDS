@@ -105,6 +105,7 @@ https://trabalhofds.atlassian.net/
 <br>
 <br>
 Cenário 01: Visualização de subtarefas com sucesso:
+
 ![image](https://github.com/user-attachments/assets/d8343575-257f-4639-9700-cb9075b7ef82)
 <br>
 Cenário 02: Editar subtarefas com sucesso:
@@ -126,15 +127,19 @@ Cenário 05: Deletar subtarefas com sucesso:
 <br>
 <br>
 Cenário 01: Criação de grupos com sucesso:
+
 ![image](https://github.com/user-attachments/assets/6107b30c-750f-4ea7-b2c2-6a8ef1bce3e3)
 <br>
 Cenário 02: Criar grupo sem nome:
 ![image](https://github.com/user-attachments/assets/7dc32ffd-2a21-41aa-989b-ed766a5288b0)
+
 <br>
 Cenário 03: Criar um grupo que já existe:
+
 ![image](https://github.com/user-attachments/assets/71cad202-442f-4694-9d0b-7416ae759a60)
 <br>
 Cenário 04: Criar grupo sem senha:
+
 ![image](https://github.com/user-attachments/assets/e78868b9-5c12-4215-8c13-666ea621fcf4)
 <br>
 </details>
