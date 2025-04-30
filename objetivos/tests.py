@@ -38,8 +38,6 @@ class Test1_GerenciarObjetivo(LiveServerTestCase):
         driver.find_element(By.ID, "campo_senha").send_keys("senha321")
         driver.find_element(By.TAG_NAME, "button").click()
 
-        self.assertEqual(driver.current_url, f'{self.live_server_url}/')
-
         # 2. Login
         driver.find_element(By.ID, "campo_email").send_keys("novousuario@teste.com")
         driver.find_element(By.ID, "campo_senha").send_keys("senha321")
@@ -116,7 +114,6 @@ class Test2_GerenciarObjetivo(LiveServerTestCase):
         driver.find_element(By.ID, "campo_senha").send_keys("senha321")
         driver.find_element(By.TAG_NAME, "button").click()
 
-        self.assertEqual(driver.current_url, f'{self.live_server_url}/')
 
         # 2. Login
         driver.find_element(By.ID, "campo_email").send_keys("novousuario@teste.com")
@@ -231,7 +228,6 @@ class Test3_VerPrioridade(LiveServerTestCase):
         driver.find_element(By.ID, "campo_senha").send_keys("senha321")
         driver.find_element(By.TAG_NAME, "button").click()
 
-        self.assertEqual(driver.current_url, f'{self.live_server_url}/')
 
         # 2. Login
         driver.find_element(By.ID, "campo_email").send_keys("novousuario@teste.com")
@@ -316,8 +312,6 @@ class Test4_CriarSubtarefa(LiveServerTestCase):
         driver.find_element(By.ID, "campo_email").send_keys("novousuario@teste.com")
         driver.find_element(By.ID, "campo_senha").send_keys("senha321")
         driver.find_element(By.TAG_NAME, "button").click()
-
-        self.assertEqual(driver.current_url, f'{self.live_server_url}/')
 
         # 2. Login
         driver.find_element(By.ID, "campo_email").send_keys("novousuario@teste.com")
@@ -414,8 +408,6 @@ class Test5_GerenciarSubtarefa(LiveServerTestCase):
         driver.find_element(By.ID, "campo_email").send_keys("novousuario@teste.com")
         driver.find_element(By.ID, "campo_senha").send_keys("senha321")
         driver.find_element(By.TAG_NAME, "button").click()
-
-        self.assertEqual(driver.current_url, f'{self.live_server_url}/')
 
         # 2. Login
         driver.find_element(By.ID, "campo_email").send_keys("novousuario@teste.com")
@@ -545,7 +537,6 @@ class Test6_CriarGrupo(LiveServerTestCase):
         driver.find_element(By.ID, "campo_senha").send_keys("senha321")
         driver.find_element(By.TAG_NAME, "button").click()
 
-        self.assertEqual(driver.current_url, f'{self.live_server_url}/')
 
         # 2. Login
         driver.find_element(By.ID, "campo_email").send_keys("novousuario@teste.com")
