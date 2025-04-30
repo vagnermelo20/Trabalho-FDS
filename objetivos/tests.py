@@ -38,50 +38,89 @@ class Test1_GerenciarObjetivo(LiveServerTestCase):
         driver.find_element(By.ID, "campo_senha").send_keys("senha321")
         driver.find_element(By.TAG_NAME, "button").click()
 
-        # 2. Login
-        driver.find_element(By.ID, "campo_email").send_keys("novousuario@teste.com")
-        driver.find_element(By.ID, "campo_senha").send_keys("senha321")
+        # 2. Login - Aguardando elementos após redirecionamento
+        campo_email = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_email"))
+        )
+        campo_email.send_keys("novousuario@teste.com")
+        
+        campo_senha = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_senha"))
+        )
+        campo_senha.send_keys("senha321")
+        
         driver.find_element(By.TAG_NAME, "button").click()
 
         WebDriverWait(driver, 10).until(EC.url_contains('/objetivos/'))
         time.sleep(1)
 
         # 3. Criar objetivo
-        driver.find_element(By.LINK_TEXT, "+ Criar tarefas").click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "+ Criar tarefas"))
+        ).click()
         time.sleep(1)
-        driver.find_element(By.ID, "campo_nome").send_keys("Objetivo Teste 1")
-        time.sleep(1)
-        driver.find_element(By.ID, "campo_descricao").send_keys("Descrição do objetivo 1.")
-        time.sleep(1)
-        driver.find_element(By.ID, "campo_urgencia").send_keys("2")
-        time.sleep(1)
+        
+        campo_nome = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_nome"))
+        )
+        campo_nome.send_keys("Objetivo Teste 1")
+        
+        campo_descricao = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_descricao"))
+        )
+        campo_descricao.send_keys("Descrição do objetivo 1.")
+        
+        campo_urgencia = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_urgencia"))
+        )
+        campo_urgencia.send_keys("2")
+        
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
 
-        driver.find_element(By.LINK_TEXT, "📋 Ver todos os objetivos").click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "📋 Ver todos os objetivos"))
+        ).click()
         time.sleep(1)
 
         # 4. Criar objetivo sem nome
-        driver.find_element(By.LINK_TEXT, "+ Criar tarefas").click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "+ Criar tarefas"))
+        ).click()
         time.sleep(1)
-        driver.find_element(By.ID, "campo_descricao").send_keys("Descrição sem título.")
-        time.sleep(1)
+        
+        campo_descricao = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_descricao"))
+        )
+        campo_descricao.send_keys("Descrição sem título.")
+        
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
 
-        self.assertIn("É necessário preencher o nome do objetivo.", driver.find_element(By.TAG_NAME, "body").text)
+        # Verificar mensagem de erro
+        WebDriverWait(driver, 10).until(
+            EC.text_to_be_present_in_element((By.TAG_NAME, "body"), "É necessário preencher o nome do objetivo.")
+        )
         time.sleep(1)
 
         # 5. Criar objetivo duplicado
-        driver.find_element(By.ID, "campo_nome").send_keys("Objetivo Teste 1")
-        time.sleep(1)
+        campo_nome = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_nome"))
+        )
+        campo_nome.send_keys("Objetivo Teste 1")
+        
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
 
-        self.assertIn("Você já tem uma tarefa com este nome.", driver.find_element(By.TAG_NAME, "body").text)
+        # Verificar mensagem de erro
+        WebDriverWait(driver, 10).until(
+            EC.text_to_be_present_in_element((By.TAG_NAME, "body"), "Você já tem uma tarefa com este nome.")
+        )
         time.sleep(1)
 
-        driver.find_element(By.LINK_TEXT, "Voltar").click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "Voltar"))
+        ).click()
         time.sleep(1)
 
 
@@ -115,90 +154,162 @@ class Test2_GerenciarObjetivo(LiveServerTestCase):
         driver.find_element(By.TAG_NAME, "button").click()
 
 
-        # 2. Login
-        driver.find_element(By.ID, "campo_email").send_keys("novousuario@teste.com")
-        driver.find_element(By.ID, "campo_senha").send_keys("senha321")
+        # 2. Login - Aguardando elementos após redirecionamento
+        campo_email = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_email"))
+        )
+        campo_email.send_keys("novousuario@teste.com")
+        
+        campo_senha = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_senha"))
+        )
+        campo_senha.send_keys("senha321")
+        
         driver.find_element(By.TAG_NAME, "button").click()
 
         WebDriverWait(driver, 10).until(EC.url_contains('/objetivos/'))
         time.sleep(1)
 
         # 3. Criar objetivo 1
-        driver.find_element(By.LINK_TEXT, "+ Criar tarefas").click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "+ Criar tarefas"))
+        ).click()
         time.sleep(1)
-        driver.find_element(By.ID, "campo_nome").send_keys("Objetivo Teste 1")
-        time.sleep(1)
-        driver.find_element(By.ID, "campo_descricao").send_keys("Descrição do objetivo 1.")
-        time.sleep(1)
-        driver.find_element(By.ID, "campo_urgencia").send_keys("2")
-        time.sleep(1)
+        
+        campo_nome = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_nome"))
+        )
+        campo_nome.send_keys("Objetivo Teste 1")
+        
+        campo_descricao = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_descricao"))
+        )
+        campo_descricao.send_keys("Descrição do objetivo 1.")
+        
+        campo_urgencia = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_urgencia"))
+        )
+        campo_urgencia.send_keys("2")
+        
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
 
-        driver.find_element(By.LINK_TEXT, "📋 Ver todos os objetivos").click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "📋 Ver todos os objetivos"))
+        ).click()
         time.sleep(1)
 
         # 4. Criar objetivo 2
-        driver.find_element(By.LINK_TEXT, "+ Criar tarefas").click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "+ Criar tarefas"))
+        ).click()
         time.sleep(1)
-        driver.find_element(By.ID, "campo_nome").send_keys("Objetivo Teste 2")
-        time.sleep(1)
-        driver.find_element(By.ID, "campo_descricao").send_keys("Descrição do objetivo 2.")
-        time.sleep(1)
-        driver.find_element(By.ID, "campo_urgencia").send_keys("2")
-        time.sleep(1)
+        
+        campo_nome = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_nome"))
+        )
+        campo_nome.send_keys("Objetivo Teste 2")
+        
+        campo_descricao = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_descricao"))
+        )
+        campo_descricao.send_keys("Descrição do objetivo 2.")
+        
+        campo_urgencia = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_urgencia"))
+        )
+        campo_urgencia.send_keys("2")
+        
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
-        driver.find_element(By.LINK_TEXT, "📋 Ver todos os objetivos").click()
+        
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "📋 Ver todos os objetivos"))
+        ).click()
         time.sleep(1)
+        
         # 5. Editar objetivo
-        driver.find_element(By.LINK_TEXT, "Editar").click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "Editar"))
+        ).click()
         time.sleep(1)
-        campo_nome = driver.find_element(By.ID, "campo_nome")
+        
+        campo_nome = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_nome"))
+        )
         campo_nome.clear()
         campo_nome.send_keys("Objetivo Teste Editado")
-        time.sleep(1)
-        driver.find_element(By.TAG_NAME, "button").click()
+        
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.TAG_NAME, "button"))
+        ).click()
         time.sleep(2)
 
-        driver.find_element(By.LINK_TEXT, "Editar").click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "Editar"))
+        ).click()
         time.sleep(1)
-        campo_nome = driver.find_element(By.ID, "campo_nome")
+        
+        campo_nome = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_nome"))
+        )
         campo_nome.clear()
         campo_nome.send_keys("Objetivo Teste 2")
-        time.sleep(1)
-        driver.find_element(By.TAG_NAME, "button").click()
+        
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.TAG_NAME, "button"))
+        ).click()
         time.sleep(2)
-        self.assertIn("Você já tem uma tarefa com este nome. Por favor, escolha um nome diferente.", driver.find_element(By.TAG_NAME, "body").text)
-        campo_nome = driver.find_element(By.ID, "campo_nome")
+        
+        # Verificar mensagem de erro
+        WebDriverWait(driver, 10).until(
+            EC.text_to_be_present_in_element((By.TAG_NAME, "body"), 
+                                           "Você já tem uma tarefa com este nome. Por favor, escolha um nome diferente.")
+        )
+        
+        campo_nome = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_nome"))
+        )
         campo_nome.clear()
         time.sleep(1)
-        driver.find_element(By.TAG_NAME, "button").click()
+        
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.TAG_NAME, "button"))
+        ).click()
         time.sleep(2)
-        self.assertIn("É necessário preencher o nome do objetivo.", driver.find_element(By.TAG_NAME, "body").text)
+        
+        # Verificar mensagem de erro
+        WebDriverWait(driver, 10).until(
+            EC.text_to_be_present_in_element((By.TAG_NAME, "body"), 
+                                           "É necessário preencher o nome do objetivo.")
+        )
         time.sleep(1)
-        driver.find_element(By.LINK_TEXT, "Voltar").click()
+        
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "Voltar"))
+        ).click()
         time.sleep(1)
 
-                # 12. Deletar objetivo
-        botao_deletar_obj = driver.find_element(By.XPATH, "//form/button[contains(text(), 'Deletar')]")
+        # 12. Deletar objetivo
+        botao_deletar_obj = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, "//form/button[contains(text(), 'Deletar')]"))
+        )
         botao_deletar_obj.click()
         time.sleep(1)
+        
         alerta = driver.switch_to.alert
         alerta.accept()
         time.sleep(2)
-        botao_deletar_obj = driver.find_element(By.XPATH, "//form/button[contains(text(), 'Deletar')]")
+        
+        botao_deletar_obj = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, "//form/button[contains(text(), 'Deletar')]"))
+        )
         botao_deletar_obj.click()
         time.sleep(1)
+        
         alerta = driver.switch_to.alert
         alerta.accept()
         time.sleep(2)
-
-
-
-
-
-
 
 # Teste 3
 class Test3_VerPrioridade(LiveServerTestCase):
@@ -229,61 +340,98 @@ class Test3_VerPrioridade(LiveServerTestCase):
         driver.find_element(By.TAG_NAME, "button").click()
 
 
-        # 2. Login
-        driver.find_element(By.ID, "campo_email").send_keys("novousuario@teste.com")
-        driver.find_element(By.ID, "campo_senha").send_keys("senha321")
+        # 2. Login - Aguardando elementos após redirecionamento
+        campo_email = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_email"))
+        )
+        campo_email.send_keys("novousuario@teste.com")
+        
+        campo_senha = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_senha"))
+        )
+        campo_senha.send_keys("senha321")
+        
         driver.find_element(By.TAG_NAME, "button").click()
 
         WebDriverWait(driver, 10).until(EC.url_contains('/objetivos/'))
         time.sleep(1)
 
-        driver.find_element(By.LINK_TEXT, "Alta/Nível 3").click()
+        # Verificar filtros de prioridade
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "Alta/Nível 3"))
+        ).click()
         time.sleep(1)
-        driver.find_element(By.LINK_TEXT, "Todas").click()
-        time.sleep(1)
-
         
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "Todas"))
+        ).click()
+        time.sleep(1)
 
        # 3. Criar objetivo 1
-        driver.find_element(By.LINK_TEXT, "+ Criar tarefas").click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "+ Criar tarefas"))
+        ).click()
         time.sleep(1)
-        driver.find_element(By.ID, "campo_nome").send_keys("Objetivo Prioridade 1")
-        time.sleep(1)
-        driver.find_element(By.ID, "campo_descricao").send_keys("Descrição do objetivo 1.")
-        time.sleep(1)
-        driver.find_element(By.ID, "campo_urgencia").send_keys("1")
-        time.sleep(1)
+        
+        campo_nome = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_nome"))
+        )
+        campo_nome.send_keys("Objetivo Prioridade 1")
+        
+        campo_descricao = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_descricao"))
+        )
+        campo_descricao.send_keys("Descrição do objetivo 1.")
+        
+        campo_urgencia = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_urgencia"))
+        )
+        campo_urgencia.send_keys("1")
+        
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
 
-        driver.find_element(By.LINK_TEXT, "📋 Ver todos os objetivos").click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "📋 Ver todos os objetivos"))
+        ).click()
         time.sleep(1)
 
         # Criar objetivo 2
-        driver.find_element(By.LINK_TEXT, "+ Criar tarefas").click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "+ Criar tarefas"))
+        ).click()
         time.sleep(1)
-        driver.find_element(By.ID, "campo_nome").send_keys("Objetivo Prioridade 3")
-        time.sleep(1)
-        driver.find_element(By.ID, "campo_descricao").send_keys("Descrição do objetivo 3.")
-        time.sleep(1)
-        driver.find_element(By.ID, "campo_urgencia").send_keys("3")
-        time.sleep(1)
+        
+        campo_nome = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_nome"))
+        )
+        campo_nome.send_keys("Objetivo Prioridade 3")
+        
+        campo_descricao = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_descricao"))
+        )
+        campo_descricao.send_keys("Descrição do objetivo 3.")
+        
+        campo_urgencia = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_urgencia"))
+        )
+        campo_urgencia.send_keys("3")
+        
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
 
-        driver.find_element(By.LINK_TEXT, "📋 Ver todos os objetivos").click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "📋 Ver todos os objetivos"))
+        ).click()
         time.sleep(1)
+        
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         time.sleep(1)
-        driver.find_element(By.LINK_TEXT, "Alta/Nível 3").click()
+        
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "Alta/Nível 3"))
+        ).click()
         time.sleep(1)
-
-
-
-
-
-
-
 
 # Teste 4
 class Test4_CriarSubtarefa(LiveServerTestCase):
@@ -313,74 +461,127 @@ class Test4_CriarSubtarefa(LiveServerTestCase):
         driver.find_element(By.ID, "campo_senha").send_keys("senha321")
         driver.find_element(By.TAG_NAME, "button").click()
 
-        # 2. Login
-        driver.find_element(By.ID, "campo_email").send_keys("novousuario@teste.com")
-        driver.find_element(By.ID, "campo_senha").send_keys("senha321")
+        # 2. Login - Aguardando elementos após redirecionamento
+        campo_email = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_email"))
+        )
+        campo_email.send_keys("novousuario@teste.com")
+        
+        campo_senha = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_senha"))
+        )
+        campo_senha.send_keys("senha321")
+        
         driver.find_element(By.TAG_NAME, "button").click()
 
         WebDriverWait(driver, 10).until(EC.url_contains('/objetivos/'))
         time.sleep(1)
 
        # 3. Criar objetivo 1
-        driver.find_element(By.LINK_TEXT, "+ Criar tarefas").click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "+ Criar tarefas"))
+        ).click()
         time.sleep(1)
-        driver.find_element(By.ID, "campo_nome").send_keys("Objetivo Teste 1")
-        time.sleep(1)
-        driver.find_element(By.ID, "campo_descricao").send_keys("Descrição do objetivo 1.")
-        time.sleep(1)
-        driver.find_element(By.ID, "campo_urgencia").send_keys("2")
-        time.sleep(1)
+        
+        campo_nome = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_nome"))
+        )
+        campo_nome.send_keys("Objetivo Teste 1")
+        
+        campo_descricao = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_descricao"))
+        )
+        campo_descricao.send_keys("Descrição do objetivo 1.")
+        
+        campo_urgencia = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_urgencia"))
+        )
+        campo_urgencia.send_keys("2")
+        
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
 
-        driver.find_element(By.LINK_TEXT, "📋 Ver todos os objetivos").click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "📋 Ver todos os objetivos"))
+        ).click()
         time.sleep(1)
-        driver.find_element(By.LINK_TEXT, "Visualizar subtarefas").click()
+        
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "Visualizar subtarefas"))
+        ).click()
         time.sleep(1)
 
 
         # 4. Criar subtarefa
-        driver.find_element(By.LINK_TEXT, "+ Criar subtarefa").click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "+ Criar subtarefa"))
+        ).click()
         time.sleep(1)
-        driver.find_element(By.ID, "campo_nome").send_keys("Subtarefa Teste 1")
-        time.sleep(1)
-        driver.find_element(By.ID, "campo_descricao").send_keys("Descrição da subtarefa 1.")
-        time.sleep(1)
+        
+        campo_nome = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_nome"))
+        )
+        campo_nome.send_keys("Subtarefa Teste 1")
+        
+        campo_descricao = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_descricao"))
+        )
+        campo_descricao.send_keys("Descrição da subtarefa 1.")
+        
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
 
-        driver.find_element(By.LINK_TEXT, "Visualizar subtarefas").click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "Visualizar subtarefas"))
+        ).click()
         time.sleep(1)
 
-        self.assertIn("Subtarefa Teste 1", driver.find_element(By.TAG_NAME, "body").text)
+        # Verificar se subtarefa foi criada
+        WebDriverWait(driver, 10).until(
+            EC.text_to_be_present_in_element((By.TAG_NAME, "body"), "Subtarefa Teste 1")
+        )
         time.sleep(1)
 
         # 8. Criar subtarefa sem nome
-        driver.find_element(By.LINK_TEXT, "+ Criar subtarefa").click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "+ Criar subtarefa"))
+        ).click()
         time.sleep(1)
-        driver.find_element(By.ID, "campo_descricao").send_keys("Subtarefa sem nome")
-        time.sleep(1)
+        
+        campo_descricao = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_descricao"))
+        )
+        campo_descricao.send_keys("Subtarefa sem nome")
+        
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
         
-        self.assertIn("O nome da subtarefa é obrigatório.", driver.find_element(By.TAG_NAME, "body").text)
+        # Verificar mensagem de erro
+        WebDriverWait(driver, 10).until(
+            EC.text_to_be_present_in_element((By.TAG_NAME, "body"), "O nome da subtarefa é obrigatório.")
+        )
 
         # 9. Criar subtarefa duplicada
         time.sleep(1)
-        driver.find_element(By.ID, "campo_nome").send_keys("Subtarefa Teste 1")
-        time.sleep(1)
-        driver.find_element(By.ID, "campo_descricao").send_keys("Outra descrição.")
-        time.sleep(1)
+        
+        campo_nome = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_nome"))
+        )
+        campo_nome.send_keys("Subtarefa Teste 1")
+        
+        campo_descricao = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_descricao"))
+        )
+        campo_descricao.clear()
+        campo_descricao.send_keys("Outra descrição.")
+        
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
 
-        driver.find_element(By.LINK_TEXT, "Voltar para Subtarefas").click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "Voltar para Subtarefas"))
+        ).click()
         
-    
-
-
-
-
 # Teste 5
 class Test5_GerenciarSubtarefa(LiveServerTestCase):
     @classmethod
@@ -409,9 +610,17 @@ class Test5_GerenciarSubtarefa(LiveServerTestCase):
         driver.find_element(By.ID, "campo_senha").send_keys("senha321")
         driver.find_element(By.TAG_NAME, "button").click()
 
-        # 2. Login
-        driver.find_element(By.ID, "campo_email").send_keys("novousuario@teste.com")
-        driver.find_element(By.ID, "campo_senha").send_keys("senha321")
+        # 2. Login - Aguardando elementos após redirecionamento
+        campo_email = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_email"))
+        )
+        campo_email.send_keys("novousuario@teste.com")
+        
+        campo_senha = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_senha"))
+        )
+        campo_senha.send_keys("senha321")
+        
         driver.find_element(By.TAG_NAME, "button").click()
 
         WebDriverWait(driver, 10).until(EC.url_contains('/objetivos/'))
@@ -419,94 +628,170 @@ class Test5_GerenciarSubtarefa(LiveServerTestCase):
 
         
        # 3. Criar objetivo
-        driver.find_element(By.LINK_TEXT, "+ Criar tarefas").click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "+ Criar tarefas"))
+        ).click()
         time.sleep(1)
-        driver.find_element(By.ID, "campo_nome").send_keys("Objetivo Teste 1")
-        time.sleep(1)
-        driver.find_element(By.ID, "campo_descricao").send_keys("Descrição do objetivo 1.")
-        time.sleep(1)
-        driver.find_element(By.ID, "campo_urgencia").send_keys("2")
-        time.sleep(1)
+        
+        campo_nome = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_nome"))
+        )
+        campo_nome.send_keys("Objetivo Teste 1")
+        
+        campo_descricao = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_descricao"))
+        )
+        campo_descricao.send_keys("Descrição do objetivo 1.")
+        
+        campo_urgencia = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_urgencia"))
+        )
+        campo_urgencia.send_keys("2")
+        
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
 
-        driver.find_element(By.LINK_TEXT, "📋 Ver todos os objetivos").click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "📋 Ver todos os objetivos"))
+        ).click()
         time.sleep(1)
-        driver.find_element(By.LINK_TEXT, "Visualizar subtarefas").click()
+        
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "Visualizar subtarefas"))
+        ).click()
         time.sleep(1)
 
 
         # 4. Criar subtarefa 1
-        driver.find_element(By.LINK_TEXT, "+ Criar subtarefa").click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "+ Criar subtarefa"))
+        ).click()
         time.sleep(1)
-        driver.find_element(By.ID, "campo_nome").send_keys("Subtarefa Teste 1")
-        time.sleep(1)
-        driver.find_element(By.ID, "campo_descricao").send_keys("Descrição da subtarefa 1.")
-        time.sleep(1)
+        
+        campo_nome = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_nome"))
+        )
+        campo_nome.send_keys("Subtarefa Teste 1")
+        
+        campo_descricao = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_descricao"))
+        )
+        campo_descricao.send_keys("Descrição da subtarefa 1.")
+        
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
 
         # 5. Criar subtarefa 2
-        driver.find_element(By.LINK_TEXT, "Visualizar subtarefas").click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "Visualizar subtarefas"))
+        ).click()
         time.sleep(1)
 
-        driver.find_element(By.LINK_TEXT, "+ Criar subtarefa").click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "+ Criar subtarefa"))
+        ).click()
         time.sleep(1)
-        driver.find_element(By.ID, "campo_nome").send_keys("Subtarefa Teste 2")
-        time.sleep(1)
-        driver.find_element(By.ID, "campo_descricao").send_keys("Descrição da subtarefa 2.")
-        time.sleep(1)
+        
+        campo_nome = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_nome"))
+        )
+        campo_nome.send_keys("Subtarefa Teste 2")
+        
+        campo_descricao = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_descricao"))
+        )
+        campo_descricao.send_keys("Descrição da subtarefa 2.")
+        
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
         
         # 6. Editar subtarefa
-        driver.find_element(By.LINK_TEXT, "Visualizar subtarefas").click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "Visualizar subtarefas"))
+        ).click()
         time.sleep(1)
-        driver.find_element(By.LINK_TEXT, "Editar").click()
+        
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "Editar"))
+        ).click()
         time.sleep(1)
-        campo_nome = driver.find_element(By.ID, "campo_nome")
+        
+        campo_nome = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_nome"))
+        )
         campo_nome.clear()
         campo_nome.send_keys("Subtarefa Editada")
-        time.sleep(1)
-        campo_descricao = driver.find_element(By.ID, "campo_descricao")
+        
+        campo_descricao = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_descricao"))
+        )
         campo_descricao.clear()
         campo_descricao.send_keys("Subtarefa editada descrição.")
-        time.sleep(1)
+        
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
 
         # 7. Editar subtarefa sem nome
-        driver.find_element(By.LINK_TEXT, "Visualizar subtarefas").click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "Visualizar subtarefas"))
+        ).click()
         time.sleep(1)
-        driver.find_element(By.LINK_TEXT, "Editar").click()
+        
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "Editar"))
+        ).click()
         time.sleep(1)
-        campo_nome = driver.find_element(By.ID, "campo_nome")
+        
+        campo_nome = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_nome"))
+        )
         campo_nome.clear()
+        
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
-        self.assertIn("O nome da subtarefa é obrigatório.", driver.find_element(By.TAG_NAME, "body").text)
+        
+        # Verificar mensagem de erro
+        WebDriverWait(driver, 10).until(
+            EC.text_to_be_present_in_element((By.TAG_NAME, "body"), "O nome da subtarefa é obrigatório.")
+        )
         time.sleep(1)
 
         # 8. Editar subtarefa duplicada
-        campo_nome = driver.find_element(By.ID, "campo_nome")
+        campo_nome = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_nome"))
+        )
         campo_nome.clear()
         campo_nome.send_keys("Subtarefa Teste 2")
+        
         driver.find_element(By.TAG_NAME, "button").click()
-        self.assertIn("Já existe outra subtarefa com esse nome para este objetivo.", driver.find_element(By.TAG_NAME, "body").text)
+        
+        # Verificar mensagem de erro
+        WebDriverWait(driver, 10).until(
+            EC.text_to_be_present_in_element((By.TAG_NAME, "body"), 
+                                           "Já existe outra subtarefa com esse nome para este objetivo.")
+        )
         time.sleep(1)
+        
         # 9. Deletar subtarefa
-        driver.find_element(By.LINK_TEXT, "Voltar para Subtarefas").click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "Voltar para Subtarefas"))
+        ).click()
         time.sleep(1)
-        botao_deletar_sub = driver.find_element(By.XPATH, "//form/button[contains(text(), 'Deletar')]")
+        
+        botao_deletar_sub = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, "//form/button[contains(text(), 'Deletar')]"))
+        )
         botao_deletar_sub.click()
         time.sleep(1)
+        
         alerta = driver.switch_to.alert
         alerta.accept()
         time.sleep(2)
-        driver.find_element(By.LINK_TEXT, "Visualizar subtarefas").click()
+        
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "Visualizar subtarefas"))
+        ).click()
         time.sleep(1)
-
-
 
 # Teste 6
 
@@ -538,50 +823,103 @@ class Test6_CriarGrupo(LiveServerTestCase):
         driver.find_element(By.TAG_NAME, "button").click()
 
 
-        # 2. Login
-        driver.find_element(By.ID, "campo_email").send_keys("novousuario@teste.com")
-        driver.find_element(By.ID, "campo_senha").send_keys("senha321")
+        # 2. Login - Aguardando elementos após redirecionamento
+        campo_email = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_email"))
+        )
+        campo_email.send_keys("novousuario@teste.com")
+        
+        campo_senha = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_senha"))
+        )
+        campo_senha.send_keys("senha321")
+        
         driver.find_element(By.TAG_NAME, "button").click()
 
         WebDriverWait(driver, 10).until(EC.url_contains('/objetivos/'))
         time.sleep(1)
 
         # 3. Criar grupo com titulo e descrição
-
-        driver.find_element(By.LINK_TEXT, "Criar um grupo").click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "Criar um grupo"))
+        ).click()
         time.sleep(1)
-        driver.find_element(By.ID, "campo_nome_grupo").send_keys("grupo 1")
-        time.sleep(1)
-        driver.find_element(By.ID, "senha").send_keys("senha321")
-        time.sleep(1)
+        
+        campo_nome_grupo = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_nome_grupo"))
+        )
+        campo_nome_grupo.send_keys("grupo 1")
+        
+        campo_senha = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "senha"))
+        )
+        campo_senha.send_keys("senha321")
+        
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
-        driver.find_element(By.LINK_TEXT, "Voltar").click()
+        
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "Voltar"))
+        ).click()
         time.sleep(1)
 
         # 4. Criar grupo sem nome
-        driver.find_element(By.LINK_TEXT, "Criar um grupo").click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "Criar um grupo"))
+        ).click()
         time.sleep(1)
-        driver.find_element(By.ID, "senha").send_keys("senha321")
-        time.sleep(1)
+        
+        campo_senha = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "senha"))
+        )
+        campo_senha.send_keys("senha321")
+        
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
-        self.assertIn("O nome do grupo é obrigatório.", driver.find_element(By.TAG_NAME, "body").text)
+        
+        # Verificar mensagem de erro
+        WebDriverWait(driver, 10).until(
+            EC.text_to_be_present_in_element((By.TAG_NAME, "body"), "O nome do grupo é obrigatório.")
+        )
         time.sleep(1)
 
         # 5. Criar grupo com nome duplicado
-        driver.find_element(By.ID, "campo_nome_grupo").send_keys("grupo 1")
-        time.sleep(1)
-        driver.find_element(By.ID, "senha").send_keys("senha321")
-        time.sleep(1)
+        campo_nome_grupo = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_nome_grupo"))
+        )
+        campo_nome_grupo.send_keys("grupo 1")
+        
+        campo_senha = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "senha"))
+        )
+        campo_senha.send_keys("senha321")
+        
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
-        self.assertIn("Esse grupo já existe", driver.find_element(By.TAG_NAME, "body").text)
+        
+        # Verificar mensagem de erro
+        WebDriverWait(driver, 10).until(
+            EC.text_to_be_present_in_element((By.TAG_NAME, "body"), "Esse grupo já existe")
+        )
         time.sleep(1)
+        
         # 6. Criar um grupo sem senha
-        driver.find_element(By.ID, "campo_nome_grupo").send_keys("grupo 2")
-        time.sleep(1)
+        campo_nome_grupo = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_nome_grupo"))
+        )
+        campo_nome_grupo.clear()
+        campo_nome_grupo.send_keys("grupo 2")
+        
+        campo_senha = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "senha"))
+        )
+        campo_senha.clear()
+        
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
-        self.assertIn("A senha do grupo é obrigatória.", driver.find_element(By.TAG_NAME, "body").text)
+        
+        # Verificar mensagem de erro
+        WebDriverWait(driver, 10).until(
+            EC.text_to_be_present_in_element((By.TAG_NAME, "body"), "A senha do grupo é obrigatória.")
+        )
         time.sleep(1)
