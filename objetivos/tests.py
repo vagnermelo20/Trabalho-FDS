@@ -592,5 +592,5 @@ class Test6_CriarGrupo(LiveServerTestCase):
         time.sleep(1)
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
-        self.assertIn("O senha do grupo é obrigatória.", driver.find_element(By.TAG_NAME, "body").text)
+        self.assertIn("A senha do grupo é obrigatória.", driver.find_element(By.TAG_NAME, "body").text)
         time.sleep(1)
