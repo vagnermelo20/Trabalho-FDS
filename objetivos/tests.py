@@ -87,6 +87,7 @@ import os
 #         time.sleep(1)
 
 
+# Teste 2
 
 # class GerenciarObjetivo(LiveServerTestCase):
 #     @classmethod
@@ -182,8 +183,6 @@ import os
 #         driver.find_element(By.LINK_TEXT, "Voltar").click()
 #         time.sleep(1)
 
-
-
 #                 # 12. Deletar objetivo
 #         botao_deletar_obj = driver.find_element(By.XPATH, "//form/button[contains(text(), 'Deletar')]")
 #         botao_deletar_obj.click()
@@ -202,6 +201,95 @@ import os
 
 
 
+
+
+# Teste 3
+class TesteCriarSubtarefa(LiveServerTestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        options = Options()
+        if os.environ.get('GITHUB_ACTIONS') == 'true':
+            options.add_argument('--headless')
+            options.add_argument('--no-sandbox')
+            options.add_argument('--disable-dev-shm-usage')
+        cls.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+        cls.driver.implicitly_wait(10)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.driver.quit()
+        super().tearDownClass()
+
+    def test_fluxo_completo_usuario_objetivos(self):
+        driver = self.driver
+
+        # 1. Cadastro de novo usuário
+        driver.get(f'{self.live_server_url}/criar_usuario/')
+        driver.find_element(By.ID, "campo_username").send_keys("UsuarioNovoTeste")
+        driver.find_element(By.ID, "campo_email").send_keys("novousuario@teste.com")
+        driver.find_element(By.ID, "campo_senha").send_keys("senha321")
+        driver.find_element(By.TAG_NAME, "button").click()
+
+        self.assertEqual(driver.current_url, f'{self.live_server_url}/')
+
+        # 2. Login
+        driver.find_element(By.ID, "campo_email").send_keys("novousuario@teste.com")
+        driver.find_element(By.ID, "campo_senha").send_keys("senha321")
+        driver.find_element(By.TAG_NAME, "button").click()
+
+        WebDriverWait(driver, 10).until(EC.url_contains('/objetivos/'))
+        time.sleep(1)
+
+        driver.find_element(By.LINK_TEXT, "Alta/Nível 3").click()
+        time.sleep(1)
+        driver.find_element(By.LINK_TEXT, "Todas").click()
+        time.sleep(1)
+
+        
+
+       # 3. Criar objetivo 1
+        driver.find_element(By.LINK_TEXT, "+ Criar tarefas").click()
+        time.sleep(1)
+        driver.find_element(By.ID, "campo_nome").send_keys("Objetivo Prioridade 1")
+        time.sleep(1)
+        driver.find_element(By.ID, "campo_descricao").send_keys("Descrição do objetivo 1.")
+        time.sleep(1)
+        driver.find_element(By.ID, "campo_urgencia").send_keys("1")
+        time.sleep(1)
+        driver.find_element(By.TAG_NAME, "button").click()
+        time.sleep(2)
+
+        driver.find_element(By.LINK_TEXT, "📋 Ver todos os objetivos").click()
+        time.sleep(1)
+
+        # Criar objetivo 2
+        driver.find_element(By.LINK_TEXT, "+ Criar tarefas").click()
+        time.sleep(1)
+        driver.find_element(By.ID, "campo_nome").send_keys("Objetivo Prioridade 3")
+        time.sleep(1)
+        driver.find_element(By.ID, "campo_descricao").send_keys("Descrição do objetivo 3.")
+        time.sleep(1)
+        driver.find_element(By.ID, "campo_urgencia").send_keys("3")
+        time.sleep(1)
+        driver.find_element(By.TAG_NAME, "button").click()
+        time.sleep(2)
+
+        driver.find_element(By.LINK_TEXT, "📋 Ver todos os objetivos").click()
+        time.sleep(1)
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(1)
+        driver.find_element(By.LINK_TEXT, "Alta/Nível 3").click()
+        time.sleep(1)
+
+
+
+
+
+
+
+
+#Teste 4
 # class TesteCriarSubtarefa(LiveServerTestCase):
 #     @classmethod
 #     def setUpClass(cls):
@@ -299,7 +387,7 @@ import os
 
 
 
-
+# Teste 5
 # class GerenciarSubtarefa(LiveServerTestCase):
 #     @classmethod
 #     def setUpClass(cls):
