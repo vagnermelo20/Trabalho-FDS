@@ -157,7 +157,7 @@ Cenário 04: Criar grupo sem senha:
 
 ## Screencast dos sketches
 
-[Screencst dos sketches](https://www.youtube.com/watch?v=vIbVD45p5pU)
+[Screencst dos sketches](https://youtu.be/pBPzn4_9lA4?si=LHFfty8imzKnxUBH)
 
 ## Bug tracker:
 
