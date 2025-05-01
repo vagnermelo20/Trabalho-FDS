@@ -143,9 +143,21 @@ Cenário 04: Criar grupo sem senha:
 
 ![image](https://github.com/user-attachments/assets/e78868b9-5c12-4215-8c13-666ea621fcf4)
 
-Screencast do funcionamento do site com a adição das novas histórias:
+## Screencast do funcionamento do site com a adição das novas histórias:
 
 [Screencast do funcionameto](https://youtu.be/CtyvxTcczEQ?feature=shared)
+
+## Screencast do pipeline:
+
+[Screencast do pipeline](https://www.youtube.com/watch?v=bmktXvYd0nQ)
+
+## Screencast dos teste:
+
+[Screencast dos teste](https://youtu.be/Na2QjC2CbVc?si=_wjCr77EN0OnCv_0)
+
+## Screencast dos sketches
+
+[Screencst dos sketches](https://www.youtube.com/watch?v=vIbVD45p5pU)
 
 ## Bug tracker:
 
