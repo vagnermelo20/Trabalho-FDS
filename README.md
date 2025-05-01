@@ -153,11 +153,12 @@ Cenário 04: Criar grupo sem senha:
 
 ## Screencast dos teste:
 
-[Screencast dos teste](https://youtu.be/Na2QjC2CbVc?si=_wjCr77EN0OnCv_0)
+[Screencast dos teste](https://youtu.be/qpe9JV_U4PI?si=k8WSNNcex9xnwn1D)
 
 ## Screencast dos sketches
 
 [Screencst dos sketches](https://youtu.be/pBPzn4_9lA4?si=LHFfty8imzKnxUBH)
+
 
 ## Bug tracker:
 
