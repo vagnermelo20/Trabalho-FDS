@@ -355,6 +355,7 @@ class Criar_Grupo(View):
     
     def post(self,request):
         usuario_id = request.session.get('usuario_id')
+        usuario_objeto=Usuario.objects.get(id=usuario_id)
         if not usuario_id:
             messages.error(request, "Você precisa estar logado para criar grupos.")
             return redirect('logar')
@@ -379,7 +380,7 @@ class Criar_Grupo(View):
         Grupos.objects.create(
             Nome_grupo=nome_grupo,
             Senha_grupo=senha,
-            Criador_grupo_id=usuario_id,
+            Criador_grupo=usuario_objeto,
         )
         
         nome_participante = get_object_or_404(Usuario,id=usuario_id)
@@ -390,14 +391,22 @@ class Criar_Grupo(View):
         return redirect('visualizar_objetivos')
     
 class VisualizarGrupos(View):
-    def get(self,request,curso):
+    def get(self,request,grupo):
         usuario_id=request.session.get('usuario_id')
-        criador_grupo=get_object_or_404(Grupos,Nome_grupo=curso)
+        criador_grupo=get_object_or_404(Grupos,Nome_grupo=grupo)
         if criador_grupo.id==usuario_id:
-
-            return render(request,"visualizar_grupos_adm.html")
+            return render(request,"objetivos/visualizar_grupos_adm.html")
         else:
-            return render(request,"visualizar_grupos_membros.html")
+            return render(request,"objetivos/visualizar_grupos_membro.html")
+
+class VisualizarGruposAdm(View):
+    def get(self,request):
+        return render(request,"visualizar_grupos_adm.html")
+
+class VisualizarGruposMembro(View):
+    def get(self,request):
+        return render(request,"visualizar_grupos_membro.html")
+
     
 class Senha(View):
     def get(self,request):
