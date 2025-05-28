@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.contrib import messages
-from .models import Objetivo, Subtarefa,Grupos,Participantes_grupos
+from .models import Objetivo, Subtarefa,Grupos,Participantes_grupos,Tarefas_grupos
 from login.models import Usuario
 
 
@@ -348,17 +348,11 @@ class Meus_Grupos(View):
 class Criar_Grupo(View):
     def get(self,request):
         usuario_id = request.session.get('usuario_id')
-        if not usuario_id:
-            messages.error(request, "Você precisa estar logado para criar grupos.")
-            return redirect('logar')
         return render(request,"objetivos/criar_grupo.html")
     
     def post(self,request):
         usuario_id = request.session.get('usuario_id')
         usuario_objeto=Usuario.objects.get(id=usuario_id)
-        if not usuario_id:
-            messages.error(request, "Você precisa estar logado para criar grupos.")
-            return redirect('logar')
 
         nome_grupo=request.POST.get('nome_grupo')
         senha=request.POST.get('senha')
@@ -394,19 +388,65 @@ class VisualizarGrupos(View):
     def get(self,request,grupo):
         usuario_id=request.session.get('usuario_id')
         criador_grupo=get_object_or_404(Grupos,Nome_grupo=grupo)
-        if criador_grupo.id==usuario_id:
-            return render(request,"objetivos/visualizar_grupos_adm.html")
+        if criador_grupo.Criador_grupo.id==usuario_id:
+            contexto={'grupo':grupo}
+            return render(request,"objetivos/visualizar_grupos_adm.html",contexto)
         else:
-            return render(request,"objetivos/visualizar_grupos_membro.html")
+            contexto={'grupo':grupo}
+            return render(request,"objetivos/visualizar_grupos_membro.html",contexto)
+    
+class CriarTarefaAdm(View):
+    def get(self, request,grupo):
+        query_participantes=Participantes_grupos.objects.filter(Grupos=grupo)
+        contexto={'grupo':grupo,'participantes':query_participantes}
+        return render(request, 'objetivos/criar_tarefa_adm.html',contexto)
 
-class VisualizarGruposAdm(View):
-    def get(self,request):
-        return render(request,"visualizar_grupos_adm.html")
+    def post(self, request,grupo):
+        usuario_id = request.session.get('usuario_id')
 
-class VisualizarGruposMembro(View):
-    def get(self,request):
-        return render(request,"visualizar_grupos_membro.html")
+        query_participantes=Participantes_grupos.objects.filter(Grupos=grupo)
+        contexto={'grupo':grupo,'participantes':query_participantes}
 
+
+        nome_tarefa = request.POST.get('nome_tarefa')
+        descricao_tarefa = request.POST.get('descricao_tarefa')
+        urgencia = request.POST.get('urgencia')  # Obter o valor de urgência
+        designado =request.POST.get('designado')
+
+        # Validar o nome do objetivo
+        if not nome_tarefa or not urgencia or not designado:
+            messages.error(request, 'É necessário preencher as informações de nome, urgência e de membro designado.')
+            return render(request, 'objetivos/criar_tarefa_adm.html')
+
+        # Verificar se já existe um objetivo com o mesmo nome para este usuário
+        if Tarefas_grupos.objects.filter(Grupo=grupo, Nome=nome_tarefa).exists():
+            messages.error(request, 'Você já tem uma tarefa com este nome neste grupo. Por favor, escolha um nome diferente.')
+            return render(request, 'objetivos/criar_objetivo.html', contexto)
+
+        # Converter urgência para inteiro ou usar valor padrão
+        try:
+            urgencia_int = int(urgencia) if urgencia else 1
+            # Garantir que está dentro dos limites (1-3)
+            if urgencia_int < 1:
+                urgencia_int = 1
+            elif urgencia_int > 3:
+                urgencia_int = 3
+        except ValueError:
+            urgencia_int = 1
+
+        # Criar o objetivo associado ao usuário logado
+        tarefa = Tarefas_grupos.objects.create(
+            Grupo=grupo,
+            Nome=nome_tarefa,
+            Descricao=descricao_tarefa,
+            status='pendente',
+            Nome_participante=designado,
+            urgencia=urgencia_int,
+        )
+
+        messages.success(request, f'A tarefa "{nome_tarefa}" criado com sucesso!')
+        
+        return render(request, 'objetivos/visualizar_grupos_adm', {'tarefa': tarefa})
     
 class Senha(View):
     def get(self,request):
