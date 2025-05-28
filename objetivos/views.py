@@ -389,6 +389,16 @@ class Criar_Grupo(View):
         
         return redirect('visualizar_objetivos')
     
+class VisualizarGrupos(View):
+    def get(self,request,curso):
+        usuario_id=request.session.get('usuario_id')
+        criador_grupo=get_object_or_404(Grupos,Nome_grupo=curso)
+        if criador_grupo.id==usuario_id:
+
+            return render(request,"visualizar_grupos_adm.html")
+        else:
+            return render(request,"visualizar_grupos_membros.html")
+    
 class Senha(View):
     def get(self,request):
         
