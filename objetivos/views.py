@@ -224,7 +224,7 @@ class EditarSubtarefaView(View):
             objetivo=objetivo,
             nome__iexact=nome_subtarefa  # case-insensitive
         ).exclude(id=subtarefa.id).exists():
-            messages.error(request, f'Já existe outra subtarefa com o nome "{nome_subtarefa}" para este objetivo.')
+            messages.error(request, f'Já existe outra subtarefa com esse nome para este objetivo.')
             return render(request, 'objetivos/editar_subtarefa.html', {
                 'objetivo': objetivo,
                 'subtarefa': subtarefa
@@ -387,7 +387,7 @@ class Criar_Grupo(View):
 
         messages.success(request,"Grupo criado com sucesso")
         
-        return redirect('visualizar_objetivos')
+        return redirect('meus_grupos')
     
 class Senha(View):
     def get(self,request):
