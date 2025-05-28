@@ -385,26 +385,50 @@ class Criar_Grupo(View):
         return redirect('visualizar_objetivos')
     
 class VisualizarGrupos(View):
-    def get(self,request,grupo):
-        usuario_id=request.session.get('usuario_id')
-        criador_grupo=get_object_or_404(Grupos,Nome_grupo=grupo)
-        if criador_grupo.Criador_grupo.id==usuario_id:
-            contexto={'grupo':grupo}
-            return render(request,"objetivos/visualizar_grupos_adm.html",contexto)
+    def get(self, request, grupo):
+        usuario_id = request.session.get('usuario_id')
+        if not usuario_id:
+            messages.error(request, "Você precisa estar logado.")
+            return redirect('logar')
+
+        grupo_obj = get_object_or_404(Grupos, Nome_grupo=grupo)
+        usuario = get_object_or_404(Usuario, id=usuario_id)
+
+        if grupo_obj.Criador_grupo.id == usuario_id:
+            tarefas = Tarefas_grupos.objects.filter(Grupo=grupo)
+            contexto = {
+                'grupo': grupo,
+                'tarefas': tarefas,
+                'adm': True
+            }
+            return render(request, "objetivos/visualizar_grupos_adm.html", contexto)
         else:
-            contexto={'grupo':grupo}
-            return render(request,"objetivos/visualizar_grupos_membro.html",contexto)
-    
+            tarefas = Tarefas_grupos.objects.filter(Grupo=grupo, Nome_participante=usuario.username)
+
+            # Tarefas ocultadas na sessão
+            tarefas_escondidas = request.session.get('tarefas_escondidas', [])
+            tarefas = tarefas.exclude(id__in=tarefas_escondidas)
+
+
+            contexto = {
+                'grupo': grupo,
+                'tarefas': tarefas,
+                'adm': False
+            }
+            return render(request, "objetivos/visualizar_grupos_membro.html", contexto)
 class CriarTarefaAdm(View):
     def get(self, request,grupo):
-        query_participantes=Participantes_grupos.objects.filter(Grupos=grupo)
+        grupo_membros = get_object_or_404(Grupos, Nome_grupo=grupo)
+        query_participantes = Participantes_grupos.objects.filter(Grupos=grupo_membros.Nome_grupo).exclude(nome_participantes=grupo_membros.Criador_grupo.username)
+
         contexto={'grupo':grupo,'participantes':query_participantes}
         return render(request, 'objetivos/criar_tarefa_adm.html',contexto)
 
     def post(self, request,grupo):
         usuario_id = request.session.get('usuario_id')
 
-        query_participantes=Participantes_grupos.objects.filter(Grupos=grupo)
+        query_participantes = Participantes_grupos.objects.filter(Grupos=grupo).exclude(nome_participantes=Grupos.objects.get(Nome_grupo=grupo).Criador_grupo.username)
+
         contexto={'grupo':grupo,'participantes':query_participantes}
 
 
@@ -439,14 +463,15 @@ class CriarTarefaAdm(View):
             Grupo=grupo,
             Nome=nome_tarefa,
             Descricao=descricao_tarefa,
-            status='pendente',
+            Status='pendente',
             Nome_participante=designado,
             urgencia=urgencia_int,
         )
 
         messages.success(request, f'A tarefa "{nome_tarefa}" criado com sucesso!')
         
-        return render(request, 'objetivos/visualizar_grupos_adm', {'tarefa': tarefa})
+        return redirect('visualizar_grupos', grupo=grupo)
+
     
 class Senha(View):
     def get(self,request):
@@ -476,5 +501,47 @@ class Senha(View):
         Participantes_grupos.objects.create(Grupos=grupo.Nome_grupo,nome_participantes=nome_participante.username)
         messages.success(request,f"Você agora faz parte do grupo {nome_do_grupo}")
         return redirect('meus_grupos')
-        
-        
+    
+    
+class AtualizarStatusTarefa(View):
+    def post(self, request, tarefa_id):
+        usuario_id = request.session.get('usuario_id')
+        if not usuario_id:
+            messages.error(request, "Você precisa estar logado.")
+            return redirect('logar')
+
+        tarefa = get_object_or_404(Tarefas_grupos, id=tarefa_id)
+        usuario = get_object_or_404(Usuario, id=usuario_id)
+
+        # Garante que ele só pode atualizar se for o designado
+        if tarefa.Nome_participante != usuario.username:
+            messages.error(request, "Você não tem permissão para modificar esta tarefa.")
+            return redirect('visualizar_objetivos')
+
+        novo_status = request.POST.get('novo_status')
+        if novo_status in ['pendente', 'ativa', 'completa']:
+            tarefa.Status = novo_status
+            tarefa.save()
+
+        return redirect('visualizar_grupos', grupo=tarefa.Grupo)
+    
+class EsconderTarefaMembro(View):
+    def post(self, request, grupo, tarefa_id):
+        usuario_id = request.session.get('usuario_id')
+        if not usuario_id:
+            messages.error(request, "Você precisa estar logado.")
+            return redirect('logar')
+
+        tarefa = get_object_or_404(Tarefas_grupos, id=tarefa_id)
+        if tarefa.Status != "completa":
+            messages.error(request, "Só é possível esconder tarefas marcadas como concluídas.")
+            return redirect('visualizar_grupos', grupo=grupo)
+
+        # Adiciona o ID da tarefa na sessão se ainda não estiver
+        escondidas = request.session.get('tarefas_escondidas', [])
+        if tarefa_id not in escondidas:
+            escondidas.append(tarefa_id)
+            request.session['tarefas_escondidas'] = escondidas
+
+        messages.success(request, "Tarefa escondida com sucesso.")
+        return redirect('visualizar_grupos', grupo=grupo)
