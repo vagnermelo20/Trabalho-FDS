@@ -40,7 +40,7 @@ class Subtarefa(models.Model):
 class Grupos(models.Model):
     Nome_grupo=models.CharField(max_length=1000,unique=True)
     Senha_grupo=models.CharField(max_length=100)
-    Criador_grupo=models.CharField(max_length=100)
+    Criador_grupo_id=models.IntegerField(max_length=100)
     def __str__(self):
         return self.Nome_grupo
 
