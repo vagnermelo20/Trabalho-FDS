@@ -1,5 +1,13 @@
 {% extends "objetivos/base1.html" %}
 
 {% block content %}
-    <h1>MEMBRO</h1>
+    <h1>ADM</h1>
+    {% if tarefas %}
+        {% for tarefa in tarefa %}
+            <p>{{ tarefa.Nome }}</p>
+            <p>{{ tarefa.Nome_participante}}</p>
+        {% endfor %}
+    {% endif %}
+    <a href="{% url 'criar_tarefa_adm' grupo %}">Criar tarefa</a>
+    <a href="{% url 'meus_grupos' %}">Voltar</a>
 {% endblock content %}
