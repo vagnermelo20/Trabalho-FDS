@@ -27,7 +27,7 @@
         {% for grupo in meu_grupo %}
             
             <p><strong>Nome do grupo:</strong> {{ grupo.Grupos }}</p>
-            <a href="{% url 'ver_grupo' grupo.Grupos %}">Visualizar</a>
+            <a href="{% url 'visualizar_grupos' grupo.Grupos %}">Visualizar</a>
         {% endfor %}
     </div>  
     
