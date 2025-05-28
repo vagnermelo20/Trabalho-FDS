@@ -40,9 +40,22 @@ class Subtarefa(models.Model):
 class Grupos(models.Model):
     Nome_grupo=models.CharField(max_length=1000,unique=True)
     Senha_grupo=models.CharField(max_length=100)
+    Criador_grupo=models.CharField(max_length=100)
     def __str__(self):
         return self.Nome_grupo
 
 class Participantes_grupos(models.Model):
     Grupos=models.CharField(max_length=1000)
     nome_participantes=models.CharField(max_length=100)
+
+class Tarefas_grupos(models.Model):
+    Nome=models.CharField(max_length=200)
+    Descricao=models.CharField(max_length=1000)
+    STATUS_ESCOLHAS = (
+        ('pendente', 'Pendente'),
+        ('ativa', 'Ativa'),
+        ('completa', 'Completa'),
+    )     
+    Status=models.CharField(max_length=50, choices=STATUS_ESCOLHAS, default="pendente")
+    Nome_participante=models.CharField(max_length=100)
+    
