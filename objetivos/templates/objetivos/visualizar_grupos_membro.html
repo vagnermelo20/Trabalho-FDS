@@ -1,5 +1,59 @@
 {% extends "objetivos/base1.html" %}
 
+{% block titulo %}<title>Minhas Tarefas no Grupo</title>{% endblock titulo %}
+
 {% block content %}
-    <h1>membro</h1>
+<header>
+    <h1>Minhas Tarefas do Grupo: {{ grupo }}</h1>
+    <a href="{% url 'meus_grupos' %}" class="link">Voltar</a>
+</header>
+
+<main>
+    {% if messages %}
+        <ul style="color: red; padding-left: 20px; margin-bottom: 20px;">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if tarefas %}
+        {% for tarefa in tarefas %}
+        <div class="tarefa {% if tarefa.urgencia == 3 %}tarefa-alta{% elif tarefa.urgencia == 2 %}tarefa-media{% elif tarefa.urgencia == 1 %}tarefa-baixa{% endif %}">
+            <p><strong>Tarefa:</strong> {{ tarefa.Nome }}</p>
+            <p><strong>Descrição:</strong> {{ tarefa.Descricao }}</p>
+            <p><strong>Status:</strong> {{ tarefa.Status }}</p>
+            <p>
+                <strong>Urgência:</strong>
+                {% if tarefa.urgencia == 1 %}
+                    <span class="texto-baixa">1 - Baixa</span>
+                {% elif tarefa.urgencia == 2 %}
+                    <span class="texto-media">2 - Média</span>
+                {% elif tarefa.urgencia == 3 %}
+                    <span class="texto-alta">3 - Alta</span>
+                {% endif %}
+            </p>
+        </div>
+
+        <form method="POST" action="{% url 'atualizar_status_tarefa' tarefa.id %}" style="margin-bottom: 10px;">
+            {% csrf_token %}
+            <label for="novo_status_{{ tarefa.id }}">Alterar status:</label>
+            <select name="novo_status" id="novo_status_{{ tarefa.id }}">
+                <option value="pendente" {% if tarefa.Status == "pendente" %}selected{% endif %}>Pendente</option>
+                <option value="ativa" {% if tarefa.Status == "ativa" %}selected{% endif %}>Em andamento</option>
+                <option value="completa" {% if tarefa.Status == "completa" %}selected{% endif %}>Concluída</option>
+            </select>
+            <button type="submit">Atualizar</button>
+        </form>
+
+        <form method="POST" action="{% url 'esconder_tarefa_membro' grupo tarefa.id %}">
+            {% csrf_token %}
+            <button type="submit" style="background-color: orange; color: white;">Esconder tarefa concluída</button>
+        </form>
+
+        {% endfor %}
+    {% else %}
+        <p>Você não possui tarefas designadas neste grupo.</p>
+    {% endif %}
+</main>
 {% endblock content %}
