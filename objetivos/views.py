@@ -224,7 +224,7 @@ class EditarSubtarefaView(View):
             objetivo=objetivo,
             nome__iexact=nome_subtarefa  # case-insensitive
         ).exclude(id=subtarefa.id).exists():
-            messages.error(request, f'Já existe outra subtarefa com esse nome para este objetivo.')
+            messages.error(request, f'Já existe outra subtarefa com o nome "{nome_subtarefa}" para este objetivo.')
             return render(request, 'objetivos/editar_subtarefa.html', {
                 'objetivo': objetivo,
                 'subtarefa': subtarefa
@@ -354,7 +354,6 @@ class Criar_Grupo(View):
         return render(request,"objetivos/criar_grupo.html")
     
     def post(self,request):
-
         usuario_id = request.session.get('usuario_id')
         if not usuario_id:
             messages.error(request, "Você precisa estar logado para criar grupos.")
@@ -380,6 +379,7 @@ class Criar_Grupo(View):
         Grupos.objects.create(
             Nome_grupo=nome_grupo,
             Senha_grupo=senha,
+            Criador_grupo_id=usuario_id,
         )
         
         nome_participante = get_object_or_404(Usuario,id=usuario_id)
@@ -387,7 +387,7 @@ class Criar_Grupo(View):
 
         messages.success(request,"Grupo criado com sucesso")
         
-        return redirect('meus_grupos')
+        return redirect('visualizar_objetivos')
     
 class Senha(View):
     def get(self,request):
