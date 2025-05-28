@@ -15,7 +15,7 @@ class Usuario(models.Model):
     senha = models.CharField(max_length=128)  # Aumentar para comportar senha hasheada
 
     def __str__(self):
-        return self.Username
+        return self.username
 
 
 
