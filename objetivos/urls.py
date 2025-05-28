@@ -2,7 +2,7 @@ from django.urls import path
 from objetivos.views import (CriarObjetivoView, DeletarObjetivoView, EditarObjetivoView, 
                             VisualizarObjetivosView, AdicionarSubtarefasView, 
                             EditarSubtarefaView, DeletarSubtarefaView, 
-                            VisualizarSubtarefasView,Meus_Grupos,Criar_Grupo,Senha,VisualizarGrupos)#VisualizarGruposMembro,VisualizarGruposAdm
+                            VisualizarSubtarefasView,Meus_Grupos,Criar_Grupo,Senha,VisualizarGrupos,CriarTarefaAdm,)
 from . import views
 
 urlpatterns = [
@@ -16,9 +16,8 @@ urlpatterns = [
     path('objetivos/<int:objetivo_id>/subtarefas/<int:subtarefa_id>/deletar/', DeletarSubtarefaView.as_view(), name='deletar_subtarefa'),
     path('meus_grupos/',Meus_Grupos.as_view(),name='meus_grupos'),
     path('criar_grupo/',Criar_Grupo.as_view(),name='criar_grupo'),
-    path('visualizar_grupo/<str:grupo>',VisualizarGrupos.as_view(),name='visualizar_grupos'),
+    path('visualizar_grupo/<str:grupo>/',VisualizarGrupos.as_view(),name='visualizar_grupos'),
     path('senha/',Senha.as_view(),name='senha'),
+    path("criar_tarefa_adm/<str:grupo>/",CriarTarefaAdm.as_view(),name='criar_tarefa_adm')
 ]
-#path('visualizar_grupos_membros/',VisualizarGruposMembro.as_view(),name="visualizar_gp_membro"),
-#path('visualizar_grupos_adm/',VisualizarGruposAdm.as_view(),name="visualizar_gp_adm"),
 
