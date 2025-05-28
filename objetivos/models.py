@@ -49,6 +49,7 @@ class Participantes_grupos(models.Model):
     nome_participantes=models.CharField(max_length=100)
 
 class Tarefas_grupos(models.Model):
+    Grupo=models.CharField(max_length=200)
     Nome=models.CharField(max_length=200)
     Descricao=models.CharField(max_length=1000)
     STATUS_ESCOLHAS = (
@@ -58,4 +59,11 @@ class Tarefas_grupos(models.Model):
     )     
     Status=models.CharField(max_length=50, choices=STATUS_ESCOLHAS, default="pendente")
     Nome_participante=models.CharField(max_length=100)
+    urgencia = models.IntegerField(null=True, blank=True, default=0,
+        validators=[
+            MaxValueValidator(3),  
+            MinValueValidator(1),     
+        ]
+    )
+
     
