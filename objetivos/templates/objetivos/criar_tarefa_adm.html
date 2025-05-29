@@ -2,6 +2,17 @@
 
 
 {% block content %}
+       {% if messages %}
+            <ul style="color: red; padding-left: 20px; margin-bottom: 20px;">
+                {% for message in messages %}
+                    {% if message.error %}
+                        <li style="color: red; padding-left: 20px; margin-bottom: 20px;">{{ message }}</li>
+                    {% else %}
+                        <li style="color: green; padding-left: 20px; margin-bottom: 20px;">{{ message }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endif %}
 
 <form method="POST">
     {% csrf_token %}

@@ -416,6 +416,7 @@ class VisualizarGrupos(View):
                 'adm': False
             }
             return render(request, "objetivos/visualizar_grupos_membro.html", contexto)
+
 class CriarTarefaAdm(View):
     def get(self, request,grupo):
         grupo_membros = get_object_or_404(Grupos, Nome_grupo=grupo)
@@ -440,12 +441,12 @@ class CriarTarefaAdm(View):
         # Validar o nome do objetivo
         if not nome_tarefa or not urgencia or not designado:
             messages.error(request, 'É necessário preencher as informações de nome, urgência e de membro designado.')
-            return render(request, 'objetivos/criar_tarefa_adm.html')
+            return render(request, 'objetivos/criar_tarefa_adm.html', contexto)
 
         # Verificar se já existe um objetivo com o mesmo nome para este usuário
         if Tarefas_grupos.objects.filter(Grupo=grupo, Nome=nome_tarefa).exists():
             messages.error(request, 'Você já tem uma tarefa com este nome neste grupo. Por favor, escolha um nome diferente.')
-            return render(request, 'objetivos/criar_objetivo.html', contexto)
+            return render(request, 'objetivos/criar_tarefa_adm.html', contexto)
 
         # Converter urgência para inteiro ou usar valor padrão
         try:
@@ -544,4 +545,94 @@ class EsconderTarefaMembro(View):
             request.session['tarefas_escondidas'] = escondidas
 
         messages.success(request, "Tarefa escondida com sucesso.")
+        return redirect('visualizar_grupos', grupo=grupo)
+
+class EditarTarefaAdm(View):
+    def get(self, request, grupo, tarefa_id):
+        usuario_id = request.session.get('usuario_id')
+        if not usuario_id:
+            messages.error(request, "Você precisa estar logado.")
+            return redirect('logar')
+
+        # Obter o grupo e a tarefa
+        grupo_obj = get_object_or_404(Grupos, Nome_grupo=grupo)
+        tarefa = get_object_or_404(Tarefas_grupos, id=tarefa_id)
+
+        # Verifica se o usuário é o criador do grupo (administrador)
+        if grupo_obj.Criador_grupo.id != usuario_id:
+            messages.error(request, "Você não tem permissão para editar essa tarefa.")
+            return redirect('visualizar_grupos', grupo=grupo)
+
+        contexto = {
+            'grupo': grupo,
+            'tarefa': tarefa,
+        }
+        return render(request, 'objetivos/editar_tarefa_adm.html', contexto)
+
+    def post(self, request, grupo, tarefa_id):
+        usuario_id = request.session.get('usuario_id')
+        if not usuario_id:
+            messages.error(request, "Você precisa estar logado.")
+            return redirect('logar')
+
+        # Obter o grupo e a tarefa
+        grupo_obj = get_object_or_404(Grupos, Nome_grupo=grupo)
+        tarefa = get_object_or_404(Tarefas_grupos, id=tarefa_id)
+
+        # Verifica se o usuário é o criador do grupo (administrador)
+        if grupo_obj.Criador_grupo.id != usuario_id:
+            messages.error(request, "Você não tem permissão para editar essa tarefa.")
+            return redirect('visualizar_grupos', grupo=grupo)
+
+        # Receber dados do formulário
+        nome_tarefa = request.POST.get('nome_tarefa')
+        descricao_tarefa = request.POST.get('descricao_tarefa')
+        urgencia = request.POST.get('urgencia')
+        status = request.POST.get('status')
+
+        # Validar os campos
+        if not nome_tarefa or not descricao_tarefa or not urgencia or not status:
+            messages.error(request, "Todos os campos devem ser preenchidos.")
+            return render(request, 'objetivos/editar_tarefa_adm.html', {'grupo': grupo, 'tarefa': tarefa})
+
+        try:
+            urgencia_int = int(urgencia)
+            if urgencia_int < 1 or urgencia_int > 3:
+                raise ValueError
+        except ValueError:
+            messages.error(request, "A urgência deve ser um valor entre 1 e 3.")
+            return render(request, 'objetivos/editar_tarefa_adm.html', {'grupo': grupo, 'tarefa': tarefa})
+
+        # Atualizar a tarefa com os novos dados
+        tarefa.Nome = nome_tarefa
+        tarefa.Descricao = descricao_tarefa
+        tarefa.urgencia = urgencia_int
+        tarefa.Status = status
+        tarefa.save()
+
+        messages.success(request, "Tarefa atualizada com sucesso!")
+        return redirect('visualizar_grupos', grupo=grupo)
+
+class DeletarTarefaAdmView(View):
+    def post(self, request, grupo, tarefa_id):
+        # Verificar se o usuário está logado
+        usuario_id = request.session.get('usuario_id')
+        if not usuario_id:
+            messages.error(request, "Você precisa estar logado para excluir tarefas.")
+            return redirect('logar')
+
+        # Buscar o grupo e a tarefa pelo ID
+        grupo_obj = get_object_or_404(Grupos, Nome_grupo=grupo)
+        tarefa = get_object_or_404(Tarefas_grupos, id=tarefa_id)
+
+        # Verificar se o usuário é o administrador do grupo (criador)
+        if grupo_obj.Criador_grupo.id != usuario_id:
+            messages.error(request, "Você não tem permissão para excluir esta tarefa.")
+            return redirect('visualizar_grupos', grupo=grupo)
+
+        # Deletar a tarefa
+        nome_tarefa = tarefa.Nome
+        tarefa.delete()
+
+        messages.success(request, f'Tarefa "{nome_tarefa}" excluída com sucesso.')
         return redirect('visualizar_grupos', grupo=grupo)

@@ -22,5 +22,7 @@ urlpatterns = [
     path("criar_tarefa_adm/<str:grupo>/",CriarTarefaAdm.as_view(),name='criar_tarefa_adm'),
     path('atualizar_tarefa/<int:tarefa_id>/', AtualizarStatusTarefa.as_view(), name='atualizar_status_tarefa'),
     path('esconder_tarefa_membro/<str:grupo>/<int:tarefa_id>/', EsconderTarefaMembro.as_view(), name='esconder_tarefa_membro'),
+    path('grupo/<str:grupo>/editar_tarefa/<int:tarefa_id>/', views.EditarTarefaAdm.as_view(), name='editar_tarefa_adm'),
+    path('deletar_tarefa/<str:grupo>/<int:tarefa_id>/', views.DeletarTarefaAdmView.as_view(), name='deletar_tarefa'),
+    
 ]
-

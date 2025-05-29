@@ -35,6 +35,17 @@
                 {% endif %}
             </p>
 
+            <!-- Verifica se o usuário é o criador do grupo (administrador) -->
+            {% if usuario_id == grupo_obj.Criador_grupo.id %}
+                <!-- Formulário para deletar tarefa, só visível para o administrador -->
+                <form action="{% url 'deletar_tarefa' grupo tarefa.id %}" method="POST" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="link">Deletar Tarefa</button>
+                </form>
+            {% endif %}
+
+            <a href="{% url 'editar_tarefa_adm' grupo tarefa.id %}" class="link">Editar Tarefa</a>
+        </div>
         {% endfor %}
     {% else %}
         <p>Não há tarefas neste grupo ainda.</p>

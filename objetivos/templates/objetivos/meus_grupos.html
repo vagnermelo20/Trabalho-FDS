@@ -22,14 +22,14 @@
                 {% endfor %}
             </ul>
         {% endif %}
-    
+
     <div class="Meus_Grupos"> 
         {% for grupo in meu_grupo %}
-            
+
             <p><strong>Nome do grupo:</strong> {{ grupo.Grupos }}</p>
             <a href="{% url 'visualizar_grupos' grupo.Grupos %}">Visualizar</a>
         {% endfor %}
-    </div>  
-    
+    </div>
+
     <a href="{% url 'visualizar_objetivos' %}" class="link">Voltar</a>
 {% endblock content %}
