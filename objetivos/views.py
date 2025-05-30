@@ -439,8 +439,16 @@ class CriarTarefaAdm(View):
         designado =request.POST.get('designado')
 
         # Validar o nome do objetivo
-        if not nome_tarefa or not urgencia or not designado:
-            messages.error(request, 'É necessário preencher as informações de nome, urgência e de membro designado.')
+        if not designado:
+            messages.error(request, 'É necessário colocar o nome do usuário designado para registrar a tarefa.')
+            return render(request, 'objetivos/criar_tarefa_adm.html', contexto)
+
+        if not nome_tarefa:
+            messages.error(request, 'Por favor digite o nome da tarefa para prosseguir.')
+            return render(request, 'objetivos/criar_tarefa_adm.html', contexto)
+
+        if not urgencia:
+            messages.error(request, 'Por favor selecione o nível de urgência da tarefa.')
             return render(request, 'objetivos/criar_tarefa_adm.html', contexto)
 
         # Verificar se já existe um objetivo com o mesmo nome para este usuário
