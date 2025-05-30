@@ -10,6 +10,7 @@ Este projeto será feito para a matéria de **FDS (Fundamentos de Desenvolviment
 - Vagner Montenegro de Melo
 - Willian de Souza Bezerra
 
+
 ## Sobre o Projeto
 Este projeto, intitulado de **Feito!**, tem como objetivo criar uma aplicação para gerenciamento de tarefas, sejam elas individuais ou em grupo, buscando aumentar a produtividade em atividades cotidianas e profissionais.
 
