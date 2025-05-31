@@ -844,7 +844,6 @@ class Test5_GerenciarSubtarefa(LiveServerTestCase):
 
 # Teste 6
 
-___________________________________________________________________
 
 class Test6_CriarGrupo(LiveServerTestCase):
     @classmethod
