@@ -211,7 +211,7 @@ Issue/Bug Tracker
 https://youtu.be/X-7YcnNr5d0?feature=shared 
 
 ## Screencast da pipeline
-https://www.youtube.com/watch?v=syJ8i5ut7YM 
+https://youtu.be/XWoDoEJ_8Ho?si=gTEZwCFWdv3xyKxP
 
 ## screencast dos testes
 https://youtu.be/5armWYiqsb8?si=MiO5I82zrtND1wy8
