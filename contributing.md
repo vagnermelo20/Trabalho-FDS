@@ -38,9 +38,9 @@ pip install -r requirements.txt
 2. execute os testes com
 python manage.py test
 
+ 
 
-
-
+  
 
 ## Links úteis
 
