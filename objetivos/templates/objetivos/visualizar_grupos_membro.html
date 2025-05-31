@@ -35,15 +35,17 @@
             </p>
         </div>
 
-        <form method="POST" action="{% url 'atualizar_status_tarefa' tarefa.id %}" style="margin-bottom: 10px;">
+        <form method="POST" action="{% url 'atualizar_status_tarefa' tarefa.id %}">
             {% csrf_token %}
-            <label for="novo_status_{{ tarefa.id }}">Alterar status:</label>
-            <select name="novo_status" id="novo_status_{{ tarefa.id }}">
+            
+            <label for="status">Status</label>
+            <select id="status" name="novo_status" required>
                 <option value="pendente" {% if tarefa.Status == "pendente" %}selected{% endif %}>Pendente</option>
-                <option value="ativa" {% if tarefa.Status == "ativa" %}selected{% endif %}>Em andamento</option>
-                <option value="completa" {% if tarefa.Status == "completa" %}selected{% endif %}>Concluída</option>
-            </select>
-            <button type="submit" id = "atualizar">Atualizar</button>
+                <option value="ativa" {% if tarefa.Status == "ativa" %}selected{% endif %}>Em Andamento</option>
+                <option value="completa" {% if tarefa.Status == "Concluída" %}selected{% endif %}>Concluída</option>
+            </select><br>
+                
+                <button type="submit" id="atualizar">Atualizar</button>
         </form>
 
         <form method="POST" action="{% url 'esconder_tarefa_membro' grupo tarefa.id %}">
