@@ -201,6 +201,21 @@ Prints do Jira
  ![Imagem do WhatsApp de 2025-05-31 à(s) 10 48 28_3b01d200](https://github.com/user-attachments/assets/b2c13fb4-17a1-4b04-8d76-a0beee4655f6)
 
 
+Issue/Bug Tracker
+
+
+ 
+## Screencast dos sketches
+https://youtu.be/X-7YcnNr5d0?feature=shared 
+
+## Screencast da pipeline
+
+## screencast dos testes
+
+## screencast do site
+
+
+
 
 
 
