@@ -176,4 +176,11 @@ Cenário 04: Criar grupo sem senha:
 <br>
 </details>
 
+<details><summary><h1><b>Entrega 04</b></h1></summary>
 
+Prints do Jira
+<br>
+![image](https://github.com/user-attachments/assets/b666fe70-7e7f-4d70-81ba-a82ae1461329)
+![image](https://github.com/user-attachments/assets/945d491c-7f81-4f2d-86f6-279a3bcc3e1e)
+
+</details>
