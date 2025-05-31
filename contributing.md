@@ -5,13 +5,16 @@ Obrigado por considerar contribuir com este projeto! Estamos animados para ter v
 
 ## Índice
 
-- [Bem-vindo(a) ao projeto](#bem-vindo-ao-projeto)
-- [Configuração do ambiente](#configuração-do-ambiente)
-- [Rodando os testes](#rodando-os-testes)
-- [Criando branches](#criando-branches)
-- [Commits e estilo de código](#commits-e-estilo-de-código)
-- [Como relatar bugs](#como-relatar-bugs)
-- [Como sugerir melhorias](#como-sugerir-melhorias)
+- [Bem-vindo(a) ao projeto](#bem-vindoa-ao-projeto)
+- [Rodar os testes](#rodar-os-testes)
+- [Links úteis](#links-úteis)
+- [Templates para contribuição](#templates-para-contribuição)
+- [Submissão de mudanças](#submissão-de-mudanças)
+- [Instruções passo a passo (How To)](#instruções-passo-a-passo-how-to)
+  - [Como relatar um bug](#como-relatar-um-bug)
+  - [Como corrigir um bug](#como-corrigir-um-bug)
+  - [Como sugerir melhorias](#como-sugerir-melhorias)
+  - [Convenções de código e estilo](#convenções-de-código-e-estilo)
 - [Código de Conduta](#código-de-conduta)
 - [Reconhecimento](#reconhecimento)
 - [Quem somos](#quem-somos)
@@ -20,7 +23,20 @@ Obrigado por considerar contribuir com este projeto! Estamos animados para ter v
 
 
 
+## Rodar os testes
 
+Este projeto utiliza testes automatizados com o **Selenium**, simulando interações reais com o navegador.
+
+### Como executar os testes:
+
+1. Certifique-se de que as dependências estão instaladas:
+
+   ```bash
+pip install -r requirements.txt
+```
+
+2. execute os testes com
+python manage.py test
 
 
 
@@ -29,6 +45,14 @@ Obrigado por considerar contribuir com este projeto! Estamos animados para ter v
 ## Links úteis
 
 ### 📂 Estrutura do Projeto
+
+
+- **apps**  
+  - Login: [`login/`](./login/)
+  - Objetivos: [`objetivos`](./objetivos)  
+
+- **Projeto**  
+  - Projeto: [`projeto/`](./projeto/)
 
 - **Templates (HTML)**  
   - Login: [`login/templates/login/`](./login/templates/login/)  
@@ -52,15 +76,14 @@ Obrigado por considerar contribuir com este projeto! Estamos animados para ter v
 
 ---
 
-### 🛠 Submissão de mudanças
+### Submissão de mudanças
 
 Contribuições são bem-vindas via pull requests:
 
 1. Crie um fork do projeto
 2. Crie uma branch com sua mudança
 3. Envie um [Pull Request](https://github.com/vagnermelo20/Trabalho-FDS/pulls)
-4. Aguarde revisão (respondemos normalmente em até 5 dias úteis)
-
+4. Aguarde revisão
 
 
 ## Instruções passo a passo (How To)
