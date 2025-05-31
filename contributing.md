@@ -53,12 +53,12 @@ Este projeto utiliza testes automatizados com o **Selenium**, simulando interaç
   - Objetivos: [`objetivos`](./objetivos)  
 
 - **Projeto**  
-  - Projeto: [`projeto/`](./projeto/)
+  - Projeto: [`projeto`](./projeto/)
 
 - **Templates (HTML)**  
-  - Login: [`login/templates/login/`](./login/templates/login/)  
+  - Login: [`login/templates/login`](./login/templates/login/)  
     - `base.html`, `criar_usuario.html`, `logar.html`  
-  - Objetivos: [`objetivos/templates/objetivos/`](./objetivos/templates/objetivos/)  
+  - Objetivos: [`objetivos/templates/objetivos`](./objetivos/templates/objetivos/)  
     - `criar_objetivo.html`, `criar_tarefa_adm.html`, `visualizar_grupos_adm.html`, etc.
 
 - **Testes**  
