@@ -1087,7 +1087,7 @@ class Test7_Criar_TarefasMembros(LiveServerTestCase):
         time.sleep(2)
 
 
-        logout  = driver.find_element(By.ID, "logout").click()
+        driver.find_element(By.ID, "logout").click()
         time.sleep(2)
 
 
@@ -1146,7 +1146,7 @@ class Test7_Criar_TarefasMembros(LiveServerTestCase):
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
 
-        logout  = driver.find_element(By.ID, "logout").click()
+        driver.find_element(By.ID, "logout").click()
         time.sleep(1)
 
 
@@ -1224,7 +1224,7 @@ class Test7_Criar_TarefasMembros(LiveServerTestCase):
 
         time.sleep(3)
 
-        logout  = driver.find_element(By.ID, "logout").click()
+        driver.find_element(By.ID, "logout").click()
         time.sleep(2)
 
 
@@ -1337,7 +1337,7 @@ class Test8_Gerenciar_Tarefas_adm(LiveServerTestCase):
         driver.find_element(By.TAG_NAME, "button").click()
         time.sleep(2)
 
-        logout  = driver.find_element(By.ID, "logout").click()
+        driver.find_element(By.ID, "logout").click()
         time.sleep(1)
 
 
@@ -1393,7 +1393,7 @@ class Test8_Gerenciar_Tarefas_adm(LiveServerTestCase):
         driver.find_element(By.TAG_NAME, "button").click()
         # time.sleep(2)
 
-        logout  = driver.find_element(By.ID, "logout").click()
+        driver.find_element(By.ID, "logout").click()
         # time.sleep(1)
 
 
@@ -1453,7 +1453,7 @@ class Test8_Gerenciar_Tarefas_adm(LiveServerTestCase):
 
         time.sleep(3)
 
-        logout  = driver.find_element(By.ID, "logout").click()
+        driver.find_element(By.ID, "logout").click()
         # time.sleep(2)
 
 
@@ -1508,7 +1508,7 @@ class Test8_Gerenciar_Tarefas_adm(LiveServerTestCase):
 
 
         time.sleep(5)
-        logout  = driver.find_element(By.ID, "logout").click()
+        driver.find_element(By.ID, "logout").click()
         time.sleep(1)
 
 
@@ -1549,7 +1549,7 @@ class Test8_Gerenciar_Tarefas_adm(LiveServerTestCase):
         ).click()
         time.sleep(2)
 
-        logout  = driver.find_element(By.ID, "logout").click()
+        driver.find_element(By.ID, "logout").click()
         # time.sleep(2)
 
 
@@ -1590,7 +1590,7 @@ class Test8_Gerenciar_Tarefas_adm(LiveServerTestCase):
         driver.find_element(By.ID, "esconder").click()
         time.sleep(2)
 
-        logout  = driver.find_element(By.ID, "logout").click()
+        driver.find_element(By.ID, "logout").click()
 
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "campo_email"))
