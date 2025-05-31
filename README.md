@@ -181,7 +181,8 @@ Cenário 04: Criar grupo sem senha:
 Prints do Jira
 <br>
 ![image](https://github.com/user-attachments/assets/b666fe70-7e7f-4d70-81ba-a82ae1461329)
-![image](https://github.com/user-attachments/assets/945d491c-7f81-4f2d-86f6-279a3bcc3e1e)
+![image](https://github.com/user-attachments/assets/a4dcd0f2-6b48-4b24-a179-ccbbb9393825)
+
 
 
 ## Sketches das historias no Figma <br>
@@ -203,6 +204,7 @@ Prints do Jira
 
 Issue/Bug Tracker
 
+![image](https://github.com/user-attachments/assets/c3a2c0f8-7638-4424-86f0-3dade1d89a92)
 
  
 ## Screencast dos sketches
