@@ -5,21 +5,21 @@ Obrigado por considerar contribuir com este projeto! Estamos animados para ter v
 
 ## Índice
 
+
 - [Bem-vindo(a) ao projeto](#bem-vindoa-ao-projeto)
 - [Rodar os testes](#rodar-os-testes)
-- [Links úteis](#links-úteis)
-- [Templates para contribuição](#templates-para-contribuição)
-- [Submissão de mudanças](#submissão-de-mudanças)
-- [Instruções passo a passo (How To)](#instruções-passo-a-passo-how-to)
+- [Links uteis](#links-uteis)
+- [Templates para contribuicao](#templates-para-contribuicao)
+- [Submissao de mudancas](#submissao-de-mudancas)
+- [Instrucoes passo a passo (How To)](#instrucoes-passo-a-passo-how-to)
   - [Como relatar um bug](#como-relatar-um-bug)
   - [Como corrigir um bug](#como-corrigir-um-bug)
   - [Como sugerir melhorias](#como-sugerir-melhorias)
-  - [Convenções de código e estilo](#convenções-de-código-e-estilo)
-- [Código de Conduta](#código-de-conduta)
+  - [Convencoes de codigo e estilo](#convencoes-de-codigo-e-estilo)
+- [Codigo de Conduta](#codigo-de-conduta)
 - [Reconhecimento](#reconhecimento)
 - [Quem somos](#quem-somos)
 - [Onde obter ajuda](#onde-obter-ajuda)
-
 
 
 
