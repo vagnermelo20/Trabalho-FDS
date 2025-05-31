@@ -28,7 +28,7 @@ Obrigado por considerar contribuir com este projeto! Estamos animados para ter v
 
 
 
-## Executáveis
+## Executaveis
 
 Este projeto utiliza o framework Django e testes automatizados com o **Selenium**, simulando interações reais com o navegador.
 
@@ -47,7 +47,7 @@ source venv/bin/activate
 
 ---
 
-### 2. Instalar dependências
+### 2. Instalar dependencias
 
 Certifique-se de estar dentro do ambiente virtual, então rode:
 
