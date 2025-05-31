@@ -31,9 +31,9 @@ Este projeto utiliza testes automatizados com o **Selenium**, simulando interaç
 
 1. Certifique-se de que as dependências estão instaladas:
 
-   ```bash
+
 pip install -r requirements.txt
-```
+
 
 2. execute os testes com
 python manage.py test
