@@ -67,8 +67,8 @@ python manage.py test
 - **Ambiente de desenvolvimento**  
   As instruções completas estão no [`README.md`](./README.md)
 
----
-
+--- 
+  
 ### 📑 Templates para contribuição
 
 - [Template para relatório de bugs](./.github/ISSUE_TEMPLATE/bug_report.md) *(adicione este arquivo se ainda não existir)*
