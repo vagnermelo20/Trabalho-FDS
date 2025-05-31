@@ -162,7 +162,7 @@
         </div>
         <div>
             {% if usuario %}
-                <a href="{% url 'logout' %}" class="logout-button">Logout</a>
+                <a href="{% url 'logout' %}" class="logout-button" id = "logout">Logout</a>
             {% else %}
                 <a href="{% url 'logar' %}" class="logout-button">Login</a>
             {% endif %}

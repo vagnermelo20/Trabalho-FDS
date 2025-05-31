@@ -43,12 +43,12 @@
                 <option value="ativa" {% if tarefa.Status == "ativa" %}selected{% endif %}>Em andamento</option>
                 <option value="completa" {% if tarefa.Status == "completa" %}selected{% endif %}>Concluída</option>
             </select>
-            <button type="submit">Atualizar</button>
+            <button type="submit" id = "atualizar">Atualizar</button>
         </form>
 
         <form method="POST" action="{% url 'esconder_tarefa_membro' grupo tarefa.id %}">
             {% csrf_token %}
-            <button type="submit" style="background-color: orange; color: white;">Esconder tarefa concluída</button>
+            <button type="submit" style="background-color: orange; color: white;" id = "esconder">Esconder tarefa concluída</button>
         </form>
 
         {% endfor %}
