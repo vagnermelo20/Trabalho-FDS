@@ -207,5 +207,5 @@ Prints do Jira
 
 ## Contribuição no projeto
 
-Caso tenha interesse em contribuir com o projeto, acesse o [guia de contribuição](./CONTRIBUTING.md).
+Caso tenha interesse em contribuir com o projeto, acesse o [guia de contribuição](./contributing.md).
 </details>
