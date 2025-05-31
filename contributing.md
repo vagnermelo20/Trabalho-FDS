@@ -8,7 +8,7 @@ Obrigado por considerar contribuir com este projeto! Estamos animados para ter v
 
 - [Bem-vindo(a) ao projeto](#bem-vindoa-ao-projeto)
 - [Rodar os testes](#rodar-os-testes)
-- [Links uteis](#links-uteis)
+- [Links uteis](#links-úteis)
 - [Templates para contribuicao](#templates-para-contribuicao)
 - [Submissao de mudancas](#submissao-de-mudancas)
 - [Instrucoes passo a passo (How To)](#instrucoes-passo-a-passo-how-to)
