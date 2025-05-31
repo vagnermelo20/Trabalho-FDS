@@ -187,15 +187,18 @@ Prints do Jira
 ## Sketches das historias no Figma <br>
 <h1>história: Gerenciar tarefas como membro de um grupo</h1>
 <br>
-![Imagem do WhatsApp de 2025-05-31 à(s) 10 48 27_a90ac372](https://github.com/user-attachments/assets/ab32ced7-61ef-44fd-8776-5a333a2ba627) 
-![Imagem do WhatsApp de 2025-05-31 à(s) 10 48 27_bdf6c1a8](https://github.com/user-attachments/assets/c99a5669-a2bd-4da9-890a-933045eb260f)
-![Imagem do WhatsApp de 2025-05-31 à(s) 10 48 28_8b5b7ab0](https://github.com/user-attachments/assets/af4f9ded-9e76-47f6-bc40-d14f505df7f5)
-![Imagem do WhatsApp de 2025-05-31 à(s) 10 48 28_629f812f](https://github.com/user-attachments/assets/a32d36a8-deab-4874-8f67-8530c41088ea)
-<h1>Criar tarefas como administrador</h1>
+
+ ![Imagem do WhatsApp de 2025-05-31 à(s) 10 48 27_a90ac372](https://github.com/user-attachments/assets/ab32ced7-61ef-44fd-8776-5a333a2ba627) 
+ ![Imagem do WhatsApp de 2025-05-31 à(s) 10 48 27_bdf6c1a8](https://github.com/user-attachments/assets/c99a5669-a2bd-4da9-890a-933045eb260f)
+ ![Imagem do WhatsApp de 2025-05-31 à(s) 10 48 28_8b5b7ab0](https://github.com/user-attachments/assets/af4f9ded-9e76-47f6-bc40-d14f505df7f5)
+ ![Imagem do WhatsApp de 2025-05-31 à(s) 10 48 28_629f812f](https://github.com/user-attachments/assets/a32d36a8-deab-4874-8f67-8530c41088ea)
+
+<h1>história: Criar tarefas como um administrador</h1>
 <br>
-![Imagem do WhatsApp de 2025-05-31 à(s) 10 48 28_2c9ecc32](https://github.com/user-attachments/assets/a1d89c26-a199-4053-9f29-c3ad057a7193)
-![Imagem do WhatsApp de 2025-05-31 à(s) 10 48 28_36ece65f](https://github.com/user-attachments/assets/dfe58924-dac4-4c58-af6a-2d1fc21a9b6a)
-![Imagem do WhatsApp de 2025-05-31 à(s) 10 48 28_3b01d200](https://github.com/user-attachments/assets/b2c13fb4-17a1-4b04-8d76-a0beee4655f6)
+ 
+ ![Imagem do WhatsApp de 2025-05-31 à(s) 10 48 28_2c9ecc32](https://github.com/user-attachments/assets/a1d89c26-a199-4053-9f29-c3ad057a7193)
+ ![Imagem do WhatsApp de 2025-05-31 à(s) 10 48 28_36ece65f](https://github.com/user-attachments/assets/dfe58924-dac4-4c58-af6a-2d1fc21a9b6a)
+ ![Imagem do WhatsApp de 2025-05-31 à(s) 10 48 28_3b01d200](https://github.com/user-attachments/assets/b2c13fb4-17a1-4b04-8d76-a0beee4655f6)
 
 
 
