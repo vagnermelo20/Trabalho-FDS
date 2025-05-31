@@ -98,7 +98,7 @@ Os testes utilizam o Selenium e abrem um navegador real. Certifique-se de ter o 
   - Objetivos: [`objetivos/templates/objetivos`](./objetivos/templates/objetivos/)  
 
 - **Testes**  
-  - Módulo `login`: [`login/tests.py`](./login/tests.py)  
+  - Módulo `login`: [`login/tests.py`](./login/tests.py)  no momento não há nenhum teste nele
   - Módulo `objetivos`: [`objetivos/tests.py`](./objetivos/tests.py)
 
 - **Ambiente de desenvolvimento**  
@@ -227,7 +227,6 @@ com o intuito de criar uma aplicação de um gerenciador de tarefas para o nosso
 Se você tiver dúvidas ou dificuldades para contribuir:
 
 - Consulte as [Issues](https://github.com/vagnermelo20/Trabalho-FDS/issues)
-- Veja a seção de [Discussões](https://github.com/vagnermelo20/Trabalho-FDS/discussions)
 - Fique à vontade para sugerir melhorias na documentação
 
 Queremos tornar sua experiência a melhor possível, então não hesite em nos procurar!
