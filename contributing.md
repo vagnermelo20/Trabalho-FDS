@@ -49,7 +49,7 @@ Este projeto utiliza testes automatizados com o **Selenium**, simulando interaç
 
 
 - **apps**  
-  - Login: [`login/`](./login/)
+  - Login: [`login`](./login/)
   - Objetivos: [`objetivos`](./objetivos)  
 
 - **Projeto**  
