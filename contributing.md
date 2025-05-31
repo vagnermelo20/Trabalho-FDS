@@ -6,7 +6,12 @@ Obrigado por considerar contribuir com este projeto! Estamos animados para ter v
 ## Índice
 
 - [Bem-vindo(a) ao projeto](#bem-vindoa-ao-projeto)
-- [Rodar os testes](#rodar-os-testes)
+- [Executaveis](#executaveis)
+  - [Criar ambiente virtual](#criar-ambiente-virtual)
+  - [Instalar dependências](#instalar-dependencias)
+  - [Aplicar migrações](#aplicar-migracoes)
+  - [Rodar o servidor local](#rodar-o-servidor-local)
+  - [Executar os testes automatizados](#executar-os-testes-automatizados)
 - [Links uteis](#links-úteis)
 - [Templates para contribuicao](#templates-para-contribuição)
 - [Submissao de mudancas](#submissão-de-mudanças)
@@ -22,22 +27,55 @@ Obrigado por considerar contribuir com este projeto! Estamos animados para ter v
 
 
 
-## Rodar os testes
 
-Este projeto utiliza testes automatizados com o **Selenium**, simulando interações reais com o navegador.
+## Executáveis
 
-### Como executar os testes:
+Este projeto utiliza o framework Django e testes automatizados com o **Selenium**, simulando interações reais com o navegador.
 
-1.  Certifique-se de que as dependências estão instaladas:
+### 1. Criar ambiente virtual
 
-    ```bash
-    pip install -r requirements.txt
-    ```
+#### 💻 Windows (CMD ou PowerShell):
 
-2.  execute os testes com
-    python manage.py test
+python -m venv venv
+venv\Scripts\activate
+
+#### 🐧 Linux / macOS:
+
+python3 -m venv venv
+source venv/bin/activate
+
 
 ---
+
+### 2. Instalar dependências
+
+Certifique-se de estar dentro do ambiente virtual, então rode:
+
+pip install -r requirements.txt
+
+---
+
+### 3. Aplicar migrações (caso necessário)
+
+python manage.py migrate
+
+---
+
+### 4. Rodar o servidor local
+
+python manage.py runserver
+
+
+Acesse no navegador: `http://127.0.0.1:8000/`
+
+---
+
+### 5. Executar os testes automatizados
+
+python manage.py test
+
+Os testes utilizam o Selenium e abrem um navegador real. Certifique-se de ter o **`webdriver-manager`** instalado e funcional.
+
 
  
 
@@ -57,17 +95,14 @@ Este projeto utiliza testes automatizados com o **Selenium**, simulando interaç
 
 - **Templates (HTML)**  
   - Login: [`login/templates/login`](./login/templates/login/)  
-    - `base.html`, `criar_usuario.html`, `logar.html`  
   - Objetivos: [`objetivos/templates/objetivos`](./objetivos/templates/objetivos/)  
-    - `criar_objetivo.html`, `criar_tarefa_adm.html`, `visualizar_grupos_adm.html`, etc.
 
 - **Testes**  
   - Módulo `login`: [`login/tests.py`](./login/tests.py)  
   - Módulo `objetivos`: [`objetivos/tests.py`](./objetivos/tests.py)
 
 - **Ambiente de desenvolvimento**  
-  As instruções completas estão no [`README.md`](./README.md)
-
+  As instruções completas estão em - [Executaveis](#executaveis)
 --- 
   
 ### Templates para contribuição
