@@ -98,7 +98,7 @@ Os testes utilizam o Selenium e abrem um navegador real. Certifique-se de ter o 
   - Objetivos: [`objetivos/templates/objetivos`](./objetivos/templates/objetivos/)  
 
 - **Testes**  
-  - Módulo `login`: [`login/tests.py`](./login/tests.py)  
+  - Módulo `login`: [`login/tests.py`](./login/tests.py)  no momento não há nenhum teste nele
   - Módulo `objetivos`: [`objetivos/tests.py`](./objetivos/tests.py)
 
 - **Ambiente de desenvolvimento**  
