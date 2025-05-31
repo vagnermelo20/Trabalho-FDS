@@ -227,7 +227,6 @@ com o intuito de criar uma aplicação de um gerenciador de tarefas para o nosso
 Se você tiver dúvidas ou dificuldades para contribuir:
 
 - Consulte as [Issues](https://github.com/vagnermelo20/Trabalho-FDS/issues)
-- Veja a seção de [Discussões](https://github.com/vagnermelo20/Trabalho-FDS/discussions)
 - Fique à vontade para sugerir melhorias na documentação
 
 Queremos tornar sua experiência a melhor possível, então não hesite em nos procurar!
