@@ -29,14 +29,16 @@ Este projeto utiliza testes automatizados com o **Selenium**, simulando interaç
 
 ### Como executar os testes:
 
-1. Certifique-se de que as dependências estão instaladas:
+1.  Certifique-se de que as dependências estão instaladas:
 
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-pip install -r requirements.txt
+2.  execute os testes com
+    python manage.py test
 
-
-2. execute os testes com
-python manage.py test
+---
 
  
 
