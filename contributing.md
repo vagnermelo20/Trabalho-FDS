@@ -70,7 +70,7 @@ Este projeto utiliza testes automatizados com o **Selenium**, simulando interaç
 
 --- 
   
-### 📑 Templates para contribuição
+### Templates para contribuição
 
 - [Template para relatório de bugs](./.github/ISSUE_TEMPLATE/bug_report.md) *(adicione este arquivo se ainda não existir)*
 - [Template para sugestão de melhorias](./.github/ISSUE_TEMPLATE/enhancement.md) *(adicione este arquivo se ainda não existir)*
