@@ -977,3 +977,326 @@ class Test6_CriarGrupo(LiveServerTestCase):
             EC.text_to_be_present_in_element((By.TAG_NAME, "body"), "A senha do grupo é obrigatória.")
         )
         time.sleep(1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Test7_Gerenciar_TarefasMembros(LiveServerTestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        options = Options()
+        if os.environ.get('GITHUB_ACTIONS') == 'true':
+            options.add_argument('--headless')
+            options.add_argument('--no-sandbox')
+            options.add_argument('--disable-dev-shm-usage')
+        cls.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+        cls.driver.implicitly_wait(10)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.driver.quit()
+        super().tearDownClass()
+
+    def test_Gerenciar_Tarefas(self):
+        driver = self.driver
+
+        # 1. Cadastro de novo usuário
+        driver.get(f'{self.live_server_url}/criar_usuario/')
+        driver.find_element(By.ID, "campo_username").send_keys("usuario1")
+        driver.find_element(By.ID, "campo_email").send_keys("usuario1@teste.com")
+        driver.find_element(By.ID, "campo_senha").send_keys("123")
+        driver.find_element(By.TAG_NAME, "button").click()
+
+
+        # 2. Login - Usando WebDriverWait com retries para garantir estabilidade
+        # Aguardar até que o redirecionamento para a página de login esteja completo
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_email"))
+        )
+        
+        # Uma pausa breve para garantir a estabilidade da página
+        time.sleep(1)
+        
+        # Localizar o campo email novamente (para evitar StaleElementReferenceException)
+        campo_email = driver.find_element(By.ID, "campo_email")
+        campo_email.clear()  # Limpar o campo antes de digitar
+        campo_email.send_keys("usuario1@teste.com")
+        
+        # Localizar o campo senha
+        campo_senha = driver.find_element(By.ID, "campo_senha") 
+        campo_senha.clear()  # Limpar o campo antes de digitar
+        campo_senha.send_keys("123")
+        
+        # Clicar no botão de login
+        driver.find_element(By.TAG_NAME, "button").click()
+
+        # Aguardar o redirecionamento para a página de objetivos
+        WebDriverWait(driver, 10).until(EC.url_contains('/objetivos/'))
+        time.sleep(1)
+
+        # 3. Criar grupo com titulo e descrição
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "Criar um grupo"))
+        ).click()
+        time.sleep(1)
+        
+        campo_nome_grupo = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_nome_grupo"))
+        )
+        campo_nome_grupo.send_keys("grupo 1")
+        
+        campo_senha = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "senha"))
+        )
+        campo_senha.send_keys("123")
+        
+        driver.find_element(By.TAG_NAME, "button").click()
+        time.sleep(2)
+
+        WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.LINK_TEXT, "Meus grupos"))
+        ).click()
+        time.sleep(2)
+
+        WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.LINK_TEXT, "Visualizar"))
+        ).click()
+        time.sleep(2)
+
+        WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.LINK_TEXT, "+ Criar Tarefa"))
+        ).click()
+        time.sleep(2)
+
+
+        campo_nome = driver.find_element(By.ID, "campo_nome")
+        campo_nome.clear()  # Limpar o campo antes de digitar
+        campo_nome.send_keys("Primeira tarefa")
+        
+        # Localizar o campo senha
+        campo_descricao = driver.find_element(By.ID, "campo_descricao") 
+        campo_descricao.clear()  # Limpar o campo antes de digitar
+        campo_descricao.send_keys("Boa Tarefa")
+        
+        # Clicar no botão de login
+        driver.find_element(By.TAG_NAME, "button").click()
+
+        time.sleep(4)
+
+
+        logout  = driver.find_element(By.ID, "logout").click()
+        time.sleep(3)
+
+
+
+        # Criar o segundo usuario e entrar no grupo
+
+
+        driver.get(f'{self.live_server_url}/criar_usuario/')
+        driver.find_element(By.ID, "campo_username").send_keys("usuario2")
+        driver.find_element(By.ID, "campo_email").send_keys("usuario2@teste.com")
+        driver.find_element(By.ID, "campo_senha").send_keys("123")
+        driver.find_element(By.TAG_NAME, "button").click()
+
+
+        # 2. Login - Usando WebDriverWait com retries para garantir estabilidade
+        # Aguardar até que o redirecionamento para a página de login esteja completo
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_email"))
+        )
+        
+        # Uma pausa breve para garantir a estabilidade da página
+        time.sleep(1)
+        
+        # Localizar o campo email novamente (para evitar StaleElementReferenceException)
+        campo_email = driver.find_element(By.ID, "campo_email")
+        campo_email.clear()  # Limpar o campo antes de digitar
+        campo_email.send_keys("usuario2@teste.com")
+        
+        # Localizar o campo senha
+        campo_senha = driver.find_element(By.ID, "campo_senha") 
+        campo_senha.clear()  # Limpar o campo antes de digitar
+        campo_senha.send_keys("123")
+        
+        # Clicar no botão de login
+        driver.find_element(By.TAG_NAME, "button").click()
+
+        # Aguardar o redirecionamento para a página de objetivos
+        WebDriverWait(driver, 10).until(EC.url_contains('/objetivos/'))
+        time.sleep(4)
+
+        WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.LINK_TEXT, "Entrar em um grupo"))
+        ).click()
+        time.sleep(2)
+
+        campo_nome_grupo = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_nome_grupo"))
+        )
+        campo_nome_grupo.send_keys("grupo 1")
+        
+        campo_senha = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_senha"))
+        )
+        campo_senha.send_keys("123")
+        
+        driver.find_element(By.TAG_NAME, "button").click()
+        time.sleep(2)
+
+        logout  = driver.find_element(By.ID, "logout").click()
+        time.sleep(3)
+
+
+
+        # Entrar de novo com o primeiro usuário
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_email"))
+        )
+        
+        # Uma pausa breve para garantir a estabilidade da página
+        time.sleep(1)
+        
+        # Localizar o campo email novamente (para evitar StaleElementReferenceException)
+        campo_email = driver.find_element(By.ID, "campo_email")
+        campo_email.clear()  # Limpar o campo antes de digitar
+        campo_email.send_keys("usuario1@teste.com")
+        
+        # Localizar o campo senha
+        campo_senha = driver.find_element(By.ID, "campo_senha") 
+        campo_senha.clear()  # Limpar o campo antes de digitar
+        campo_senha.send_keys("123")
+        
+        # Clicar no botão de login
+        driver.find_element(By.TAG_NAME, "button").click()
+
+        # Aguardar o redirecionamento para a página de objetivos
+        WebDriverWait(driver, 10).until(EC.url_contains('/objetivos/'))
+        time.sleep(1)
+
+        WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.LINK_TEXT, "Meus grupos"))
+        ).click()
+        time.sleep(2)
+
+        WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.LINK_TEXT, "Visualizar"))
+        ).click()
+        time.sleep(2)
+
+        WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.LINK_TEXT, "+ Criar Tarefa"))
+        ).click()
+        time.sleep(2)
+
+
+                # Localizar o campo senha
+
+        campo_nome = driver.find_element(By.ID, "campo_nome")
+        campo_nome.clear() 
+
+
+        campo_descricao = driver.find_element(By.ID, "campo_descricao") 
+        campo_descricao.clear()  # Limpar o campo antes de digitar
+        campo_descricao.send_keys("Boa Tarefa")
+        
+        # Clicar no botão de login
+        driver.find_element(By.TAG_NAME, "button").click()
+
+        time.sleep(8)
+
+
+
+        campo_nome = driver.find_element(By.ID, "campo_nome")
+        campo_nome.clear()  # Limpar o campo antes de digitar
+        campo_nome.send_keys("Primeira tarefa")
+        
+        # Localizar o campo senha
+        campo_descricao = driver.find_element(By.ID, "campo_descricao") 
+        campo_descricao.clear()  # Limpar o campo antes de digitar
+        campo_descricao.send_keys("Boa Tarefa")
+        
+        # Clicar no botão de login
+        driver.find_element(By.TAG_NAME, "button").click()
+
+        time.sleep(9)
+
+        logout  = driver.find_element(By.ID, "logout").click()
+        time.sleep(3)
+
+
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "campo_email"))
+        )
+        
+        # Uma pausa breve para garantir a estabilidade da página
+        time.sleep(1)
+        
+        # Localizar o campo email novamente (para evitar StaleElementReferenceException)
+        campo_email = driver.find_element(By.ID, "campo_email")
+        campo_email.clear()  # Limpar o campo antes de digitar
+        campo_email.send_keys("usuario2@teste.com")
+        
+        # Localizar o campo senha
+        campo_senha = driver.find_element(By.ID, "campo_senha") 
+        campo_senha.clear()  # Limpar o campo antes de digitar
+        campo_senha.send_keys("123")
+        
+        # Clicar no botão de login
+        driver.find_element(By.TAG_NAME, "button").click()
+
+        # Aguardar o redirecionamento para a página de objetivos
+        WebDriverWait(driver, 10).until(EC.url_contains('/objetivos/'))
+        time.sleep(1)
+
+        WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.LINK_TEXT, "Meus grupos"))
+        ).click()
+        time.sleep(2)
+
+        WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.LINK_TEXT, "Visualizar"))
+        ).click()
+        time.sleep(2)
