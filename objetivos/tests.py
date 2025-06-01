@@ -1087,6 +1087,12 @@ class Test7_Criar_TarefasMembros(LiveServerTestCase):
 
         time.sleep(2)
 
+          # Verificar mensagem de erro
+        WebDriverWait(driver, 10).until(
+            EC.text_to_be_present_in_element((By.TAG_NAME, "body"), "É necessário colocar o nome do usuário designado para registrar a tarefa.")
+        )
+        time.sleep(1)
+
 
         driver.find_element(By.ID, "logout").click()
         time.sleep(2)
@@ -1209,8 +1215,10 @@ class Test7_Criar_TarefasMembros(LiveServerTestCase):
 
         time.sleep(2)
 
-
-
+        WebDriverWait(driver, 10).until(
+            EC.text_to_be_present_in_element((By.TAG_NAME, "body"), "Por favor digite o nome da tarefa para prosseguir.")
+        )
+        time.sleep(1)
         campo_nome = driver.find_element(By.ID, "campo_nome")
         campo_nome.clear()  # Limpar o campo antes de digitar
         campo_nome.send_keys("Primeira tarefa")
@@ -1496,7 +1504,10 @@ class Test8_Gerenciar_Tarefas_adm(LiveServerTestCase):
         driver.find_element(By.ID, "esconder").click()
         time.sleep(2)
 
-
+        WebDriverWait(driver, 10).until(
+            EC.text_to_be_present_in_element((By.TAG_NAME, "body"), "Só é possível esconder tarefas marcadas como concluídas.")
+        )
+        time.sleep(1)
         campo_status = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "status"))
         )
