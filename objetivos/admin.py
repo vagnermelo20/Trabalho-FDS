@@ -8,3 +8,4 @@ admin.site.register(Subtarefa)
 admin.site.register(Grupos)
 admin.site.register(Tarefas_grupos)
 admin.site.register(Participantes_grupos)
+ 
