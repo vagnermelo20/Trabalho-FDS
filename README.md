@@ -63,8 +63,7 @@ história 4: Como usuários membros de um grupo quero acompanhar o andamento do 
 ## Acesso ao site
 
 entre no site, faca o cadastro com um email que ainda não foi utilizado, faça o login e utilize o site.
-https://feito1-hze3efe6bxagcehp.brazilsouth-01.azurewebsites.net
-
+https://trabalho-fds.onrender.com
 
 ## Screencast do uso do site
 [Screencast Entrega 2](https://youtu.be/xBdM84UWv6I?si=fG1iTN-NJXAVg2o_)
