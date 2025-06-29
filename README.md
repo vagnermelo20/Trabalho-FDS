@@ -2,6 +2,12 @@
 
 Este projeto será feito para a matéria de **FDS (Fundamentos de Desenvolvimento de Software) da turma 2A da Cesar School do curso de Ciência da Computação**.
 
+entre no site, faca o cadastro com um email que ainda não foi utilizado, faça o login e utilize o site. https://trabalho-fds.onrender.com
+
+Demora de 30 segundos até um minuto para entrar no site pela primeira vez, porque o deploy está em uma plataforma gratuita e eles desativam as aplicações que passam 15 minutos sem ninguém mexer nelas. Depois de entrar pela primeira vez, ela funcionará normalmente
+
+
+
 ## Equipe
 - Daniel Andrade Ferreira Silva
 - David Magalhães Porto Oliveira
