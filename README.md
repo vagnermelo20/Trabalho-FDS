@@ -226,7 +226,17 @@ https://www.youtube.com/watch?v=7k4LcFQ_RLI
 
 
 
+Cenários de Validação:
 
+Cenário 1: Visualizar lista de subtarefas
+
+Cenário 2: Atualizar uma subtarefa com sucesso
+
+Cenário 3: Atualizar uma subtarefa com nome duplicado
+
+Cenário 4: editar uma subtarefa sem nome
+
+Cenário 5: Deletar uma subtarefa
 
 ## Contribuição no projeto
 
