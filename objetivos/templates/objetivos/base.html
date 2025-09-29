@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block titulo %}<title>Sistema</title>{% endblock titulo %}
+    <link rel="stylesheet" type="text/css" href="{% static 'objetivos/css/base.css' %}">
+    {% block extra_css %}{% endblock extra_css %}
+</head>
+<body>
+    <header>
+        <div class="user-info">
+            {% if usuario %}
+                <span><strong>Usuário:</strong> {{ usuario.username }}</span>
+            {% endif %}
+        </div>
+        <div>
+            {% if usuario %}
+                <a href="{% url 'logout' %}" class="logout-button" id="logout">Logout</a>
+            {% else %}
+                <a href="{% url 'logar' %}" class="logout-button">Login</a>
+            {% endif %}
+        </div>
+    </header>
+    {% block content %}{% endblock content %}
+    {% block extra_js %}{% endblock extra_js %}
+</body>
+</html>
